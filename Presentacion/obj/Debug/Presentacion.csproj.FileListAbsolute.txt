@@ -103,3 +103,6 @@ C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\Microsof
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\Newtonsoft.Json.xml
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\System.ValueTuple.xml
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\PdfiumViewer.dll
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\PdfiumViewer.xml
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\nl\PdfiumViewer.resources.dll

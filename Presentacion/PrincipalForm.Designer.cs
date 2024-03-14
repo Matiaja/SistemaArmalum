@@ -43,7 +43,7 @@
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.columnaEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.btnImprimir = new System.Windows.Forms.Button();
+            this.btnPDF = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -186,23 +186,23 @@
             this.columnaEliminar.UseColumnTextForButtonValue = true;
             this.columnaEliminar.Width = 125;
             // 
-            // btnImprimir
+            // btnPDF
             // 
-            this.btnImprimir.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnImprimir.Location = new System.Drawing.Point(1025, 35);
-            this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(199, 48);
-            this.btnImprimir.TabIndex = 33;
-            this.btnImprimir.Text = "Imprimir";
-            this.btnImprimir.UseVisualStyleBackColor = true;
-            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
+            this.btnPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPDF.Location = new System.Drawing.Point(1025, 35);
+            this.btnPDF.Name = "btnPDF";
+            this.btnPDF.Size = new System.Drawing.Size(199, 48);
+            this.btnPDF.TabIndex = 33;
+            this.btnPDF.Text = "Generar PDF";
+            this.btnPDF.UseVisualStyleBackColor = true;
+            this.btnPDF.Click += new System.EventHandler(this.btnPDF_Click);
             // 
             // PrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1254, 659);
-            this.Controls.Add(this.btnImprimir);
+            this.Controls.Add(this.btnPDF);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.txtBoxTotal);
@@ -239,7 +239,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
         private System.Windows.Forms.DataGridViewButtonColumn columnaEliminar;
-        private System.Windows.Forms.Button btnImprimir;
+        private System.Windows.Forms.Button btnPDF;
     }
 }
 

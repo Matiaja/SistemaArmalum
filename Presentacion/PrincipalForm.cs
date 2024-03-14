@@ -14,6 +14,8 @@ using iTextSharp.text.pdf;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Xml.Linq;
+using PdfiumViewer;
+using System.Windows.Media.Animation;
 
 namespace Presentacion
 {
@@ -139,8 +141,8 @@ namespace Presentacion
                 tablaProductos.DefaultCell.BorderWidth = 1; // Grosor del borde de las celdas
 
                 // Encabezados de las columnas
-                tablaProductos.AddCell("Código");
                 tablaProductos.AddCell("Descripción");
+                tablaProductos.AddCell("Código");
                 tablaProductos.AddCell("Precio");
 
                 double total = 0;
@@ -156,22 +158,14 @@ namespace Presentacion
                         string codigo = fila.Cells["ColumnaCodigo"].Value.ToString();
                         double precio = Convert.ToDouble(fila.Cells["ColumnaPrecio"].Value);
 
-                        // Agregar el producto a la lista
-                        ListaDeProductos.Add(new Producto(descripcion, codigo, precio));
+                        tablaProductos.AddCell(descripcion);
+                        tablaProductos.AddCell(codigo);
+                        tablaProductos.AddCell(precio.ToString());
 
                         total += precio;
                     }
                 }
 
-                // Recorrer la lista de productos y agregar cada uno a la tabla
-                foreach (Producto producto in ListaDeProductos)
-                {
-                    tablaProductos.AddCell(producto.Codigo);
-                    tablaProductos.AddCell(producto.Descripcion);
-                    tablaProductos.AddCell(Convert.ToDouble(producto.Precio).ToString());
-                }
-
-                // Agregar la tabla al documento
                 doc.Add(tablaProductos);
 
                 // Agregar el total al documento
@@ -187,19 +181,34 @@ namespace Presentacion
                 // Cerrar el documento
                 doc.Close();
             }
+
+            //memoryStream.Seek(0, SeekOrigin.Begin);
+            //pdfViewer.Load(memoryStream);
         }
 
         // Método para manejar el evento Click del botón "Imprimir"
-        private void btnImprimir_Click(object sender, EventArgs e)
+        private void btnPDF_Click(object sender, EventArgs e)
         {
-            // Definir la ruta del archivo PDF
-            string rutaArchivo = "ListaDeProductos.pdf";
+            if (dGVProducto.Rows.Count > 0)
+            {
+                // Obtener la ruta donde se guardará el PDF
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Archivos PDF (*.pdf)|*.pdf";
+                saveFileDialog.Title = "Guardar PDF";
+                saveFileDialog.FileName = "ListaProductos.pdf"; // Nombre predeterminado del archivo
 
-            // Generar el PDF
-            GenerarPDF(rutaArchivo);
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string rutaArchivo = saveFileDialog.FileName;
 
-            // Mostrar mensaje de éxito
-            MessageBox.Show("Se ha generado el archivo PDF correctamente.", "PDF Generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Generar el PDF
+                    GenerarPDF(rutaArchivo);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay datos para generar el PDF.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }
