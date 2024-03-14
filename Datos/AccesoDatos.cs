@@ -1,0 +1,211 @@
+﻿using Entidades;
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Datos
+{
+    public class AccesoDatos
+    {
+        private string server = "127.0.0.1";
+        private string database = "sistemaferreteria";
+        private string uid = "root";
+        private string password = "root";
+        private string connectionString;
+        public event EventHandler<int> ProgresoActualizado;
+        public event EventHandler<int> ProgresoBorradoActualizado;
+        public delegate void ProgresoBorradoEventHandler(int progreso);
+
+        public AccesoDatos()
+        {
+            connectionString = $"SERVER={server};PORT=3306;DATABASE={database};UID={uid};PASSWORD={password};";
+
+        }
+
+        public void CrearBaseDeDatos()
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string createDatabaseQuery = $"CREATE DATABASE IF NOT EXISTS {database}";
+                using (MySqlCommand command = new MySqlCommand(createDatabaseQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+
+                connection.ChangeDatabase(database);
+
+
+                string createTableQuery = "CREATE TABLE IF NOT EXISTS producto (" +
+                                          "descripcion VARCHAR(255), " +
+                                          "codigo VARCHAR(70), " +
+                                          "precio DECIMAL(18, 2))";
+                using (MySqlCommand command = new MySqlCommand(createTableQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+
+        }
+
+        public void ActualizarBaseDeDatos(List<Producto> productos)
+        {
+            bool baseDeDatosExiste;
+
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = @DatabaseName";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@DatabaseName", database);
+                object result = command.ExecuteScalar();
+                baseDeDatosExiste = result != null;
+            }
+
+            if (!baseDeDatosExiste)
+            {
+                // La base de datos no existe, crearla
+                CrearBaseDeDatos();
+            }
+
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Iniciar la transacción
+                MySqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // Asociar la transacción con todos los comandos
+                    MySqlCommand command = connection.CreateCommand();
+                    command.Transaction = transaction;
+
+                    // Borrar todos los productos de la tabla
+                    BorrarTodosLosProductos(command);
+
+                    // Insertar la lista de productos en la tabla
+                    InsertarProductos(command, productos);
+
+                    // Commit la transacción
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    // En caso de error, hacer rollback de la transacción
+                    transaction.Rollback();
+                    // Manejar el error adecuadamente, por ejemplo, lanzar una excepción o registrar el error
+                    throw ex;
+                }
+            }
+        }
+
+
+
+        private void BorrarTodosLosProductos(MySqlCommand command)
+        {
+            string query = "DELETE FROM producto";
+            command.CommandText = query;
+            command.ExecuteNonQuery();
+        }
+
+    protected virtual void OnProgresoBorradoActualizado(int progreso)
+        {
+            ProgresoBorradoActualizado?.Invoke(this, progreso);
+        }
+
+        private int ObtenerCantidadRegistros()
+        {
+            int totalRegistros = 0;
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM producto";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    totalRegistros = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+
+            return totalRegistros;
+        }
+
+
+
+        private void InsertarProductos(MySqlCommand command, List<Producto> productos)
+        {
+            int totalProductos = productos.Count;
+            int productosInsertados = 0;
+
+            command.Parameters.Add("@Descripcion", MySqlDbType.VarChar);
+            command.Parameters.Add("@Codigo", MySqlDbType.VarChar);
+            command.Parameters.Add("@Precio", MySqlDbType.Double);
+
+            foreach (Producto producto in productos)
+            {
+                command.Parameters["@Descripcion"].Value = producto.Descripcion;
+                command.Parameters["@Codigo"].Value = producto.Codigo;
+                command.Parameters["@Precio"].Value = producto.Precio;
+
+                string query = "INSERT INTO Producto (Descripcion,Codigo, Precio) VALUES (@Descripcion, @Codigo, @Precio)";
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+                productosInsertados++;
+                int progreso = (productosInsertados * 100) / totalProductos;
+            }
+        }
+
+        public Producto BuscarProductoPorCodigo(string codigo)
+        {
+            Producto productoEncontrado = null;
+
+            try
+            {
+                string query = "SELECT codigo, descripcion, precio FROM producto WHERE codigo = @Codigo";
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Codigo", codigo);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                Console.WriteLine("Llego acaa!!");
+                                // Se encontró un producto con el código especificado
+                                productoEncontrado = new Producto(
+                                    reader.GetString("Descripcion"),
+                                    reader.GetString("Codigo"),
+                                    reader.GetDouble("Precio")
+                                    );
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
+            return productoEncontrado;
+        }
+
+    }
+}
