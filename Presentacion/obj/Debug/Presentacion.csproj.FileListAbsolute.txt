@@ -106,3 +106,4 @@ C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\System.V
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\PdfiumViewer.dll
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\PdfiumViewer.xml
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\nl\PdfiumViewer.resources.dll
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Debug\Presentacion.ProductosCoincidentesForm.resources

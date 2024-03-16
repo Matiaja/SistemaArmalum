@@ -16,6 +16,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Xml.Linq;
 using PdfiumViewer;
 using System.Windows.Media.Animation;
+using System.Drawing.Printing;
 
 namespace Presentacion
 {
@@ -26,6 +27,11 @@ namespace Presentacion
         {
             InitializeComponent();
             rutaArchivo = @"C:\Users\matia\Downloads\Lista 15_02_24.xlsm";
+
+            PrintPreviewControl printPreviewControl = new PrintPreviewControl();
+            printPreviewControl.Dock = DockStyle.Fill;
+            this.Controls.Add(printPreviewControl);
+            printPreviewControl.Visible = false;
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
@@ -51,7 +57,7 @@ namespace Presentacion
 
         private void txtboxCodigo_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char)Keys.Enter && txtboxCodigo.Text != "")
             {
                 ProcesarCodigo();
             }
@@ -63,11 +69,12 @@ namespace Presentacion
 
             GestorProductos gestorProductos = new GestorProductos();
 
-            Producto producto = gestorProductos.BuscarProducto(codigo);
+            List<Producto> productos = gestorProductos.BuscarProducto(codigo);
 
-            if (producto != null)
+            if (productos != null && productos.Count == 1)
             {
 
+                Producto producto = productos[0];
                 dGVProducto.Rows.Add(producto.Descripcion, producto.Codigo, producto.Precio);
 
                 txtBoxDescripcion.Text = producto.Descripcion;
@@ -76,6 +83,24 @@ namespace Presentacion
                 txtboxCodigo.Clear();
 
                 CalcularTotal();
+            }
+            else if (productos.Count > 1)
+            {
+                using (ProductosCoincidentesForm productosForm = new ProductosCoincidentesForm(productos))
+                {
+                    if (productosForm.ShowDialog() == DialogResult.OK)
+                    {
+                        Producto productoSeleccionado = productosForm.GetProductoSeleccionado();
+                        if (productoSeleccionado != null)
+                        {
+                            dGVProducto.Rows.Add(productoSeleccionado.Descripcion, productoSeleccionado.Codigo, productoSeleccionado.Precio);
+                            txtBoxDescripcion.Text = productoSeleccionado.Descripcion;
+                            txtBoxPrecio.Text = productoSeleccionado.Precio.ToString();
+                            txtboxCodigo.Clear();
+                            CalcularTotal();
+                        }
+                    }
+                }
             }
             else
             {
@@ -118,97 +143,63 @@ namespace Presentacion
             }
         }
 
-        private void GenerarPDF(string rutaArchivo)
-        {
-            // Crear el documento PDF
-            Document doc = new Document();
-            try
-            {
-                // Crear un objeto PdfWriter para escribir en el archivo PDF
-                PdfWriter.GetInstance(doc, new FileStream(rutaArchivo, FileMode.Create));
-
-                // Abrir el documento para agregar contenido
-                doc.Open();
-
-                // Agregar título al documento
-                Paragraph titulo = new Paragraph("Lista de Productos\n\n");
-                doc.Add(titulo);
-
-                // Agregar tabla para mostrar los productos
-                PdfPTable tablaProductos = new PdfPTable(3); // 3 columnas: Código, Descripción, Precio
-                tablaProductos.WidthPercentage = 100; // Ancho de la tabla (en porcentaje de la página)
-                tablaProductos.DefaultCell.Padding = 3; // Espaciado entre las celdas
-                tablaProductos.DefaultCell.BorderWidth = 1; // Grosor del borde de las celdas
-
-                // Encabezados de las columnas
-                tablaProductos.AddCell("Descripción");
-                tablaProductos.AddCell("Código");
-                tablaProductos.AddCell("Precio");
-
-                double total = 0;
-
-                List<Producto> ListaDeProductos = new List<Producto>();
-
-                foreach (DataGridViewRow fila in dGVProducto.Rows)
-                {
-                    // Verificar si la fila no está vacía y si contiene datos válidos
-                    if (!fila.IsNewRow && fila.Cells["ColumnaDescripcion"].Value != null && fila.Cells["ColumnaCodigo"].Value != null && fila.Cells["ColumnaPrecio"].Value != null)
-                    {
-                        string descripcion = fila.Cells["ColumnaDescripcion"].Value.ToString();
-                        string codigo = fila.Cells["ColumnaCodigo"].Value.ToString();
-                        double precio = Convert.ToDouble(fila.Cells["ColumnaPrecio"].Value);
-
-                        tablaProductos.AddCell(descripcion);
-                        tablaProductos.AddCell(codigo);
-                        tablaProductos.AddCell(precio.ToString());
-
-                        total += precio;
-                    }
-                }
-
-                doc.Add(tablaProductos);
-
-                // Agregar el total al documento
-                Paragraph totalText = new Paragraph("\nTotal de todos los productos: " + total.ToString());
-                doc.Add(totalText);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al generar el PDF: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                // Cerrar el documento
-                doc.Close();
-            }
-
-            //memoryStream.Seek(0, SeekOrigin.Begin);
-            //pdfViewer.Load(memoryStream);
-        }
 
         // Método para manejar el evento Click del botón "Imprimir"
         private void btnPDF_Click(object sender, EventArgs e)
         {
-            if (dGVProducto.Rows.Count > 0)
-            {
-                // Obtener la ruta donde se guardará el PDF
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Archivos PDF (*.pdf)|*.pdf";
-                saveFileDialog.Title = "Guardar PDF";
-                saveFileDialog.FileName = "ListaProductos.pdf"; // Nombre predeterminado del archivo
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(this.pd_PrintPage);
 
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            PrintDialog printdlg = new PrintDialog();
+            PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
+
+            // Vista previa del documento
+            printPrvDlg.Document = pd;
+            printPrvDlg.ShowDialog();
+
+            // Mostrar el cuadro de diálogo de impresión
+            printdlg.Document = pd;
+
+            if (printdlg.ShowDialog() == DialogResult.OK)
+            {
+                pd.Print();
+            }
+        }
+
+        private void pd_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            System.Drawing.Font font = new System.Drawing.Font("Arial", 12);
+            SolidBrush brush = new SolidBrush(Color.Black);
+            Single yPos = 100;
+            Single xPos = 100;
+
+            // Imprimir encabezados
+            for (int i = 0; i < dGVProducto.Columns.Count; i++)
+            {
+                e.Graphics.DrawString(dGVProducto.Columns[i].HeaderText, font, brush, xPos, yPos);
+                xPos += 100; // Incrementa la posición para la próxima columna
+            }
+
+            yPos += 20; // Incrementa la posición para imprimir el contenido
+
+            // Imprimir contenido del DataGridView
+            foreach (DataGridViewRow row in dGVProducto.Rows)
+            {
+                xPos = 100; // Restablecer la posición X al principio de la fila
+                for (int i = 0; i < dGVProducto.Columns.Count; i++)
                 {
-                    string rutaArchivo = saveFileDialog.FileName;
-
-                    // Generar el PDF
-                    GenerarPDF(rutaArchivo);
+                    if (row.Cells[i].Value != null)
+                    {
+                        e.Graphics.DrawString(row.Cells[i].Value.ToString(), font, brush, xPos, yPos);
+                    }
+                    xPos += 100; // Incrementa la posición para la próxima columna
                 }
+                yPos += 20; // Incrementa la posición para la próxima fila
             }
-            else
-            {
-                MessageBox.Show("No hay datos para generar el PDF.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+            // Imprimir valor total
+            yPos += 20; // Incrementa la posición para imprimir el valor total debajo de la tabla
+            e.Graphics.DrawString("Total: " + txtBoxTotal.Text, font, brush, 100, yPos);
         }
 
     }

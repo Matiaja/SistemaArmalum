@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -166,13 +167,13 @@ namespace Datos
             }
         }
 
-        public Producto BuscarProductoPorCodigo(string codigo)
+        public List<Producto> BuscarProductoPorCodigo(string codigo)
         {
-            Producto productoEncontrado = null;
+            List<Producto> productosEncontrados = new List<Producto>();
 
             try
             {
-                string query = "SELECT codigo, descripcion, precio FROM producto WHERE codigo = @Codigo";
+                string query = "SELECT codigo, descripcion, precio FROM producto where codigo like @Codigo";
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -180,19 +181,18 @@ namespace Datos
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Codigo", codigo);
+                        command.Parameters.AddWithValue("@Codigo", "%" + codigo + "%");
 
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            if (reader.Read())
+                            while (reader.Read())
                             {
-                                Console.WriteLine("Llego acaa!!");
-                                // Se encontró un producto con el código especificado
-                                productoEncontrado = new Producto(
-                                    reader.GetString("Descripcion"),
-                                    reader.GetString("Codigo"),
-                                    reader.GetDouble("Precio")
-                                    );
+                                string codigoProducto = reader.GetString("codigo");
+                                string descripcion = reader.GetString("descripcion");
+                                double precio = reader.GetDouble("precio");
+
+                                Producto producto = new Producto(codigoProducto, descripcion, precio);
+                                productosEncontrados.Add(producto);
                             }
                         }
                     }
@@ -201,10 +201,10 @@ namespace Datos
 
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Error al buscar productos: " + ex.Message);
             }
 
-            return productoEncontrado;
+            return productosEncontrados;
         }
 
     }

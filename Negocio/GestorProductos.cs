@@ -66,12 +66,12 @@ namespace Negocio
         }
 
 
-        public Producto BuscarProducto(string codigo)
+        public List<Producto> BuscarProducto(string codigo)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
 
-            Producto productoEncontrado = accesoDatos.BuscarProductoPorCodigo(codigo);
-            return productoEncontrado;
+            List<Producto> productosEncontrados = accesoDatos.BuscarProductoPorCodigo(codigo);
+            return productosEncontrados;
 
         }
 
