@@ -44,6 +44,7 @@
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,6 +72,9 @@
             // 
             // txtBoxTotal
             // 
+            this.txtBoxTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBoxTotal.Location = new System.Drawing.Point(787, 142);
             this.txtBoxTotal.Name = "txtBoxTotal";
@@ -80,6 +84,9 @@
             // 
             // lblTotal
             // 
+            this.lblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotal.Location = new System.Drawing.Point(665, 142);
@@ -141,12 +148,16 @@
             // 
             // dGVProducto
             // 
+            this.dGVProducto.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dGVProducto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGVProducto.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnaCantidad,
             this.ColumnaDescripcion,
             this.ColumnaCodigo,
-            this.ColumnaPrecio});
+            this.ColumnaPrecio,
+            this.ColumnaSubtotal});
             this.dGVProducto.Location = new System.Drawing.Point(14, 204);
             this.dGVProducto.Name = "dGVProducto";
             this.dGVProducto.RowHeadersWidth = 51;
@@ -193,6 +204,13 @@
             this.ColumnaPrecio.Name = "ColumnaPrecio";
             this.ColumnaPrecio.Width = 125;
             // 
+            // ColumnaSubtotal
+            // 
+            this.ColumnaSubtotal.HeaderText = "Subtotal";
+            this.ColumnaSubtotal.MinimumWidth = 6;
+            this.ColumnaSubtotal.Name = "ColumnaSubtotal";
+            this.ColumnaSubtotal.Width = 125;
+            // 
             // PrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -237,6 +255,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaSubtotal;
     }
 }
 

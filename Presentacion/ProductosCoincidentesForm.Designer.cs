@@ -29,15 +29,18 @@
         private void InitializeComponent()
         {
             this.dGVProducto = new System.Windows.Forms.DataGridView();
-            this.lblProdCoincidentes = new System.Windows.Forms.Label();
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblProdCoincidentes = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
             // 
             // dGVProducto
             // 
+            this.dGVProducto.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dGVProducto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGVProducto.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnaDescripcion,
@@ -47,19 +50,9 @@
             this.dGVProducto.Name = "dGVProducto";
             this.dGVProducto.RowHeadersWidth = 51;
             this.dGVProducto.RowTemplate.Height = 24;
-            this.dGVProducto.Size = new System.Drawing.Size(1041, 330);
+            this.dGVProducto.Size = new System.Drawing.Size(1212, 445);
             this.dGVProducto.TabIndex = 23;
             this.dGVProducto.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVProducto_CellContentClick);
-            // 
-            // lblProdCoincidentes
-            // 
-            this.lblProdCoincidentes.AutoSize = true;
-            this.lblProdCoincidentes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProdCoincidentes.Location = new System.Drawing.Point(12, 9);
-            this.lblProdCoincidentes.Name = "lblProdCoincidentes";
-            this.lblProdCoincidentes.Size = new System.Drawing.Size(360, 25);
-            this.lblProdCoincidentes.TabIndex = 24;
-            this.lblProdCoincidentes.Text = "Atencion, estos productos coinciden";
             // 
             // ColumnaDescripcion
             // 
@@ -82,11 +75,21 @@
             this.ColumnaPrecio.Name = "ColumnaPrecio";
             this.ColumnaPrecio.Width = 125;
             // 
+            // lblProdCoincidentes
+            // 
+            this.lblProdCoincidentes.AutoSize = true;
+            this.lblProdCoincidentes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProdCoincidentes.Location = new System.Drawing.Point(12, 9);
+            this.lblProdCoincidentes.Name = "lblProdCoincidentes";
+            this.lblProdCoincidentes.Size = new System.Drawing.Size(360, 25);
+            this.lblProdCoincidentes.TabIndex = 24;
+            this.lblProdCoincidentes.Text = "Atencion, estos productos coinciden";
+            // 
             // ProductosCoincidentesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1083, 398);
+            this.ClientSize = new System.Drawing.Size(1254, 513);
             this.Controls.Add(this.lblProdCoincidentes);
             this.Controls.Add(this.dGVProducto);
             this.Name = "ProductosCoincidentesForm";

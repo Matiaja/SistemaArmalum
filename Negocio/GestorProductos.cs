@@ -16,8 +16,6 @@ namespace Negocio
 {
     public class GestorProductos
     {
-        public event Action<int> ProgressChanged;
-        public event Action<int> ProgresoBorradoActualizado;
         public delegate void ProgresoBorradoEventHandler(object sender, int progreso);
 
 
@@ -75,16 +73,29 @@ namespace Negocio
 
         }
 
-        public double CalcularTotalNegocio(List<Producto> productos)
+        public double CalcularTotalNegocio(List<double> subtotales)
         {
             double total = 0;
 
-            foreach (Producto producto in productos)
+            foreach (Double subtotal in subtotales)
             {
-                total += producto.Precio;
+                total += subtotal;
             }
 
             return total;
+        }
+
+        public Dictionary<Producto, double> CalcularSubtotales(Dictionary<Producto, int> productosConCantidad)
+        {
+            Dictionary<Producto, double> subtotales = new Dictionary<Producto, double>();
+
+            foreach (KeyValuePair<Producto, int> parProductoCantidad in productosConCantidad)
+            {
+                double subtotal = parProductoCantidad.Key.Precio * parProductoCantidad.Value;
+                subtotales.Add(parProductoCantidad.Key, subtotal);
+            }
+
+            return subtotales;
         }
 
     }
