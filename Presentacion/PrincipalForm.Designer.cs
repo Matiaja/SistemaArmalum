@@ -39,11 +39,11 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.txtboxCodigo = new System.Windows.Forms.TextBox();
             this.dGVProducto = new System.Windows.Forms.DataGridView();
+            this.btnPDF = new System.Windows.Forms.Button();
+            this.ColumnaCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnaEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.btnPDF = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -143,17 +143,34 @@
             // 
             this.dGVProducto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGVProducto.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnaCantidad,
             this.ColumnaDescripcion,
             this.ColumnaCodigo,
-            this.ColumnaPrecio,
-            this.columnaEliminar});
+            this.ColumnaPrecio});
             this.dGVProducto.Location = new System.Drawing.Point(14, 204);
             this.dGVProducto.Name = "dGVProducto";
             this.dGVProducto.RowHeadersWidth = 51;
             this.dGVProducto.RowTemplate.Height = 24;
             this.dGVProducto.Size = new System.Drawing.Size(1210, 416);
             this.dGVProducto.TabIndex = 22;
-            this.dGVProducto.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVProducto_CellContentClick);
+            // 
+            // btnPDF
+            // 
+            this.btnPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPDF.Location = new System.Drawing.Point(1025, 35);
+            this.btnPDF.Name = "btnPDF";
+            this.btnPDF.Size = new System.Drawing.Size(199, 48);
+            this.btnPDF.TabIndex = 33;
+            this.btnPDF.Text = "Generar PDF";
+            this.btnPDF.UseVisualStyleBackColor = true;
+            this.btnPDF.Click += new System.EventHandler(this.btnPDF_Click);
+            // 
+            // ColumnaCantidad
+            // 
+            this.ColumnaCantidad.HeaderText = "Cantidad";
+            this.ColumnaCantidad.MinimumWidth = 6;
+            this.ColumnaCantidad.Name = "ColumnaCantidad";
+            this.ColumnaCantidad.Width = 125;
             // 
             // ColumnaDescripcion
             // 
@@ -176,27 +193,6 @@
             this.ColumnaPrecio.Name = "ColumnaPrecio";
             this.ColumnaPrecio.Width = 125;
             // 
-            // columnaEliminar
-            // 
-            this.columnaEliminar.HeaderText = "Eliminar";
-            this.columnaEliminar.MinimumWidth = 6;
-            this.columnaEliminar.Name = "columnaEliminar";
-            this.columnaEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.columnaEliminar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.columnaEliminar.UseColumnTextForButtonValue = true;
-            this.columnaEliminar.Width = 125;
-            // 
-            // btnPDF
-            // 
-            this.btnPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPDF.Location = new System.Drawing.Point(1025, 35);
-            this.btnPDF.Name = "btnPDF";
-            this.btnPDF.Size = new System.Drawing.Size(199, 48);
-            this.btnPDF.TabIndex = 33;
-            this.btnPDF.Text = "Generar PDF";
-            this.btnPDF.UseVisualStyleBackColor = true;
-            this.btnPDF.Click += new System.EventHandler(this.btnPDF_Click);
-            // 
             // PrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -216,6 +212,7 @@
             this.Controls.Add(this.dGVProducto);
             this.Name = "PrincipalForm";
             this.Text = "Buscador";
+            this.Load += new System.EventHandler(this.PrincipalForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -235,11 +232,11 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.TextBox txtboxCodigo;
         private System.Windows.Forms.DataGridView dGVProducto;
+        private System.Windows.Forms.Button btnPDF;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
-        private System.Windows.Forms.DataGridViewButtonColumn columnaEliminar;
-        private System.Windows.Forms.Button btnPDF;
     }
 }
 

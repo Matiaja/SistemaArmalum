@@ -33,7 +33,6 @@
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnaAgregar = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,8 +42,7 @@
             this.dGVProducto.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnaDescripcion,
             this.ColumnaCodigo,
-            this.ColumnaPrecio,
-            this.ColumnaAgregar});
+            this.ColumnaPrecio});
             this.dGVProducto.Location = new System.Drawing.Point(12, 48);
             this.dGVProducto.Name = "dGVProducto";
             this.dGVProducto.RowHeadersWidth = 51;
@@ -84,13 +82,6 @@
             this.ColumnaPrecio.Name = "ColumnaPrecio";
             this.ColumnaPrecio.Width = 125;
             // 
-            // ColumnaAgregar
-            // 
-            this.ColumnaAgregar.HeaderText = "Agregar";
-            this.ColumnaAgregar.MinimumWidth = 6;
-            this.ColumnaAgregar.Name = "ColumnaAgregar";
-            this.ColumnaAgregar.Width = 125;
-            // 
             // ProductosCoincidentesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -113,6 +104,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnaAgregar;
     }
 }

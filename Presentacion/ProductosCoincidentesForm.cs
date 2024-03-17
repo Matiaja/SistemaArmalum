@@ -19,7 +19,22 @@ namespace Presentacion
         {
             InitializeComponent();
             this.productosCoincidentes = productos;
+            ConfigurarDataGridView();
             MostrarProductos();
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            // Agrega una columna de botón para agregar
+            DataGridViewButtonColumn agregarButtonColumn = new DataGridViewButtonColumn();
+            agregarButtonColumn.HeaderText = "Agregar";
+            agregarButtonColumn.Name = "ColumnaAgregar";
+            agregarButtonColumn.Text = "Agregar";
+            agregarButtonColumn.UseColumnTextForButtonValue = true;
+            dGVProducto.Columns.Add(agregarButtonColumn);
+
+            // Maneja el evento de clic en el botón de agregar
+            dGVProducto.CellContentClick += dGVProducto_CellContentClick;
         }
 
         private void MostrarProductos()
@@ -35,6 +50,7 @@ namespace Presentacion
             if (e.ColumnIndex == dGVProducto.Columns["ColumnaAgregar"].Index && e.RowIndex >= 0)
             {
                 productoSeleccionado = ObtenerProductoDeFila(e.RowIndex);
+
 
                 this.DialogResult = DialogResult.OK;
 

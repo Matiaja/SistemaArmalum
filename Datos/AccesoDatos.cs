@@ -191,7 +191,7 @@ namespace Datos
                                 string descripcion = reader.GetString("descripcion");
                                 double precio = reader.GetDouble("precio");
 
-                                Producto producto = new Producto(codigoProducto, descripcion, precio);
+                                Producto producto = new Producto(descripcion, codigoProducto, precio);
                                 productosEncontrados.Add(producto);
                             }
                         }

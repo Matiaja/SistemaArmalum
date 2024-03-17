@@ -32,6 +32,25 @@ namespace Presentacion
             printPreviewControl.Dock = DockStyle.Fill;
             this.Controls.Add(printPreviewControl);
             printPreviewControl.Visible = false;
+
+            ConfigurarDataGridView();
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            // Asegúrate de que el DataGridView permite agregar filas
+            dGVProducto.AllowUserToAddRows = true;
+
+            // Agrega una columna de botón para eliminar
+            DataGridViewButtonColumn eliminarButtonColumn = new DataGridViewButtonColumn();
+            eliminarButtonColumn.HeaderText = "Eliminar";
+            eliminarButtonColumn.Name = "ColumnaEliminar";
+            eliminarButtonColumn.Text = "Eliminar";
+            eliminarButtonColumn.UseColumnTextForButtonValue = true;
+            dGVProducto.Columns.Add(eliminarButtonColumn);
+
+            // Maneja el evento de clic en el botón de eliminación
+            dGVProducto.CellContentClick += DGVProducto_CellContentClick;
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
@@ -75,7 +94,7 @@ namespace Presentacion
             {
 
                 Producto producto = productos[0];
-                dGVProducto.Rows.Add(producto.Descripcion, producto.Codigo, producto.Precio);
+                dGVProducto.Rows.Add(1,producto.Descripcion, producto.Codigo, producto.Precio);
 
                 txtBoxDescripcion.Text = producto.Descripcion;
                 txtBoxPrecio.Text = producto.Precio.ToString();
@@ -93,7 +112,7 @@ namespace Presentacion
                         Producto productoSeleccionado = productosForm.GetProductoSeleccionado();
                         if (productoSeleccionado != null)
                         {
-                            dGVProducto.Rows.Add(productoSeleccionado.Descripcion, productoSeleccionado.Codigo, productoSeleccionado.Precio);
+                            dGVProducto.Rows.Add(1,productoSeleccionado.Descripcion, productoSeleccionado.Codigo, productoSeleccionado.Precio);
                             txtBoxDescripcion.Text = productoSeleccionado.Descripcion;
                             txtBoxPrecio.Text = productoSeleccionado.Precio.ToString();
                             txtboxCodigo.Clear();
@@ -110,18 +129,32 @@ namespace Presentacion
 
         private void CalcularTotal()
         {
-            decimal total = 0;
 
+            List<Producto> listaProductos = new List<Producto>();
+
+            // Recorre cada fila del DataGridView
             foreach (DataGridViewRow fila in dGVProducto.Rows)
             {
-                if (fila.Cells["ColumnaPrecio"].Value != null)
+                // Verifica si la fila no es la fila de nuevo ingreso y si la celda de la descripción no es nula
+                if (!fila.IsNewRow && fila.Cells["ColumnaDescripcion"].Value != null)
                 {
-                    total += Convert.ToDecimal(fila.Cells["ColumnaPrecio"].Value);
+                    // Obtiene los valores de la fila
+                    string descripcion = fila.Cells["ColumnaDescripcion"].Value.ToString();
+                    string codigo = fila.Cells["ColumnaCodigo"].Value.ToString();
+                    double precio = Convert.ToDouble(fila.Cells["ColumnaPrecio"].Value);
+
+                    // Crea un nuevo producto y lo agrega a la lista
+                    Producto producto = new Producto(descripcion, codigo, precio);
+                    listaProductos.Add(producto);
                 }
             }
-            txtBoxTotal.Text = total.ToString();
-        }
 
+            GestorProductos gestorProductos = new GestorProductos();
+
+            double Total = gestorProductos.CalcularTotalNegocio(listaProductos);
+
+            txtBoxTotal.Text = Total.ToString();
+        }
 
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -135,10 +168,18 @@ namespace Presentacion
 
         private void dGVProducto_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == dGVProducto.Columns["columnaEliminar"].Index && e.RowIndex >= 0)
-            {
 
+        }
+
+        private void DGVProducto_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Verifica si el clic se realizó en la columna de eliminación
+            if (e.ColumnIndex == dGVProducto.Columns["ColumnaEliminar"].Index && e.RowIndex != -1)
+            {
+                // Elimina la fila seleccionada del DataGridView
                 dGVProducto.Rows.RemoveAt(e.RowIndex);
+
+                // Llama a la función para recalcular el total
                 CalcularTotal();
             }
         }
@@ -202,5 +243,9 @@ namespace Presentacion
             e.Graphics.DrawString("Total: " + txtBoxTotal.Text, font, brush, 100, yPos);
         }
 
+        private void PrincipalForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

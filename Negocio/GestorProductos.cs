@@ -75,6 +75,18 @@ namespace Negocio
 
         }
 
+        public double CalcularTotalNegocio(List<Producto> productos)
+        {
+            double total = 0;
+
+            foreach (Producto producto in productos)
+            {
+                total += producto.Precio;
+            }
+
+            return total;
+        }
+
     }
 }
 
