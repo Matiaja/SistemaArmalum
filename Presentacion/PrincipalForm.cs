@@ -26,7 +26,7 @@ namespace Presentacion
         public PrincipalForm()
         {
             InitializeComponent();
-            rutaArchivo = @"C:\Users\matia\Downloads\Lista 15_02_24.xlsm";
+            rutaArchivo = Properties.Settings.Default.RutaArchivo;
 
             PrintPreviewControl printPreviewControl = new PrintPreviewControl();
             printPreviewControl.Dock = DockStyle.Fill;
@@ -358,6 +358,26 @@ namespace Presentacion
         private void PrincipalForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void enlazarExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Title = "Seleccionar archivo Excel";
+
+            openFileDialog.Filter = "Archivos Excel|*.xlsm";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFilePath = openFileDialog.FileName;
+                
+                rutaArchivo = selectedFilePath;
+
+                Properties.Settings.Default.RutaArchivo = rutaArchivo;
+
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }

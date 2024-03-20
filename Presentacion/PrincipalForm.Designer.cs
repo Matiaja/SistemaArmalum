@@ -39,19 +39,23 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.txtboxCodigo = new System.Windows.Forms.TextBox();
             this.dGVProducto = new System.Windows.Forms.DataGridView();
-            this.btnPDF = new System.Windows.Forms.Button();
             this.ColumnaCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnPDF = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.enlazarExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnActualizar
             // 
             this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizar.Location = new System.Drawing.Point(803, 35);
+            this.btnActualizar.Location = new System.Drawing.Point(804, 60);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(199, 48);
             this.btnActualizar.TabIndex = 32;
@@ -62,7 +66,7 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(579, 35);
+            this.btnLimpiar.Location = new System.Drawing.Point(580, 60);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(199, 48);
             this.btnLimpiar.TabIndex = 31;
@@ -76,10 +80,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxTotal.Location = new System.Drawing.Point(787, 142);
+            this.txtBoxTotal.Location = new System.Drawing.Point(788, 167);
             this.txtBoxTotal.Name = "txtBoxTotal";
             this.txtBoxTotal.ReadOnly = true;
-            this.txtBoxTotal.Size = new System.Drawing.Size(288, 38);
+            this.txtBoxTotal.Size = new System.Drawing.Size(284, 38);
             this.txtBoxTotal.TabIndex = 30;
             // 
             // lblTotal
@@ -89,7 +93,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotal.Location = new System.Drawing.Point(665, 142);
+            this.lblTotal.Location = new System.Drawing.Point(666, 167);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(83, 32);
             this.lblTotal.TabIndex = 29;
@@ -98,7 +102,7 @@
             // lblPrecio
             // 
             this.lblPrecio.AutoSize = true;
-            this.lblPrecio.Location = new System.Drawing.Point(48, 142);
+            this.lblPrecio.Location = new System.Drawing.Point(49, 167);
             this.lblPrecio.Name = "lblPrecio";
             this.lblPrecio.Size = new System.Drawing.Size(46, 16);
             this.lblPrecio.TabIndex = 28;
@@ -106,7 +110,7 @@
             // 
             // txtBoxPrecio
             // 
-            this.txtBoxPrecio.Location = new System.Drawing.Point(130, 142);
+            this.txtBoxPrecio.Location = new System.Drawing.Point(131, 167);
             this.txtBoxPrecio.Name = "txtBoxPrecio";
             this.txtBoxPrecio.ReadOnly = true;
             this.txtBoxPrecio.Size = new System.Drawing.Size(361, 22);
@@ -115,7 +119,7 @@
             // lblDescripcion
             // 
             this.lblDescripcion.AutoSize = true;
-            this.lblDescripcion.Location = new System.Drawing.Point(48, 89);
+            this.lblDescripcion.Location = new System.Drawing.Point(49, 114);
             this.lblDescripcion.Name = "lblDescripcion";
             this.lblDescripcion.Size = new System.Drawing.Size(79, 16);
             this.lblDescripcion.TabIndex = 26;
@@ -123,7 +127,7 @@
             // 
             // txtBoxDescripcion
             // 
-            this.txtBoxDescripcion.Location = new System.Drawing.Point(130, 89);
+            this.txtBoxDescripcion.Location = new System.Drawing.Point(131, 114);
             this.txtBoxDescripcion.Name = "txtBoxDescripcion";
             this.txtBoxDescripcion.ReadOnly = true;
             this.txtBoxDescripcion.Size = new System.Drawing.Size(361, 22);
@@ -132,7 +136,7 @@
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Location = new System.Drawing.Point(48, 35);
+            this.lblCodigo.Location = new System.Drawing.Point(49, 60);
             this.lblCodigo.Name = "lblCodigo";
             this.lblCodigo.Size = new System.Drawing.Size(51, 16);
             this.lblCodigo.TabIndex = 24;
@@ -140,7 +144,7 @@
             // 
             // txtboxCodigo
             // 
-            this.txtboxCodigo.Location = new System.Drawing.Point(130, 35);
+            this.txtboxCodigo.Location = new System.Drawing.Point(131, 60);
             this.txtboxCodigo.Name = "txtboxCodigo";
             this.txtboxCodigo.Size = new System.Drawing.Size(361, 22);
             this.txtboxCodigo.TabIndex = 23;
@@ -158,23 +162,12 @@
             this.ColumnaCodigo,
             this.ColumnaPrecio,
             this.ColumnaSubtotal});
-            this.dGVProducto.Location = new System.Drawing.Point(14, 204);
+            this.dGVProducto.Location = new System.Drawing.Point(14, 231);
             this.dGVProducto.Name = "dGVProducto";
             this.dGVProducto.RowHeadersWidth = 51;
             this.dGVProducto.RowTemplate.Height = 24;
-            this.dGVProducto.Size = new System.Drawing.Size(1210, 416);
+            this.dGVProducto.Size = new System.Drawing.Size(1206, 227);
             this.dGVProducto.TabIndex = 22;
-            // 
-            // btnPDF
-            // 
-            this.btnPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPDF.Location = new System.Drawing.Point(1025, 35);
-            this.btnPDF.Name = "btnPDF";
-            this.btnPDF.Size = new System.Drawing.Size(199, 48);
-            this.btnPDF.TabIndex = 33;
-            this.btnPDF.Text = "Generar PDF";
-            this.btnPDF.UseVisualStyleBackColor = true;
-            this.btnPDF.Click += new System.EventHandler(this.btnPDF_Click);
             // 
             // ColumnaCantidad
             // 
@@ -211,11 +204,44 @@
             this.ColumnaSubtotal.Name = "ColumnaSubtotal";
             this.ColumnaSubtotal.Width = 125;
             // 
+            // btnPDF
+            // 
+            this.btnPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPDF.Location = new System.Drawing.Point(1026, 60);
+            this.btnPDF.Name = "btnPDF";
+            this.btnPDF.Size = new System.Drawing.Size(199, 48);
+            this.btnPDF.TabIndex = 33;
+            this.btnPDF.Text = "Generar PDF";
+            this.btnPDF.UseVisualStyleBackColor = true;
+            this.btnPDF.Click += new System.EventHandler(this.btnPDF_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enlazarExcelToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1250, 28);
+            this.menuStrip1.TabIndex = 34;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // enlazarExcelToolStripMenuItem
+            // 
+            this.enlazarExcelToolStripMenuItem.Name = "enlazarExcelToolStripMenuItem";
+            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(109, 24);
+            this.enlazarExcelToolStripMenuItem.Text = "Enlazar Excel";
+            this.enlazarExcelToolStripMenuItem.Click += new System.EventHandler(this.enlazarExcelToolStripMenuItem_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // PrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1254, 659);
+            this.ClientSize = new System.Drawing.Size(1250, 470);
             this.Controls.Add(this.btnPDF);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnLimpiar);
@@ -228,10 +254,14 @@
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.txtboxCodigo);
             this.Controls.Add(this.dGVProducto);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "PrincipalForm";
             this.Text = "Buscador";
             this.Load += new System.EventHandler(this.PrincipalForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,6 +286,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaSubtotal;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem enlazarExcelToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
