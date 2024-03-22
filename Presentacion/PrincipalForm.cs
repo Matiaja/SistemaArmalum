@@ -300,27 +300,41 @@ namespace Presentacion
         // Método para manejar el evento Click del botón "Imprimir"
         private void btnPDF_Click(object sender, EventArgs e)
         {
-            PrintDocument pd = new PrintDocument();
-            pd.PrintPage += new PrintPageEventHandler(this.pd_PrintPage);
+            PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
+            printPreviewDialog.Document = printDocument1;
 
-            PrintDialog printdlg = new PrintDialog();
-            PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
-
-            // Vista previa del documento
-            printPrvDlg.Document = pd;
-            printPrvDlg.ShowDialog();
-
-            // Mostrar el cuadro de diálogo de impresión
-            printdlg.Document = pd;
-
-            if (printdlg.ShowDialog() == DialogResult.OK)
+            // Show the print preview dialog
+            if (printPreviewDialog.ShowDialog() == DialogResult.OK)
             {
-                pd.Print();
+                // User clicked OK, initiate printing
+                printDocument1.Print();
             }
         }
+            /*   PrintDocument pd = new PrintDocument();
+               pd.PrintPage += new PrintPageEventHandler(this.pd_PrintPage);
+
+               PrintDialog printdlg = new PrintDialog();
+               PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
+
+               // Vista previa del documento
+               printPrvDlg.Document = pd;
+               printPrvDlg.ShowDialog();
+
+               // Mostrar el cuadro de diálogo de impresión
+               printdlg.Document = pd;
+
+               if (printdlg.ShowDialog() == DialogResult.OK)
+               {
+                   pd.Print();
+               }*/
+        
+
 
         private void pd_PrintPage(object sender, PrintPageEventArgs e)
         {
+
+
+            /*
             System.Drawing.Font font = new System.Drawing.Font("Arial", 12);
             SolidBrush brush = new SolidBrush(Color.Black);
             Single yPos = 100;
@@ -352,7 +366,7 @@ namespace Presentacion
 
             // Imprimir valor total
             yPos += 20; // Incrementa la posición para imprimir el valor total debajo de la tabla
-            e.Graphics.DrawString("Total: " + txtBoxTotal.Text, font, brush, 100, yPos);
+            e.Graphics.DrawString("Total: " + txtBoxTotal.Text, font, brush, 100, yPos);*/
         }
 
         private void PrincipalForm_Load(object sender, EventArgs e)
@@ -378,6 +392,100 @@ namespace Presentacion
 
                 Properties.Settings.Default.Save();
             }
+        }
+
+        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            int marginLeft = e.MarginBounds.Left;
+            int marginTop = e.MarginBounds.Top;
+            int cellHeight = 0;
+
+            // Define column widths for the table
+            int[] columnWidths = { 40, 350, 100, 80, 80 };
+
+            // Draw table header
+            string[] headers = { "Cant", "Descripción", "Código", "Precio", "Subtotal" };
+            int headerIndex = 0;
+            for (int i = 0; i < dGVProducto.Columns.Count; i++)
+            {
+                DataGridViewColumn column = dGVProducto.Columns[i];
+                if (column.Name == "ColumnaCantidad" ||
+                    column.Name == "ColumnaDescripcion" ||
+                    column.Name == "ColumnaCodigo" ||
+                    column.Name == "ColumnaPrecio" ||
+                    column.Name == "ColumnaSubtotal")
+                {
+
+                    e.Graphics.DrawString(headers[headerIndex], dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
+                    marginLeft += columnWidths[headerIndex];
+                    headerIndex++;
+                }
+            }
+            marginTop += dGVProducto.Rows[0].Height;
+
+            // Draw each row
+            foreach (DataGridViewRow row in dGVProducto.Rows)
+            {
+                marginLeft = e.MarginBounds.Left; // Reset margin left for each row
+                cellHeight = 0; // Reset cell height for each row
+
+                // Draw each desired column
+                int columnIndex = 0;
+                for (int i = 0; i < dGVProducto.Columns.Count; i++)
+                {
+                    DataGridViewColumn column = dGVProducto.Columns[i];
+                    if (column.Name == "ColumnaCantidad" ||
+                        column.Name == "ColumnaDescripcion" ||
+                        column.Name == "ColumnaCodigo" ||
+                        column.Name == "ColumnaPrecio" ||
+                        column.Name == "ColumnaSubtotal")
+                    {
+                        string cellValue = row.Cells[column.Index].FormattedValue.ToString();
+
+                        // Truncate the description if it exceeds 300 characters
+                        if (column.Name == "ColumnaDescripcion" && cellValue.Length > 60)
+                        {
+                            cellValue = cellValue.Substring(0, 60) + "...";
+                        }
+
+                        if (column.Name == "ColumnaCodigo" && cellValue.Length > 15)
+                        {
+                            cellValue = cellValue.Substring(0, 15) + "...";
+                        }
+
+                        e.Graphics.DrawString(cellValue, dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
+
+                        marginLeft += columnWidths[columnIndex];
+                        cellHeight = Math.Max(cellHeight, row.Cells[column.Index].Size.Height);
+                        columnIndex++;
+                    }
+                }
+
+                marginTop += cellHeight;
+            }
+
+            marginTop += 10;
+            e.Graphics.DrawLine(Pens.Black, e.MarginBounds.Left, marginTop, e.MarginBounds.Right, marginTop);
+
+            marginLeft = e.MarginBounds.Left + columnWidths.Sum() - columnWidths.Last();
+
+            // Calcula el ancho del total
+            int totalWidth = columnWidths.Last();
+
+            // Calcula la posición vertical del total
+            int totalTop = marginTop + cellHeight;
+
+            SizeF totalTextSize = e.Graphics.MeasureString("Total: " + txtBoxTotal.Text, dGVProducto.Font);
+
+            // Define el ancho y la altura adicionales para el rectángulo
+            float extraWidth = 5; // Espacio adicional a la izquierda y a la derecha del texto
+            float extraHeight = 5; // Espacio adicional encima y debajo del texto
+
+            // Dibuja el total con un rectángulo que rodea
+            RectangleF totalRect = new RectangleF(marginLeft - extraWidth, totalTop, totalTextSize.Width + (2 * extraWidth), totalTextSize.Height + (2 * extraHeight));
+
+            e.Graphics.DrawString("Total: " + txtBoxTotal.Text, new System.Drawing.Font(dGVProducto.Font, FontStyle.Bold), Brushes.Black, totalRect, new StringFormat { LineAlignment = StringAlignment.Center });
+            e.Graphics.DrawRectangle(Pens.Black, System.Drawing.Rectangle.Round(totalRect));
         }
     }
 }
