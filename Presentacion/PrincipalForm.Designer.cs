@@ -45,12 +45,13 @@
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnPDF = new System.Windows.Forms.Button();
+            this.btnGuardarPDF = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.enlazarExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.btnDatosCliente = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -58,7 +59,7 @@
             // btnActualizar
             // 
             this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizar.Location = new System.Drawing.Point(804, 60);
+            this.btnActualizar.Location = new System.Drawing.Point(1133, 114);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(199, 48);
             this.btnActualizar.TabIndex = 32;
@@ -69,7 +70,7 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(580, 60);
+            this.btnLimpiar.Location = new System.Drawing.Point(668, 46);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(199, 48);
             this.btnLimpiar.TabIndex = 31;
@@ -83,10 +84,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxTotal.Location = new System.Drawing.Point(788, 167);
+            this.txtBoxTotal.Location = new System.Drawing.Point(864, 177);
             this.txtBoxTotal.Name = "txtBoxTotal";
             this.txtBoxTotal.ReadOnly = true;
-            this.txtBoxTotal.Size = new System.Drawing.Size(284, 38);
+            this.txtBoxTotal.Size = new System.Drawing.Size(388, 38);
             this.txtBoxTotal.TabIndex = 30;
             // 
             // lblTotal
@@ -96,7 +97,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotal.Location = new System.Drawing.Point(666, 167);
+            this.lblTotal.Location = new System.Drawing.Point(742, 177);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(83, 32);
             this.lblTotal.TabIndex = 29;
@@ -105,51 +106,57 @@
             // lblPrecio
             // 
             this.lblPrecio.AutoSize = true;
-            this.lblPrecio.Location = new System.Drawing.Point(49, 167);
+            this.lblPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPrecio.Location = new System.Drawing.Point(22, 167);
             this.lblPrecio.Name = "lblPrecio";
-            this.lblPrecio.Size = new System.Drawing.Size(46, 16);
+            this.lblPrecio.Size = new System.Drawing.Size(57, 20);
             this.lblPrecio.TabIndex = 28;
             this.lblPrecio.Text = "Precio";
             // 
             // txtBoxPrecio
             // 
-            this.txtBoxPrecio.Location = new System.Drawing.Point(131, 167);
+            this.txtBoxPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxPrecio.Location = new System.Drawing.Point(122, 167);
             this.txtBoxPrecio.Name = "txtBoxPrecio";
             this.txtBoxPrecio.ReadOnly = true;
-            this.txtBoxPrecio.Size = new System.Drawing.Size(361, 22);
+            this.txtBoxPrecio.Size = new System.Drawing.Size(361, 27);
             this.txtBoxPrecio.TabIndex = 27;
             // 
             // lblDescripcion
             // 
             this.lblDescripcion.AutoSize = true;
-            this.lblDescripcion.Location = new System.Drawing.Point(49, 114);
+            this.lblDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescripcion.Location = new System.Drawing.Point(22, 114);
             this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(79, 16);
+            this.lblDescripcion.Size = new System.Drawing.Size(99, 20);
             this.lblDescripcion.TabIndex = 26;
             this.lblDescripcion.Text = "Descripcion";
             // 
             // txtBoxDescripcion
             // 
-            this.txtBoxDescripcion.Location = new System.Drawing.Point(131, 114);
+            this.txtBoxDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxDescripcion.Location = new System.Drawing.Point(122, 114);
             this.txtBoxDescripcion.Name = "txtBoxDescripcion";
             this.txtBoxDescripcion.ReadOnly = true;
-            this.txtBoxDescripcion.Size = new System.Drawing.Size(361, 22);
+            this.txtBoxDescripcion.Size = new System.Drawing.Size(361, 27);
             this.txtBoxDescripcion.TabIndex = 25;
             // 
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Location = new System.Drawing.Point(49, 60);
+            this.lblCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCodigo.Location = new System.Drawing.Point(22, 60);
             this.lblCodigo.Name = "lblCodigo";
-            this.lblCodigo.Size = new System.Drawing.Size(51, 16);
+            this.lblCodigo.Size = new System.Drawing.Size(61, 20);
             this.lblCodigo.TabIndex = 24;
             this.lblCodigo.Text = "Codigo";
             // 
             // txtboxCodigo
             // 
-            this.txtboxCodigo.Location = new System.Drawing.Point(131, 60);
+            this.txtboxCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtboxCodigo.Location = new System.Drawing.Point(122, 60);
             this.txtboxCodigo.Name = "txtboxCodigo";
-            this.txtboxCodigo.Size = new System.Drawing.Size(361, 22);
+            this.txtboxCodigo.Size = new System.Drawing.Size(361, 27);
             this.txtboxCodigo.TabIndex = 23;
             this.txtboxCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtboxCodigo_KeyPress);
             // 
@@ -169,7 +176,7 @@
             this.dGVProducto.Name = "dGVProducto";
             this.dGVProducto.RowHeadersWidth = 51;
             this.dGVProducto.RowTemplate.Height = 24;
-            this.dGVProducto.Size = new System.Drawing.Size(1206, 227);
+            this.dGVProducto.Size = new System.Drawing.Size(1310, 395);
             this.dGVProducto.TabIndex = 22;
             // 
             // ColumnaCantidad
@@ -207,16 +214,16 @@
             this.ColumnaSubtotal.Name = "ColumnaSubtotal";
             this.ColumnaSubtotal.Width = 125;
             // 
-            // btnPDF
+            // btnGuardarPDF
             // 
-            this.btnPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPDF.Location = new System.Drawing.Point(1026, 60);
-            this.btnPDF.Name = "btnPDF";
-            this.btnPDF.Size = new System.Drawing.Size(199, 48);
-            this.btnPDF.TabIndex = 33;
-            this.btnPDF.Text = "Generar PDF";
-            this.btnPDF.UseVisualStyleBackColor = true;
-            this.btnPDF.Click += new System.EventHandler(this.btnPDF_Click);
+            this.btnGuardarPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardarPDF.Location = new System.Drawing.Point(1133, 46);
+            this.btnGuardarPDF.Name = "btnGuardarPDF";
+            this.btnGuardarPDF.Size = new System.Drawing.Size(199, 48);
+            this.btnGuardarPDF.TabIndex = 33;
+            this.btnGuardarPDF.Text = "Guardar PDF";
+            this.btnGuardarPDF.UseVisualStyleBackColor = true;
+            this.btnGuardarPDF.Click += new System.EventHandler(this.btnGuardarPDF_Click);
             // 
             // menuStrip1
             // 
@@ -225,7 +232,7 @@
             this.enlazarExcelToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1250, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1354, 28);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -255,12 +262,24 @@
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // btnDatosCliente
+            // 
+            this.btnDatosCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDatosCliente.Location = new System.Drawing.Point(900, 46);
+            this.btnDatosCliente.Name = "btnDatosCliente";
+            this.btnDatosCliente.Size = new System.Drawing.Size(199, 48);
+            this.btnDatosCliente.TabIndex = 35;
+            this.btnDatosCliente.Text = "Datos Cliente";
+            this.btnDatosCliente.UseVisualStyleBackColor = true;
+            this.btnDatosCliente.Click += new System.EventHandler(this.btnDatosCliente_Click);
+            // 
             // PrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1250, 470);
-            this.Controls.Add(this.btnPDF);
+            this.ClientSize = new System.Drawing.Size(1354, 638);
+            this.Controls.Add(this.btnDatosCliente);
+            this.Controls.Add(this.btnGuardarPDF);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.txtBoxTotal);
@@ -298,7 +317,7 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.TextBox txtboxCodigo;
         private System.Windows.Forms.DataGridView dGVProducto;
-        private System.Windows.Forms.Button btnPDF;
+        private System.Windows.Forms.Button btnGuardarPDF;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
@@ -309,6 +328,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.Button btnDatosCliente;
     }
 }
 

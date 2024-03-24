@@ -23,6 +23,7 @@ namespace Presentacion
     public partial class PrincipalForm : Form
     {
         public string rutaArchivo;
+        private Cliente cliente = new Cliente();
         public PrincipalForm()
         {
             InitializeComponent();
@@ -298,7 +299,7 @@ namespace Presentacion
 
 
         // Método para manejar el evento Click del botón "Imprimir"
-        private void btnPDF_Click(object sender, EventArgs e)
+        private void btnGuardarPDF_Click(object sender, EventArgs e)
         {
             PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
             printPreviewDialog.Document = printDocument1;
@@ -403,6 +404,54 @@ namespace Presentacion
             // Define column widths for the table
             int[] columnWidths = { 40, 350, 100, 80, 80 };
 
+            if (cliente != null && (!string.IsNullOrEmpty(cliente.NombreYApellido) ||
+                        !string.IsNullOrEmpty(cliente.Cuil) ||
+                        !string.IsNullOrEmpty(cliente.Direccion) ||
+                        !string.IsNullOrEmpty(cliente.Telefono) ||
+                        cliente.DiasVigencia != null))
+            {
+                if (!string.IsNullOrEmpty(cliente.NombreYApellido))
+                {
+                    e.Graphics.DrawString("Nombre:", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
+                    e.Graphics.DrawString($"{cliente.NombreYApellido}", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left + 100, marginTop);
+                    marginTop += 20;
+                }
+
+                if (!string.IsNullOrEmpty(cliente.Cuil))
+                {
+                    e.Graphics.DrawString("Cuil:", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
+                    e.Graphics.DrawString($"{cliente.Cuil}", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left + 100, marginTop);
+                    marginTop += 20;
+                }
+
+                if (!string.IsNullOrEmpty(cliente.Direccion))
+                {
+                    e.Graphics.DrawString("Dirección:", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
+                    e.Graphics.DrawString($"{cliente.Direccion}", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left + 100, marginTop);
+                    marginTop += 20;
+                }
+
+                if (!string.IsNullOrEmpty(cliente.Telefono))
+                {
+                    e.Graphics.DrawString("Teléfono:", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
+                    e.Graphics.DrawString($"{cliente.Telefono}", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left + 100, marginTop);
+                    marginTop += 20;
+                }
+
+                if (cliente.DiasVigencia != null)
+                {
+                    DateTime fechaHoy = DateTime.Today;
+                    e.Graphics.DrawString("Vigencia desde: " + fechaHoy.ToString("dd/MM/yy"), dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
+                    marginTop += 20;
+
+                    DateTime fechaVigenciaHasta = fechaHoy.AddDays(cliente.DiasVigencia.Value);
+                    e.Graphics.DrawString("Vigencia hasta: " + fechaVigenciaHasta.ToString("dd/MM/yy"), dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
+                    marginTop += 20;
+                }
+                e.Graphics.DrawLine(Pens.Black, e.MarginBounds.Left, marginTop, e.MarginBounds.Right, marginTop);
+                marginTop += 40;
+            }            
+
             // Draw table header
             string[] headers = { "Cant", "Descripción", "Código", "Precio", "Subtotal" };
             int headerIndex = 0;
@@ -487,5 +536,17 @@ namespace Presentacion
             e.Graphics.DrawString("Total: " + txtBoxTotal.Text, new System.Drawing.Font(dGVProducto.Font, FontStyle.Bold), Brushes.Black, totalRect, new StringFormat { LineAlignment = StringAlignment.Center });
             e.Graphics.DrawRectangle(Pens.Black, System.Drawing.Rectangle.Round(totalRect));
         }
+
+        private void btnDatosCliente_Click(object sender, EventArgs e)
+        {
+            DatosClientesForm datosClientesForm = new DatosClientesForm(cliente);
+            datosClientesForm.ShowDialog();
+
+            if (datosClientesForm.DialogResult == DialogResult.OK)
+            {
+                cliente = datosClientesForm.cliente;
+            }
+        }
+
     }
 }
