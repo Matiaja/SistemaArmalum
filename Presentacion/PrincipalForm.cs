@@ -39,10 +39,8 @@ namespace Presentacion
 
         private void ConfigurarDataGridView()
         {
-            // Asegúrate de que el DataGridView permite agregar filas
             dGVProducto.AllowUserToAddRows = true;
 
-            // Agrega una columna de botón para eliminar
             DataGridViewButtonColumn eliminarButtonColumn = new DataGridViewButtonColumn();
             eliminarButtonColumn.HeaderText = "Eliminar";
             eliminarButtonColumn.Name = "ColumnaEliminar";
@@ -73,7 +71,6 @@ namespace Presentacion
             ColumnaPrecio.Width = 70;
             ColumnaSubtotal.Width = 70;
 
-            // Maneja el evento de clic en el botón de eliminación
             dGVProducto.CellContentClick += DGVProducto_CellContentClick;
             dGVProducto.CellValueChanged += DGVProducto_CellValueChanged;
         }
@@ -119,22 +116,41 @@ namespace Presentacion
             {
 
                 Producto producto = productos[0];
-                DataGridViewRow newRow = new DataGridViewRow();
-                newRow.CreateCells(dGVProducto);
-                newRow.Cells[dGVProducto.Columns["ColumnaDescripcion"].Index].Value = producto.Descripcion;
-                newRow.Cells[dGVProducto.Columns["ColumnaCodigo"].Index].Value = producto.Codigo;
-                newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = producto.Precio;
-                newRow.Cells[dGVProducto.Columns["ColumnaCantidad"].Index].Value = 1;
-                dGVProducto.Rows.Add(newRow);
+                bool productoExistente = false;
 
-                txtBoxDescripcion.Text = producto.Descripcion;
-                txtBoxPrecio.Text = producto.Precio.ToString();
+                foreach (DataGridViewRow row in dGVProducto.Rows)
+                {
+                    if (row.Cells["ColumnaCodigo"].Value != null && row.Cells["ColumnaCodigo"].Value.ToString() == producto.Codigo)
+                    {
+                        // El producto ya existe en el DataGridView
+                        int cantidadExistente = Convert.ToInt32(row.Cells["ColumnaCantidad"].Value);
+                        row.Cells["ColumnaCantidad"].Value = cantidadExistente + 1;
 
-                CalcularSubtotal();
+                        productoExistente = true;
+                        break;
+                    }
+                }
 
-                txtboxCodigo.Clear();
+                if (!productoExistente)
+                {
+                    DataGridViewRow newRow = new DataGridViewRow();
+                    newRow.CreateCells(dGVProducto);
+                    newRow.Cells[dGVProducto.Columns["ColumnaDescripcion"].Index].Value = producto.Descripcion;
+                    newRow.Cells[dGVProducto.Columns["ColumnaCodigo"].Index].Value = producto.Codigo;
+                    newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = producto.Precio;
+                    newRow.Cells[dGVProducto.Columns["ColumnaCantidad"].Index].Value = 1;
+                    dGVProducto.Rows.Add(newRow);
 
-                CalcularTotal();
+                    txtBoxDescripcion.Text = producto.Descripcion;
+                    txtBoxPrecio.Text = producto.Precio.ToString();
+
+                    CalcularSubtotal();
+
+                    txtboxCodigo.Clear();
+
+                    CalcularTotal();
+                }
+                
             }
             else if (productos.Count > 1)
             {
@@ -145,18 +161,36 @@ namespace Presentacion
                         Producto productoSeleccionado = productosForm.GetProductoSeleccionado();
                         if (productoSeleccionado != null)
                         {
-                            DataGridViewRow newRow = new DataGridViewRow();
-                            newRow.CreateCells(dGVProducto);
-                            newRow.Cells[dGVProducto.Columns["ColumnaDescripcion"].Index].Value = productoSeleccionado.Descripcion;
-                            newRow.Cells[dGVProducto.Columns["ColumnaCodigo"].Index].Value = productoSeleccionado.Codigo;
-                            newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = productoSeleccionado.Precio;
-                            newRow.Cells[dGVProducto.Columns["ColumnaCantidad"].Index].Value = 1;
-                            dGVProducto.Rows.Add(newRow);
-                            txtBoxDescripcion.Text = productoSeleccionado.Descripcion;
-                            txtBoxPrecio.Text = productoSeleccionado.Precio.ToString();
-                            CalcularSubtotal();
-                            txtboxCodigo.Clear();
-                            CalcularTotal();
+                            bool productoExistente = false;
+
+                            foreach (DataGridViewRow row in dGVProducto.Rows)
+                            {
+                                if (row.Cells["ColumnaCodigo"].Value != null && row.Cells["ColumnaCodigo"].Value.ToString() == productoSeleccionado.Codigo)
+                                {
+                                    int cantidadExistente = Convert.ToInt32(row.Cells["ColumnaCantidad"].Value);
+                                    row.Cells["ColumnaCantidad"].Value = cantidadExistente + 1;
+
+                                    productoExistente = true;
+                                    break;
+                                }
+                            }
+
+
+                            if (!productoExistente)
+                            {
+                                DataGridViewRow newRow = new DataGridViewRow();
+                                newRow.CreateCells(dGVProducto);
+                                newRow.Cells[dGVProducto.Columns["ColumnaDescripcion"].Index].Value = productoSeleccionado.Descripcion;
+                                newRow.Cells[dGVProducto.Columns["ColumnaCodigo"].Index].Value = productoSeleccionado.Codigo;
+                                newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = productoSeleccionado.Precio;
+                                newRow.Cells[dGVProducto.Columns["ColumnaCantidad"].Index].Value = 1;
+                                dGVProducto.Rows.Add(newRow);
+                                txtBoxDescripcion.Text = productoSeleccionado.Descripcion;
+                                txtBoxPrecio.Text = productoSeleccionado.Precio.ToString();
+                                CalcularSubtotal();
+                                txtboxCodigo.Clear();
+                                CalcularTotal();
+                            }
                         }
                     }
                 }
@@ -245,14 +279,15 @@ namespace Presentacion
 
         private void DGVProducto_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Verifica si el clic se realizó en la columna de eliminación
             if (e.ColumnIndex == dGVProducto.Columns["ColumnaEliminar"].Index && e.RowIndex != -1)
             {
-                // Elimina la fila seleccionada del DataGridView
-                dGVProducto.Rows.RemoveAt(e.RowIndex);
 
-                // Llama a la función para recalcular el total
-                CalcularTotal();
+                if (!dGVProducto.Rows[e.RowIndex].IsNewRow)
+                {
+                    dGVProducto.Rows.RemoveAt(e.RowIndex);
+
+                    CalcularTotal();
+                }
             }
 
             if (e.RowIndex >= 0 && (e.ColumnIndex == dGVProducto.Columns["ColumnaMenos"].Index || e.ColumnIndex == dGVProducto.Columns["ColumnaMas"].Index))
@@ -311,64 +346,7 @@ namespace Presentacion
                 printDocument1.Print();
             }
         }
-            /*   PrintDocument pd = new PrintDocument();
-               pd.PrintPage += new PrintPageEventHandler(this.pd_PrintPage);
-
-               PrintDialog printdlg = new PrintDialog();
-               PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
-
-               // Vista previa del documento
-               printPrvDlg.Document = pd;
-               printPrvDlg.ShowDialog();
-
-               // Mostrar el cuadro de diálogo de impresión
-               printdlg.Document = pd;
-
-               if (printdlg.ShowDialog() == DialogResult.OK)
-               {
-                   pd.Print();
-               }*/
         
-
-
-        private void pd_PrintPage(object sender, PrintPageEventArgs e)
-        {
-
-
-            /*
-            System.Drawing.Font font = new System.Drawing.Font("Arial", 12);
-            SolidBrush brush = new SolidBrush(Color.Black);
-            Single yPos = 100;
-            Single xPos = 100;
-
-            // Imprimir encabezados
-            for (int i = 0; i < dGVProducto.Columns.Count; i++)
-            {
-                e.Graphics.DrawString(dGVProducto.Columns[i].HeaderText, font, brush, xPos, yPos);
-                xPos += 100; // Incrementa la posición para la próxima columna
-            }
-
-            yPos += 20; // Incrementa la posición para imprimir el contenido
-
-            // Imprimir contenido del DataGridView
-            foreach (DataGridViewRow row in dGVProducto.Rows)
-            {
-                xPos = 100; // Restablecer la posición X al principio de la fila
-                for (int i = 0; i < dGVProducto.Columns.Count; i++)
-                {
-                    if (row.Cells[i].Value != null)
-                    {
-                        e.Graphics.DrawString(row.Cells[i].Value.ToString(), font, brush, xPos, yPos);
-                    }
-                    xPos += 100; // Incrementa la posición para la próxima columna
-                }
-                yPos += 20; // Incrementa la posición para la próxima fila
-            }
-
-            // Imprimir valor total
-            yPos += 20; // Incrementa la posición para imprimir el valor total debajo de la tabla
-            e.Graphics.DrawString("Total: " + txtBoxTotal.Text, font, brush, 100, yPos);*/
-        }
 
         private void PrincipalForm_Load(object sender, EventArgs e)
         {
