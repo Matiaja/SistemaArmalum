@@ -98,6 +98,11 @@ namespace Negocio
             return subtotales;
         }
 
+        public int ActualizarCantidad(int cantidadExistente)
+        {
+            return cantidadExistente + 1;
+        }
+
     }
 }
 

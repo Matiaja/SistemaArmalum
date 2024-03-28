@@ -17,6 +17,7 @@ using System.Xml.Linq;
 using PdfiumViewer;
 using System.Windows.Media.Animation;
 using System.Drawing.Printing;
+using static System.Net.WebRequestMethods;
 
 namespace Presentacion
 {
@@ -122,11 +123,14 @@ namespace Presentacion
                 {
                     if (row.Cells["ColumnaCodigo"].Value != null && row.Cells["ColumnaCodigo"].Value.ToString() == producto.Codigo)
                     {
-                        // El producto ya existe en el DataGridView
                         int cantidadExistente = Convert.ToInt32(row.Cells["ColumnaCantidad"].Value);
-                        row.Cells["ColumnaCantidad"].Value = cantidadExistente + 1;
+
+                        int nuevaCantidad = gestorProductos.ActualizarCantidad(cantidadExistente);
+
+                        row.Cells["ColumnaCantidad"].Value = nuevaCantidad;
 
                         productoExistente = true;
+                        txtboxCodigo.Clear();
                         break;
                     }
                 }
@@ -168,9 +172,13 @@ namespace Presentacion
                                 if (row.Cells["ColumnaCodigo"].Value != null && row.Cells["ColumnaCodigo"].Value.ToString() == productoSeleccionado.Codigo)
                                 {
                                     int cantidadExistente = Convert.ToInt32(row.Cells["ColumnaCantidad"].Value);
-                                    row.Cells["ColumnaCantidad"].Value = cantidadExistente + 1;
+
+                                    int nuevaCantidad = gestorProductos.ActualizarCantidad(cantidadExistente);
+
+                                    row.Cells["ColumnaCantidad"].Value = nuevaCantidad;
 
                                     productoExistente = true;
+                                    txtboxCodigo.Clear();
                                     break;
                                 }
                             }
