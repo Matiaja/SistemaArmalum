@@ -35,6 +35,8 @@ namespace Presentacion
             this.Controls.Add(printPreviewControl);
             printPreviewControl.Visible = false;
 
+
+
             ConfigurarDataGridView();
         }
 
@@ -63,17 +65,19 @@ namespace Presentacion
             buttonColumnMas.Text = "+";
             buttonColumnMas.UseColumnTextForButtonValue = true;
             buttonColumnMas.Width = 40;
+
             dGVProducto.Columns.Insert(2, buttonColumnMas);
 
-            ColumnaDescripcion.Width = 300;
+            ColumnaDescripcion.Width = 400;
 
-            ColumnaCantidad.Width = 50;
+            ColumnaCantidad.Width = 80;
 
-            ColumnaPrecio.Width = 70;
-            ColumnaSubtotal.Width = 70;
+            ColumnaPrecio.Width = 100;
+            ColumnaSubtotal.Width = 100;
 
             dGVProducto.CellContentClick += DGVProducto_CellContentClick;
             dGVProducto.CellValueChanged += DGVProducto_CellValueChanged;
+
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
@@ -358,7 +362,10 @@ namespace Presentacion
 
         private void PrincipalForm_Load(object sender, EventArgs e)
         {
-
+            btnLimpiar.BackColor = Color.FromArgb(33, 230, 193);
+            btnDatosCliente.BackColor = Color.FromArgb(33, 230, 193);
+            btnActualizar.BackColor = Color.FromArgb(33, 230, 193);
+            btnGuardarPDF.BackColor = Color.FromArgb(33, 230, 193);
         }
 
         private void enlazarExcelToolStripMenuItem_Click(object sender, EventArgs e)

@@ -93,6 +93,7 @@
             this.Controls.Add(this.lblProdCoincidentes);
             this.Controls.Add(this.dGVProducto);
             this.Name = "ProductosCoincidentesForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ProductosCoincidentesForm";
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).EndInit();
             this.ResumeLayout(false);

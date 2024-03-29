@@ -22,6 +22,9 @@ namespace Presentacion
 
         private void DatosClientesForm_Load(object sender, EventArgs e)
         {
+            btnLimpiar.BackColor = Color.FromArgb(33, 230, 193);
+            btnAceptar.BackColor =  Color.FromArgb(33, 230, 193);
+
             if (cliente != null)
             {
                 txtBoxCuil.Text = cliente.Cuil;

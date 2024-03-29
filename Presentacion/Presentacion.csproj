@@ -167,6 +167,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PruebaInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PruebaInterface.Designer.cs">
+      <DependentUpon>PruebaInterface.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AvisoForm.resx">
       <DependentUpon>AvisoForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,6 +194,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="PruebaInterface.resx">
+      <DependentUpon>PruebaInterface.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

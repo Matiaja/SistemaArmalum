@@ -44,17 +44,19 @@
             // 
             // lblNombreApellido
             // 
+            this.lblNombreApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNombreApellido.AutoSize = true;
-            this.lblNombreApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombreApellido.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.lblNombreApellido.Location = new System.Drawing.Point(85, 68);
             this.lblNombreApellido.Name = "lblNombreApellido";
-            this.lblNombreApellido.Size = new System.Drawing.Size(213, 29);
+            this.lblNombreApellido.Size = new System.Drawing.Size(181, 24);
             this.lblNombreApellido.TabIndex = 0;
             this.lblNombreApellido.Text = "Nombre y Apellido";
             // 
             // txtBoxNombreApellido
             // 
-            this.txtBoxNombreApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxNombreApellido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBoxNombreApellido.Font = new System.Drawing.Font("Arial", 12F);
             this.txtBoxNombreApellido.Location = new System.Drawing.Point(337, 68);
             this.txtBoxNombreApellido.Name = "txtBoxNombreApellido";
             this.txtBoxNombreApellido.Size = new System.Drawing.Size(221, 30);
@@ -62,7 +64,8 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLimpiar.Font = new System.Drawing.Font("Arial", 13.8F);
             this.btnLimpiar.Location = new System.Drawing.Point(508, 437);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(122, 51);
@@ -73,7 +76,8 @@
             // 
             // txtBoxDireccion
             // 
-            this.txtBoxDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxDireccion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBoxDireccion.Font = new System.Drawing.Font("Arial", 12F);
             this.txtBoxDireccion.Location = new System.Drawing.Point(337, 136);
             this.txtBoxDireccion.Name = "txtBoxDireccion";
             this.txtBoxDireccion.Size = new System.Drawing.Size(221, 30);
@@ -81,17 +85,19 @@
             // 
             // lblDireccion
             // 
+            this.lblDireccion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDireccion.AutoSize = true;
-            this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDireccion.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.lblDireccion.Location = new System.Drawing.Point(85, 136);
             this.lblDireccion.Name = "lblDireccion";
-            this.lblDireccion.Size = new System.Drawing.Size(115, 29);
+            this.lblDireccion.Size = new System.Drawing.Size(99, 24);
             this.lblDireccion.TabIndex = 3;
             this.lblDireccion.Text = "Direccion";
             // 
             // txtBoxTelefono
             // 
-            this.txtBoxTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxTelefono.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBoxTelefono.Font = new System.Drawing.Font("Arial", 12F);
             this.txtBoxTelefono.Location = new System.Drawing.Point(337, 211);
             this.txtBoxTelefono.Name = "txtBoxTelefono";
             this.txtBoxTelefono.Size = new System.Drawing.Size(221, 30);
@@ -99,17 +105,19 @@
             // 
             // lblTelefono
             // 
+            this.lblTelefono.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTelefono.AutoSize = true;
-            this.lblTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTelefono.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.lblTelefono.Location = new System.Drawing.Point(85, 211);
             this.lblTelefono.Name = "lblTelefono";
-            this.lblTelefono.Size = new System.Drawing.Size(110, 29);
+            this.lblTelefono.Size = new System.Drawing.Size(92, 24);
             this.lblTelefono.TabIndex = 5;
             this.lblTelefono.Text = "Telefono";
             // 
             // txtBoxCuil
             // 
-            this.txtBoxCuil.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxCuil.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBoxCuil.Font = new System.Drawing.Font("Arial", 12F);
             this.txtBoxCuil.Location = new System.Drawing.Point(337, 287);
             this.txtBoxCuil.Name = "txtBoxCuil";
             this.txtBoxCuil.Size = new System.Drawing.Size(221, 30);
@@ -117,17 +125,19 @@
             // 
             // lblCuil
             // 
+            this.lblCuil.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCuil.AutoSize = true;
-            this.lblCuil.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCuil.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.lblCuil.Location = new System.Drawing.Point(85, 287);
             this.lblCuil.Name = "lblCuil";
-            this.lblCuil.Size = new System.Drawing.Size(55, 29);
+            this.lblCuil.Size = new System.Drawing.Size(46, 24);
             this.lblCuil.TabIndex = 7;
             this.lblCuil.Text = "Cuil";
             // 
             // txtBoxDiasVigencia
             // 
-            this.txtBoxDiasVigencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxDiasVigencia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBoxDiasVigencia.Font = new System.Drawing.Font("Arial", 12F);
             this.txtBoxDiasVigencia.Location = new System.Drawing.Point(337, 364);
             this.txtBoxDiasVigencia.Name = "txtBoxDiasVigencia";
             this.txtBoxDiasVigencia.Size = new System.Drawing.Size(221, 30);
@@ -135,17 +145,19 @@
             // 
             // lblDiasVigencia
             // 
+            this.lblDiasVigencia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDiasVigencia.AutoSize = true;
-            this.lblDiasVigencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDiasVigencia.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.lblDiasVigencia.Location = new System.Drawing.Point(85, 364);
             this.lblDiasVigencia.Name = "lblDiasVigencia";
-            this.lblDiasVigencia.Size = new System.Drawing.Size(190, 29);
+            this.lblDiasVigencia.Size = new System.Drawing.Size(164, 24);
             this.lblDiasVigencia.TabIndex = 9;
             this.lblDiasVigencia.Text = "Dias de vigencia";
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAceptar.Font = new System.Drawing.Font("Arial", 13.8F);
             this.btnAceptar.Location = new System.Drawing.Point(648, 437);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(122, 51);
@@ -158,6 +170,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
             this.ClientSize = new System.Drawing.Size(782, 515);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtBoxDiasVigencia);
@@ -172,6 +185,7 @@
             this.Controls.Add(this.txtBoxNombreApellido);
             this.Controls.Add(this.lblNombreApellido);
             this.Name = "DatosClientesForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DatosClientesForm";
             this.Load += new System.EventHandler(this.DatosClientesForm_Load);
             this.ResumeLayout(false);
