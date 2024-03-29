@@ -40,7 +40,8 @@ namespace Presentacion
             ConfigurarDataGridView();
         }
 
-        private void ConfigurarDataGridView()
+
+        public void ConfigurarDataGridView()
         {
             dGVProducto.AllowUserToAddRows = true;
 

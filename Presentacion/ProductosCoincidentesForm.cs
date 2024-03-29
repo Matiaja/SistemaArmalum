@@ -74,7 +74,6 @@ namespace Presentacion
             }
             else
             {
-                // Si el índice de la fila está fuera de rango, retornar null
                 return null;
             }
         }

@@ -17,14 +17,14 @@ namespace Presentacion
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void AvisoForm_Load(object sender, EventArgs e)
         {
-
+            btnCerrar.BackColor = Color.FromArgb(33, 230, 193);
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            this.Close();
+             this.Close();
         }
     }
 }

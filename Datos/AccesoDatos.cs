@@ -173,7 +173,7 @@ namespace Datos
 
             try
             {
-                string query = "SELECT codigo, descripcion, precio FROM producto where codigo like @Codigo";
+                string query = "SELECT codigo, descripcion, precio FROM producto where codigo like @Codigo or descripcion like @Descripcion";
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -182,6 +182,7 @@ namespace Datos
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Codigo", "%" + codigo + "%");
+                        command.Parameters.AddWithValue("@Descripcion", "%" + codigo + "%");
 
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {

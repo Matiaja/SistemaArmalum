@@ -270,6 +270,7 @@
             this.ColumnaCantidad.HeaderText = "Cantidad";
             this.ColumnaCantidad.MinimumWidth = 6;
             this.ColumnaCantidad.Name = "ColumnaCantidad";
+            this.ColumnaCantidad.Width = 125;
             // 
             // ColumnaDescripcion
             // 
