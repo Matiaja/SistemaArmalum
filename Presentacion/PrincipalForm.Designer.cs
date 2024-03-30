@@ -49,6 +49,7 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.btnDatosCliente = new System.Windows.Forms.Button();
             this.dGVProducto = new System.Windows.Forms.DataGridView();
+            this.cargarAExcelDeClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ColumnaCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -178,10 +179,11 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(30)))), ((int)(((byte)(61)))));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enlazarExcelToolStripMenuItem});
+            this.enlazarExcelToolStripMenuItem,
+            this.cargarAExcelDeClienteToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1435, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1435, 30);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -190,7 +192,7 @@
             this.enlazarExcelToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enlazarExcelToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.enlazarExcelToolStripMenuItem.Name = "enlazarExcelToolStripMenuItem";
-            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(122, 23);
+            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this.enlazarExcelToolStripMenuItem.Text = "Enlazar Excel";
             this.enlazarExcelToolStripMenuItem.Click += new System.EventHandler(this.enlazarExcelToolStripMenuItem_Click);
             // 
@@ -264,6 +266,16 @@
             this.dGVProducto.RowTemplate.Height = 35;
             this.dGVProducto.Size = new System.Drawing.Size(1435, 400);
             this.dGVProducto.TabIndex = 36;
+            //this.dGVProducto.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dGVProducto_RowsAdded);
+            // 
+            // cargarAExcelDeClienteToolStripMenuItem
+            // 
+            this.cargarAExcelDeClienteToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F);
+            this.cargarAExcelDeClienteToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.cargarAExcelDeClienteToolStripMenuItem.Name = "cargarAExcelDeClienteToolStripMenuItem";
+            this.cargarAExcelDeClienteToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
+            this.cargarAExcelDeClienteToolStripMenuItem.Text = "Cargar a excel de cliente";
+            this.cargarAExcelDeClienteToolStripMenuItem.Click += new System.EventHandler(this.cargarAExcelDeClienteToolStripMenuItem_Click);
             // 
             // ColumnaCantidad
             // 
@@ -286,7 +298,6 @@
             this.ColumnaCodigo.HeaderText = "Codigo";
             this.ColumnaCodigo.MinimumWidth = 6;
             this.ColumnaCodigo.Name = "ColumnaCodigo";
-            this.ColumnaCodigo.ReadOnly = true;
             this.ColumnaCodigo.Width = 200;
             // 
             // ColumnaPrecio
@@ -358,6 +369,7 @@
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.Button btnDatosCliente;
         private System.Windows.Forms.DataGridView dGVProducto;
+        private System.Windows.Forms.ToolStripMenuItem cargarAExcelDeClienteToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;

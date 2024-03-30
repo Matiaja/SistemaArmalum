@@ -18,6 +18,8 @@ using PdfiumViewer;
 using System.Windows.Media.Animation;
 using System.Drawing.Printing;
 using static System.Net.WebRequestMethods;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace Presentacion
 {
@@ -35,7 +37,7 @@ namespace Presentacion
             this.Controls.Add(printPreviewControl);
             printPreviewControl.Visible = false;
 
-
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             ConfigurarDataGridView();
         }
@@ -80,6 +82,30 @@ namespace Presentacion
             dGVProducto.CellValueChanged += DGVProducto_CellValueChanged;
 
         }
+
+        //private void dGVProducto_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        //{
+        //    FormatearCeldas();
+        //}
+
+        //private void FormatearCeldas()
+        //{
+        //    foreach (DataGridViewRow row in dGVProducto.Rows)
+        //    {
+        //        FormatearCelda(row.Cells["ColumnaPrecio"]);
+        //        FormatearCelda(row.Cells["ColumnaSubtotal"]);
+        //        FormatearCelda(row.Cells["ColumnaTotal"]);
+        //    }
+        //}
+
+        //private void FormatearCelda(DataGridViewCell cell)
+        //{
+        //    if (cell != null && cell.Value != null && double.TryParse(cell.Value.ToString(), out double valor))
+        //    {
+        //        cell.Value = valor.ToString("C");
+        //    }
+        //}
+
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
@@ -272,7 +298,7 @@ namespace Presentacion
 
             double Total = gestorProductos.CalcularTotalNegocio(subtotales);
 
-            txtBoxTotal.Text = Total.ToString();
+            txtBoxTotal.Text = Total.ToString("C");
         }
 
 
@@ -395,8 +421,18 @@ namespace Presentacion
             int marginTop = e.MarginBounds.Top;
             int cellHeight = 0;
 
-            // Define column widths for the table
             int[] columnWidths = { 40, 350, 100, 80, 80 };
+
+            System.Drawing.Image encabezadoImage = System.Drawing.Image.FromFile("C:\\Users\\matia\\Desktop\\SistemaParaFerreteria2024\\Logo_Armalum.png");
+
+            int encabezadoWidth = 300;
+            int encabezadoHeight = encabezadoImage.Height * encabezadoWidth / encabezadoImage.Width;
+            int startX = (e.MarginBounds.Width - encabezadoWidth) / 2 + e.MarginBounds.Left;
+
+
+            e.Graphics.DrawImage(encabezadoImage, new System.Drawing.Rectangle(startX, e.MarginBounds.Top, encabezadoWidth, encabezadoHeight));
+
+            marginTop += 130;
 
             if (cliente != null && (!string.IsNullOrEmpty(cliente.NombreYApellido) ||
                         !string.IsNullOrEmpty(cliente.Cuil) ||
@@ -542,5 +578,79 @@ namespace Presentacion
             }
         }
 
+        public void ExportarDataGridViewAExcel(DataGridView dataGridView, string rutaArchivoExcel)
+        {
+            
+            if (!System.IO.File.Exists(rutaArchivoExcel))
+            {
+                MessageBox.Show("El archivo de Excel seleccionado no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            FileInfo existingFile = new FileInfo(rutaArchivoExcel);
+
+            using (ExcelPackage package = new ExcelPackage(existingFile))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                
+                int filaInicio = 8;
+                while (!string.IsNullOrEmpty(worksheet.Cells[filaInicio, 3].Text)
+                       
+                       )
+                {
+                    filaInicio++;
+                }
+                worksheet.Cells[filaInicio, 1].Value = DateTime.Today.ToString("dd/MM/yyyy");
+
+                Console.WriteLine(filaInicio);
+
+                for (int fila = 0; fila < dataGridView.Rows.Count; fila++)
+                {
+                    string cantidad = dataGridView.Rows[fila].Cells["ColumnaCantidad"].Value?.ToString();
+                    string descripcion = dataGridView.Rows[fila].Cells["ColumnaDescripcion"].Value?.ToString();
+                    string codigo = dataGridView.Rows[fila].Cells["ColumnaCodigo"].Value?.ToString();
+                    string precio = dataGridView.Rows[fila].Cells["ColumnaPrecio"].Value?.ToString();
+
+                    worksheet.Cells[fila + filaInicio, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
+                    worksheet.Cells[fila + filaInicio, 3].Value = descripcion;
+                    worksheet.Cells[fila + filaInicio, 4].Value = codigo;
+                    worksheet.Cells[fila + filaInicio, 5].Value = double.TryParse(precio, out double precioValue) ? precioValue : 0;
+                }
+
+                worksheet.Cells[filaInicio, 2, filaInicio + dataGridView.Rows.Count - 1, 2].Style.Numberformat.Format = "_-* #,##0_-;-* #,##0_-;_-* \"-\"??_-;_-@_-";
+                worksheet.Cells[filaInicio, 5, filaInicio + dataGridView.Rows.Count - 1, 5].Style.Numberformat.Format = "_-* #,##0.00_-;-* #,##0.00_-;_-* \"-\"??_-;_-@_-";
+
+                for (int fila = filaInicio; fila < filaInicio + dataGridView.Rows.Count; fila++)
+                {
+                    worksheet.Row(fila).Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    worksheet.Row(fila).Style.Fill.BackgroundColor.SetColor(Color.White);
+                }
+
+                package.Save();
+            }
+        }
+
+        private void cargarAExcelDeClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "Archivos Excel|*.xlsx;*.xls";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string rutaArchivoExcel = openFileDialog.FileName;
+
+                    ExportarDataGridViewAExcel(dGVProducto, rutaArchivoExcel);
+
+                    MessageBox.Show("Los datos se han exportado correctamente a Excel.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al exportar los datos a Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }

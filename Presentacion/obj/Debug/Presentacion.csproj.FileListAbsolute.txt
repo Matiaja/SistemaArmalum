@@ -108,3 +108,11 @@ C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\PdfiumVi
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\nl\PdfiumViewer.resources.dll
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Debug\Presentacion.ProductosCoincidentesForm.resources
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Debug\Presentacion.DatosClientesForm.resources
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\EPPlus.dll
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\EPPlus.Interfaces.dll
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\EPPlus.System.Drawing.dll
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\EPPlus.xml
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Debug\Presentacion.csproj.ResolveComReference.cache
