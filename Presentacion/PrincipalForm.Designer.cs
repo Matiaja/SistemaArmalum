@@ -49,12 +49,13 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.btnDatosCliente = new System.Windows.Forms.Button();
             this.dGVProducto = new System.Windows.Forms.DataGridView();
-            this.cargarAExcelDeClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ColumnaCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnImprimir = new System.Windows.Forms.Button();
+            this.btnCargaACtaCte = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +63,7 @@
             // btnActualizar
             // 
             this.btnActualizar.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnActualizar.Location = new System.Drawing.Point(1133, 114);
+            this.btnActualizar.Location = new System.Drawing.Point(900, 114);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(199, 48);
             this.btnActualizar.TabIndex = 32;
@@ -90,7 +91,7 @@
             this.txtBoxTotal.Location = new System.Drawing.Point(864, 177);
             this.txtBoxTotal.Name = "txtBoxTotal";
             this.txtBoxTotal.ReadOnly = true;
-            this.txtBoxTotal.Size = new System.Drawing.Size(469, 39);
+            this.txtBoxTotal.Size = new System.Drawing.Size(613, 39);
             this.txtBoxTotal.TabIndex = 30;
             // 
             // lblTotal
@@ -179,11 +180,10 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(30)))), ((int)(((byte)(61)))));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enlazarExcelToolStripMenuItem,
-            this.cargarAExcelDeClienteToolStripMenuItem});
+            this.enlazarExcelToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1435, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1579, 27);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -192,7 +192,7 @@
             this.enlazarExcelToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enlazarExcelToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.enlazarExcelToolStripMenuItem.Name = "enlazarExcelToolStripMenuItem";
-            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
+            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(122, 23);
             this.enlazarExcelToolStripMenuItem.Text = "Enlazar Excel";
             this.enlazarExcelToolStripMenuItem.Click += new System.EventHandler(this.enlazarExcelToolStripMenuItem_Click);
             // 
@@ -236,7 +236,7 @@
             this.dGVProducto.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -251,7 +251,7 @@
             this.ColumnaSubtotal});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.PaleTurquoise;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -264,18 +264,10 @@
             this.dGVProducto.RowHeadersVisible = false;
             this.dGVProducto.RowHeadersWidth = 51;
             this.dGVProducto.RowTemplate.Height = 35;
-            this.dGVProducto.Size = new System.Drawing.Size(1435, 400);
+            this.dGVProducto.Size = new System.Drawing.Size(1579, 494);
             this.dGVProducto.TabIndex = 36;
-            //this.dGVProducto.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dGVProducto_RowsAdded);
-            // 
-            // cargarAExcelDeClienteToolStripMenuItem
-            // 
-            this.cargarAExcelDeClienteToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F);
-            this.cargarAExcelDeClienteToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.cargarAExcelDeClienteToolStripMenuItem.Name = "cargarAExcelDeClienteToolStripMenuItem";
-            this.cargarAExcelDeClienteToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
-            this.cargarAExcelDeClienteToolStripMenuItem.Text = "Cargar a excel de cliente";
-            this.cargarAExcelDeClienteToolStripMenuItem.Click += new System.EventHandler(this.cargarAExcelDeClienteToolStripMenuItem_Click);
+            this.dGVProducto.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVProducto_CellValueChanged_1);
+            this.dGVProducto.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dGVProducto_RowsAdded);
             // 
             // ColumnaCantidad
             // 
@@ -316,12 +308,36 @@
             this.ColumnaSubtotal.Name = "ColumnaSubtotal";
             this.ColumnaSubtotal.Width = 180;
             // 
+            // btnImprimir
+            // 
+            this.btnImprimir.Font = new System.Drawing.Font("Arial", 13.8F);
+            this.btnImprimir.Location = new System.Drawing.Point(1133, 114);
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(199, 48);
+            this.btnImprimir.TabIndex = 37;
+            this.btnImprimir.Text = "Imprimir PDF";
+            this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
+            // 
+            // btnCargaACtaCte
+            // 
+            this.btnCargaACtaCte.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCargaACtaCte.Location = new System.Drawing.Point(668, 114);
+            this.btnCargaACtaCte.Name = "btnCargaACtaCte";
+            this.btnCargaACtaCte.Size = new System.Drawing.Size(199, 48);
+            this.btnCargaACtaCte.TabIndex = 38;
+            this.btnCargaACtaCte.Text = "Cargar en Cta Cte";
+            this.btnCargaACtaCte.UseVisualStyleBackColor = true;
+            this.btnCargaACtaCte.Click += new System.EventHandler(this.btnCargaACtaCte_Click);
+            // 
             // PrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
-            this.ClientSize = new System.Drawing.Size(1435, 638);
+            this.ClientSize = new System.Drawing.Size(1579, 732);
+            this.Controls.Add(this.btnCargaACtaCte);
+            this.Controls.Add(this.btnImprimir);
             this.Controls.Add(this.dGVProducto);
             this.Controls.Add(this.btnDatosCliente);
             this.Controls.Add(this.btnGuardarPDF);
@@ -340,6 +356,7 @@
             this.Name = "PrincipalForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Buscador";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PrincipalForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -369,12 +386,13 @@
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.Button btnDatosCliente;
         private System.Windows.Forms.DataGridView dGVProducto;
-        private System.Windows.Forms.ToolStripMenuItem cargarAExcelDeClienteToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaSubtotal;
+        private System.Windows.Forms.Button btnImprimir;
+        private System.Windows.Forms.Button btnCargaACtaCte;
     }
 }
 

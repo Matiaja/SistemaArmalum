@@ -20,12 +20,14 @@ using System.Drawing.Printing;
 using static System.Net.WebRequestMethods;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Presentacion
 {
     public partial class PrincipalForm : Form
     {
         public string rutaArchivo;
+        private DataGridViewCellStyle defaultCellStyle;
         private Cliente cliente = new Cliente();
         public PrincipalForm()
         {
@@ -40,6 +42,8 @@ namespace Presentacion
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             ConfigurarDataGridView();
+            defaultCellStyle = dGVProducto.DefaultCellStyle;
+
         }
 
 
@@ -208,6 +212,8 @@ namespace Presentacion
 
                                     row.Cells["ColumnaCantidad"].Value = nuevaCantidad;
 
+                                    row.Height = 35;
+
                                     productoExistente = true;
                                     txtboxCodigo.Clear();
                                     break;
@@ -305,6 +311,7 @@ namespace Presentacion
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             dGVProducto.Rows.Clear();
+            dGVProducto.DefaultCellStyle = defaultCellStyle;
             txtBoxDescripcion.Clear();
             txtboxCodigo.Clear();
             txtBoxPrecio.Clear();
@@ -361,7 +368,6 @@ namespace Presentacion
 
         private void DGVProducto_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            // Verifica si la celda modificada es la de la columna de cantidad
             if (e.ColumnIndex == dGVProducto.Columns["ColumnaCantidad"].Index && e.RowIndex >= 0)
             {
                 // Llama al método para calcular el subtotal
@@ -393,6 +399,8 @@ namespace Presentacion
             btnDatosCliente.BackColor = Color.FromArgb(33, 230, 193);
             btnActualizar.BackColor = Color.FromArgb(33, 230, 193);
             btnGuardarPDF.BackColor = Color.FromArgb(33, 230, 193);
+            btnImprimir.BackColor = Color.FromArgb(33, 230, 193);
+            btnCargaACtaCte.BackColor = Color.FromArgb(33, 230, 193);
         }
 
         private void enlazarExcelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -580,57 +588,104 @@ namespace Presentacion
 
         public void ExportarDataGridViewAExcel(DataGridView dataGridView, string rutaArchivoExcel)
         {
-            
             if (!System.IO.File.Exists(rutaArchivoExcel))
             {
                 MessageBox.Show("El archivo de Excel seleccionado no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            FileInfo existingFile = new FileInfo(rutaArchivoExcel);
+            Excel.Application excelApp = new Excel.Application();
+            excelApp.Visible = true;
 
-            using (ExcelPackage package = new ExcelPackage(existingFile))
+            Excel.Workbook workbook = excelApp.Workbooks.Open(rutaArchivoExcel);
+            Excel.Worksheet worksheet = workbook.Sheets[1];
+            Excel.Range range = worksheet.UsedRange;
+
+            int filaInicio = 8;
+            while (worksheet.Cells[filaInicio, 3].Value != null)
             {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                
-                int filaInicio = 8;
-                while (!string.IsNullOrEmpty(worksheet.Cells[filaInicio, 3].Text)
-                       
-                       )
+                filaInicio++;
+            }
+            worksheet.Cells[filaInicio, 1].Value = DateTime.Today.ToString("dd/MM/yyyy");
+
+            int fila = 0;
+            foreach (DataGridViewRow dataGridViewRow in dataGridView.Rows)
+            {
+                if (!dataGridViewRow.IsNewRow)
                 {
-                    filaInicio++;
+                    fila++;
+
+                    string cantidad = dataGridViewRow.Cells["ColumnaCantidad"].Value?.ToString();
+                    string descripcion = dataGridViewRow.Cells["ColumnaDescripcion"].Value?.ToString();
+                    string codigo = dataGridViewRow.Cells["ColumnaCodigo"].Value?.ToString();
+                    string precio = dataGridViewRow.Cells["ColumnaPrecio"].Value?.ToString();
+
+                    string codigoString = "'" + codigo;
+
+                    worksheet.Cells[fila + filaInicio - 1, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
+                    worksheet.Cells[fila + filaInicio - 1, 3].Value = descripcion;
+                    worksheet.Cells[fila + filaInicio - 1, 4].Value = codigoString;
+                    worksheet.Cells[fila + filaInicio - 1, 5].Value = double.TryParse(precio, out double precioValue) ? precioValue : 0;
+
+
                 }
-                worksheet.Cells[filaInicio, 1].Value = DateTime.Today.ToString("dd/MM/yyyy");
+            }
 
-                Console.WriteLine(filaInicio);
+            // Aplicar formato a las celdas según sea necesario
 
-                for (int fila = 0; fila < dataGridView.Rows.Count; fila++)
-                {
-                    string cantidad = dataGridView.Rows[fila].Cells["ColumnaCantidad"].Value?.ToString();
-                    string descripcion = dataGridView.Rows[fila].Cells["ColumnaDescripcion"].Value?.ToString();
-                    string codigo = dataGridView.Rows[fila].Cells["ColumnaCodigo"].Value?.ToString();
-                    string precio = dataGridView.Rows[fila].Cells["ColumnaPrecio"].Value?.ToString();
+            // Guardar el archivo
+            workbook.Save();
 
-                    worksheet.Cells[fila + filaInicio, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
-                    worksheet.Cells[fila + filaInicio, 3].Value = descripcion;
-                    worksheet.Cells[fila + filaInicio, 4].Value = codigo;
-                    worksheet.Cells[fila + filaInicio, 5].Value = double.TryParse(precio, out double precioValue) ? precioValue : 0;
-                }
+            ReleaseObject(worksheet);
+            ReleaseObject(workbook);
 
-                worksheet.Cells[filaInicio, 2, filaInicio + dataGridView.Rows.Count - 1, 2].Style.Numberformat.Format = "_-* #,##0_-;-* #,##0_-;_-* \"-\"??_-;_-@_-";
-                worksheet.Cells[filaInicio, 5, filaInicio + dataGridView.Rows.Count - 1, 5].Style.Numberformat.Format = "_-* #,##0.00_-;-* #,##0.00_-;_-* \"-\"??_-;_-@_-";
+            MessageBox.Show("Los datos se han exportado correctamente a Excel.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
-                for (int fila = filaInicio; fila < filaInicio + dataGridView.Rows.Count; fila++)
-                {
-                    worksheet.Row(fila).Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    worksheet.Row(fila).Style.Fill.BackgroundColor.SetColor(Color.White);
-                }
-
-                package.Save();
+        private void ReleaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Error al liberar objeto Excel: " + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                GC.Collect();
             }
         }
 
-        private void cargarAExcelDeClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
+            pd.Print();
+        }
+
+        private void dGVProducto_CellValueChanged_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == dGVProducto.Columns["ColumnaPrecio"].Index)
+            {
+                CalcularSubtotal();
+
+                CalcularTotal();
+            }
+        }
+
+        private void dGVProducto_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            foreach (DataGridViewRow row in dGVProducto.Rows)
+            {
+                row.Height = 35;
+            }
+        }
+
+        private void btnCargaACtaCte_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
