@@ -27,53 +27,41 @@ namespace Datos
 
         }
 
-        public void CrearBaseDeDatos()
+        private void CrearBaseDeDatosSiNoExiste(MySqlConnection connection)
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string createDatabaseQuery = $"CREATE DATABASE IF NOT EXISTS {database}";
+            using (MySqlCommand command = new MySqlCommand(createDatabaseQuery, connection))
             {
-                connection.Open();
-
-                string createDatabaseQuery = $"CREATE DATABASE IF NOT EXISTS {database}";
-                using (MySqlCommand command = new MySqlCommand(createDatabaseQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-
-
-                connection.ChangeDatabase(database);
-
-
-                string createTableQuery = "CREATE TABLE IF NOT EXISTS producto (" +
-                                          "descripcion VARCHAR(255), " +
-                                          "codigo VARCHAR(70), " +
-                                          "precio DECIMAL(18, 2))";
-                using (MySqlCommand command = new MySqlCommand(createTableQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
+                command.ExecuteNonQuery();
             }
 
+            // Cambiar a la base de datos recién creada
+            connection.ChangeDatabase(database);
+
+            // Crear la tabla si no existe
+            string createTableQuery = "CREATE TABLE IF NOT EXISTS producto (" +
+                                      "descripcion VARCHAR(255), " +
+                                      "codigo VARCHAR(70), " +
+                                      "precio DECIMAL(18, 2))";
+            using (MySqlCommand command = new MySqlCommand(createTableQuery, connection))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         public void ActualizarBaseDeDatos(List<Producto> productos)
         {
-            bool baseDeDatosExiste;
 
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
+                CrearBaseDeDatosSiNoExiste(connection);
                 string query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = @DatabaseName";
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@DatabaseName", database);
                 object result = command.ExecuteScalar();
-                baseDeDatosExiste = result != null;
-            }
 
-            if (!baseDeDatosExiste)
-            {
-                // La base de datos no existe, crearla
-                CrearBaseDeDatos();
             }
 
 

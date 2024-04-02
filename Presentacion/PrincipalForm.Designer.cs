@@ -49,13 +49,13 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.btnDatosCliente = new System.Windows.Forms.Button();
             this.dGVProducto = new System.Windows.Forms.DataGridView();
+            this.btnImprimir = new System.Windows.Forms.Button();
+            this.btnCargaACtaCte = new System.Windows.Forms.Button();
             this.ColumnaCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnImprimir = new System.Windows.Forms.Button();
-            this.btnCargaACtaCte = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +63,7 @@
             // btnActualizar
             // 
             this.btnActualizar.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnActualizar.Location = new System.Drawing.Point(900, 114);
+            this.btnActualizar.Location = new System.Drawing.Point(1044, 115);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(199, 48);
             this.btnActualizar.TabIndex = 32;
@@ -74,7 +74,7 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(668, 46);
+            this.btnLimpiar.Location = new System.Drawing.Point(812, 47);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(199, 48);
             this.btnLimpiar.TabIndex = 31;
@@ -167,7 +167,7 @@
             // btnGuardarPDF
             // 
             this.btnGuardarPDF.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnGuardarPDF.Location = new System.Drawing.Point(1133, 46);
+            this.btnGuardarPDF.Location = new System.Drawing.Point(1277, 47);
             this.btnGuardarPDF.Name = "btnGuardarPDF";
             this.btnGuardarPDF.Size = new System.Drawing.Size(199, 48);
             this.btnGuardarPDF.TabIndex = 33;
@@ -218,7 +218,7 @@
             // btnDatosCliente
             // 
             this.btnDatosCliente.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnDatosCliente.Location = new System.Drawing.Point(900, 46);
+            this.btnDatosCliente.Location = new System.Drawing.Point(1044, 47);
             this.btnDatosCliente.Name = "btnDatosCliente";
             this.btnDatosCliente.Size = new System.Drawing.Size(199, 48);
             this.btnDatosCliente.TabIndex = 35;
@@ -231,6 +231,7 @@
             this.dGVProducto.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dGVProducto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dGVProducto.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dGVProducto.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dGVProducto.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
@@ -269,49 +270,10 @@
             this.dGVProducto.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVProducto_CellValueChanged_1);
             this.dGVProducto.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dGVProducto_RowsAdded);
             // 
-            // ColumnaCantidad
-            // 
-            this.ColumnaCantidad.HeaderText = "Cantidad";
-            this.ColumnaCantidad.MinimumWidth = 6;
-            this.ColumnaCantidad.Name = "ColumnaCantidad";
-            this.ColumnaCantidad.Width = 125;
-            // 
-            // ColumnaDescripcion
-            // 
-            this.ColumnaDescripcion.FillWeight = 400F;
-            this.ColumnaDescripcion.HeaderText = "Descripcion";
-            this.ColumnaDescripcion.MinimumWidth = 6;
-            this.ColumnaDescripcion.Name = "ColumnaDescripcion";
-            this.ColumnaDescripcion.Width = 400;
-            // 
-            // ColumnaCodigo
-            // 
-            this.ColumnaCodigo.FillWeight = 200F;
-            this.ColumnaCodigo.HeaderText = "Codigo";
-            this.ColumnaCodigo.MinimumWidth = 6;
-            this.ColumnaCodigo.Name = "ColumnaCodigo";
-            this.ColumnaCodigo.Width = 200;
-            // 
-            // ColumnaPrecio
-            // 
-            this.ColumnaPrecio.FillWeight = 180F;
-            this.ColumnaPrecio.HeaderText = "Precio";
-            this.ColumnaPrecio.MinimumWidth = 6;
-            this.ColumnaPrecio.Name = "ColumnaPrecio";
-            this.ColumnaPrecio.Width = 180;
-            // 
-            // ColumnaSubtotal
-            // 
-            this.ColumnaSubtotal.FillWeight = 180F;
-            this.ColumnaSubtotal.HeaderText = "Subtotal";
-            this.ColumnaSubtotal.MinimumWidth = 6;
-            this.ColumnaSubtotal.Name = "ColumnaSubtotal";
-            this.ColumnaSubtotal.Width = 180;
-            // 
             // btnImprimir
             // 
             this.btnImprimir.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnImprimir.Location = new System.Drawing.Point(1133, 114);
+            this.btnImprimir.Location = new System.Drawing.Point(1277, 115);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(199, 48);
             this.btnImprimir.TabIndex = 37;
@@ -322,13 +284,48 @@
             // btnCargaACtaCte
             // 
             this.btnCargaACtaCte.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCargaACtaCte.Location = new System.Drawing.Point(668, 114);
+            this.btnCargaACtaCte.Location = new System.Drawing.Point(812, 115);
             this.btnCargaACtaCte.Name = "btnCargaACtaCte";
             this.btnCargaACtaCte.Size = new System.Drawing.Size(199, 48);
             this.btnCargaACtaCte.TabIndex = 38;
             this.btnCargaACtaCte.Text = "Cargar en Cta Cte";
             this.btnCargaACtaCte.UseVisualStyleBackColor = true;
             this.btnCargaACtaCte.Click += new System.EventHandler(this.btnCargaACtaCte_Click);
+            // 
+            // ColumnaCantidad
+            // 
+            this.ColumnaCantidad.HeaderText = "Cantidad";
+            this.ColumnaCantidad.MinimumWidth = 6;
+            this.ColumnaCantidad.Name = "ColumnaCantidad";
+            // 
+            // ColumnaDescripcion
+            // 
+            this.ColumnaDescripcion.FillWeight = 400F;
+            this.ColumnaDescripcion.HeaderText = "Descripcion";
+            this.ColumnaDescripcion.MinimumWidth = 6;
+            this.ColumnaDescripcion.Name = "ColumnaDescripcion";
+            // 
+            // ColumnaCodigo
+            // 
+            this.ColumnaCodigo.FillWeight = 200F;
+            this.ColumnaCodigo.HeaderText = "Codigo";
+            this.ColumnaCodigo.MinimumWidth = 6;
+            this.ColumnaCodigo.Name = "ColumnaCodigo";
+            // 
+            // ColumnaPrecio
+            // 
+            this.ColumnaPrecio.FillWeight = 180F;
+            this.ColumnaPrecio.HeaderText = "Precio";
+            this.ColumnaPrecio.MinimumWidth = 6;
+            this.ColumnaPrecio.Name = "ColumnaPrecio";
+            // 
+            // ColumnaSubtotal
+            // 
+            this.ColumnaSubtotal.FillWeight = 180F;
+            this.ColumnaSubtotal.HeaderText = "Subtotal";
+            this.ColumnaSubtotal.MinimumWidth = 6;
+            this.ColumnaSubtotal.Name = "ColumnaSubtotal";
+            this.ColumnaSubtotal.ReadOnly = true;
             // 
             // PrincipalForm
             // 
@@ -386,13 +383,13 @@
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.Button btnDatosCliente;
         private System.Windows.Forms.DataGridView dGVProducto;
+        private System.Windows.Forms.Button btnImprimir;
+        private System.Windows.Forms.Button btnCargaACtaCte;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaSubtotal;
-        private System.Windows.Forms.Button btnImprimir;
-        private System.Windows.Forms.Button btnCargaACtaCte;
     }
 }
 

@@ -35,6 +35,8 @@
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblBuscador = new System.Windows.Forms.Label();
+            this.txtBuscador = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,7 +44,7 @@
             // 
             this.lblProdCoincidentes.AutoSize = true;
             this.lblProdCoincidentes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProdCoincidentes.Location = new System.Drawing.Point(12, 9);
+            this.lblProdCoincidentes.Location = new System.Drawing.Point(25, 36);
             this.lblProdCoincidentes.Name = "lblProdCoincidentes";
             this.lblProdCoincidentes.Size = new System.Drawing.Size(360, 25);
             this.lblProdCoincidentes.TabIndex = 24;
@@ -50,6 +52,7 @@
             // 
             // dGVProducto
             // 
+            this.dGVProducto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dGVProducto.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dGVProducto.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dGVProducto.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
@@ -77,12 +80,12 @@
             this.dGVProducto.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dGVProducto.EnableHeadersVisualStyles = false;
             this.dGVProducto.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(30)))), ((int)(((byte)(61)))));
-            this.dGVProducto.Location = new System.Drawing.Point(0, 50);
+            this.dGVProducto.Location = new System.Drawing.Point(0, 85);
             this.dGVProducto.Name = "dGVProducto";
             this.dGVProducto.RowHeadersVisible = false;
             this.dGVProducto.RowHeadersWidth = 51;
             this.dGVProducto.RowTemplate.Height = 35;
-            this.dGVProducto.Size = new System.Drawing.Size(1254, 463);
+            this.dGVProducto.Size = new System.Drawing.Size(1341, 463);
             this.dGVProducto.TabIndex = 37;
             // 
             // ColumnaDescripcion
@@ -91,7 +94,6 @@
             this.ColumnaDescripcion.HeaderText = "Descripcion";
             this.ColumnaDescripcion.MinimumWidth = 6;
             this.ColumnaDescripcion.Name = "ColumnaDescripcion";
-            this.ColumnaDescripcion.Width = 400;
             // 
             // ColumnaCodigo
             // 
@@ -100,7 +102,6 @@
             this.ColumnaCodigo.MinimumWidth = 6;
             this.ColumnaCodigo.Name = "ColumnaCodigo";
             this.ColumnaCodigo.ReadOnly = true;
-            this.ColumnaCodigo.Width = 200;
             // 
             // ColumnaPrecio
             // 
@@ -108,14 +109,34 @@
             this.ColumnaPrecio.HeaderText = "Precio";
             this.ColumnaPrecio.MinimumWidth = 6;
             this.ColumnaPrecio.Name = "ColumnaPrecio";
-            this.ColumnaPrecio.Width = 180;
+            // 
+            // lblBuscador
+            // 
+            this.lblBuscador.AutoSize = true;
+            this.lblBuscador.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuscador.Location = new System.Drawing.Point(643, 36);
+            this.lblBuscador.Name = "lblBuscador";
+            this.lblBuscador.Size = new System.Drawing.Size(110, 25);
+            this.lblBuscador.TabIndex = 38;
+            this.lblBuscador.Text = "Buscador:";
+            // 
+            // txtBuscador
+            // 
+            this.txtBuscador.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscador.Location = new System.Drawing.Point(780, 34);
+            this.txtBuscador.Name = "txtBuscador";
+            this.txtBuscador.Size = new System.Drawing.Size(361, 30);
+            this.txtBuscador.TabIndex = 39;
+            this.txtBuscador.TextChanged += new System.EventHandler(this.txtBuscador_TextChanged);
             // 
             // ProductosCoincidentesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
-            this.ClientSize = new System.Drawing.Size(1254, 513);
+            this.ClientSize = new System.Drawing.Size(1341, 548);
+            this.Controls.Add(this.txtBuscador);
+            this.Controls.Add(this.lblBuscador);
             this.Controls.Add(this.dGVProducto);
             this.Controls.Add(this.lblProdCoincidentes);
             this.Name = "ProductosCoincidentesForm";
@@ -133,5 +154,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
+        private System.Windows.Forms.Label lblBuscador;
+        private System.Windows.Forms.TextBox txtBuscador;
     }
 }

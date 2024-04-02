@@ -21,6 +21,7 @@ using static System.Net.WebRequestMethods;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Excel = Microsoft.Office.Interop.Excel;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace Presentacion
 {
@@ -63,7 +64,7 @@ namespace Presentacion
             buttonColumnMenos.Name = "ColumnaMenos";
             buttonColumnMenos.Text = "-";
             buttonColumnMenos.UseColumnTextForButtonValue = true;
-            buttonColumnMenos.Width = 40;
+            //buttonColumnMenos.Width = 40;
             dGVProducto.Columns.Insert(0, buttonColumnMenos);
 
             DataGridViewButtonColumn buttonColumnMas = new DataGridViewButtonColumn();
@@ -71,19 +72,20 @@ namespace Presentacion
             buttonColumnMas.Name = "ColumnaMas";
             buttonColumnMas.Text = "+";
             buttonColumnMas.UseColumnTextForButtonValue = true;
-            buttonColumnMas.Width = 40;
-
+            //buttonColumnMas.Width = 40;
             dGVProducto.Columns.Insert(2, buttonColumnMas);
 
-            ColumnaDescripcion.Width = 400;
+            //ColumnaDescripcion.Width = 400;
 
-            ColumnaCantidad.Width = 80;
+            //ColumnaCantidad.Width = 80;
 
-            ColumnaPrecio.Width = 100;
-            ColumnaSubtotal.Width = 100;
+            //ColumnaPrecio.Width = 100;
+            //ColumnaSubtotal.Width = 100;
 
             dGVProducto.CellContentClick += DGVProducto_CellContentClick;
             dGVProducto.CellValueChanged += DGVProducto_CellValueChanged;
+
+            //ResizeDataGridViewColumns();
 
         }
 
@@ -176,7 +178,7 @@ namespace Presentacion
                     newRow.CreateCells(dGVProducto);
                     newRow.Cells[dGVProducto.Columns["ColumnaDescripcion"].Index].Value = producto.Descripcion;
                     newRow.Cells[dGVProducto.Columns["ColumnaCodigo"].Index].Value = producto.Codigo;
-                    newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = producto.Precio;
+                    newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = producto.Precio.ToString("C");
                     newRow.Cells[dGVProducto.Columns["ColumnaCantidad"].Index].Value = 1;
                     dGVProducto.Rows.Add(newRow);
 
@@ -227,7 +229,7 @@ namespace Presentacion
                                 newRow.CreateCells(dGVProducto);
                                 newRow.Cells[dGVProducto.Columns["ColumnaDescripcion"].Index].Value = productoSeleccionado.Descripcion;
                                 newRow.Cells[dGVProducto.Columns["ColumnaCodigo"].Index].Value = productoSeleccionado.Codigo;
-                                newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = productoSeleccionado.Precio;
+                                newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = productoSeleccionado.Precio.ToString("C");
                                 newRow.Cells[dGVProducto.Columns["ColumnaCantidad"].Index].Value = 1;
                                 dGVProducto.Rows.Add(newRow);
                                 txtBoxDescripcion.Text = productoSeleccionado.Descripcion;
@@ -256,12 +258,21 @@ namespace Presentacion
                 {
                     string descripcion = fila.Cells["ColumnaDescripcion"].Value?.ToString();
                     string codigo = fila.Cells["ColumnaCodigo"].Value?.ToString();
-                    double precio = Convert.ToDouble(fila.Cells["ColumnaPrecio"].Value);
-                    int cantidad = Convert.ToInt32(fila.Cells["ColumnaCantidad"].Value);
+                    string precioConFormato = (string)fila.Cells["ColumnaPrecio"].Value;
+                    string precioSinFormato = precioConFormato.Replace("$", "").Replace(",", "");
 
-                    Producto producto = new Producto(descripcion, codigo, precio);
+                    double precioDouble;
+                    if (double.TryParse(precioSinFormato, out precioDouble))
+                    {
+                        int cantidad = Convert.ToInt32(fila.Cells["ColumnaCantidad"].Value);
 
-                    productosConCantidad.Add(producto, cantidad);
+                        Producto producto = new Producto(descripcion, codigo, precioDouble);
+                        productosConCantidad.Add(producto, cantidad);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: Formato de precio incorrecto en la fila " + fila.Index + ". Corrija el valor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
 
@@ -274,7 +285,7 @@ namespace Presentacion
                 {
                     if (!fila.IsNewRow && fila.Cells["ColumnaDescripcion"].Value.ToString() == parProductoSubtotal.Key.Descripcion)
                     {
-                        fila.Cells["ColumnaSubtotal"].Value = parProductoSubtotal.Value;
+                        fila.Cells["ColumnaSubtotal"].Value = parProductoSubtotal.Value.ToString("C");
                         break;
                     }
                 }
@@ -293,10 +304,19 @@ namespace Presentacion
                 // Verifica si la fila no es la fila de nuevo ingreso y si la celda de la descripción no es nula
                 if (!fila.IsNewRow && fila.Cells["ColumnaSubtotal"].Value != null)
                 {
-                    // Obtiene los valores de la fila
-                    double subtotal = Convert.ToDouble(fila.Cells["ColumnaSubtotal"].Value);
+                    string subtotalConFormato = (string)fila.Cells["ColumnaSubtotal"].Value;
 
-                    subtotales.Add(subtotal);
+                    string subtotalSinFormato = subtotalConFormato.Replace("$", "").Replace(",", "");
+
+                    double subtotalDouble;
+                    if (double.TryParse(subtotalSinFormato, out subtotalDouble))
+                    {
+                        subtotales.Add(subtotalDouble);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: Formato de subtotal incorrecto en la fila " + fila.Index + ". Corrija el valor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
 
@@ -401,6 +421,8 @@ namespace Presentacion
             btnGuardarPDF.BackColor = Color.FromArgb(33, 230, 193);
             btnImprimir.BackColor = Color.FromArgb(33, 230, 193);
             btnCargaACtaCte.BackColor = Color.FromArgb(33, 230, 193);
+
+            ResizeDataGridViewColumns();
         }
 
         private void enlazarExcelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -425,6 +447,7 @@ namespace Presentacion
 
         private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
         {
+            int originalMarginLeft = e.MarginBounds.Left;
             int marginLeft = e.MarginBounds.Left;
             int marginTop = e.MarginBounds.Top;
             int cellHeight = 0;
@@ -442,6 +465,7 @@ namespace Presentacion
 
             marginTop += 130;
 
+
             if (cliente != null && (!string.IsNullOrEmpty(cliente.NombreYApellido) ||
                         !string.IsNullOrEmpty(cliente.Cuil) ||
                         !string.IsNullOrEmpty(cliente.Direccion) ||
@@ -450,29 +474,31 @@ namespace Presentacion
             {
                 if (!string.IsNullOrEmpty(cliente.NombreYApellido))
                 {
-                    e.Graphics.DrawString("Nombre:", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
-                    e.Graphics.DrawString($"{cliente.NombreYApellido}", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left + 100, marginTop);
+                    e.Graphics.DrawString("Nombre:", dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
+                    e.Graphics.DrawString($"{cliente.NombreYApellido}", dGVProducto.Font, Brushes.Black, marginLeft + 100, marginTop);
                     marginTop += 20;
                 }
 
                 if (!string.IsNullOrEmpty(cliente.Cuil))
                 {
-                    e.Graphics.DrawString("Cuil:", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
-                    e.Graphics.DrawString($"{cliente.Cuil}", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left + 100, marginTop);
+                    e.Graphics.DrawString("Cuil:", dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
+                    e.Graphics.DrawString($"{cliente.Cuil}", dGVProducto.Font, Brushes.Black, marginLeft + 100, marginTop);
                     marginTop += 20;
                 }
 
                 if (!string.IsNullOrEmpty(cliente.Direccion))
                 {
-                    e.Graphics.DrawString("Dirección:", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
-                    e.Graphics.DrawString($"{cliente.Direccion}", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left + 100, marginTop);
+                   
+                    e.Graphics.DrawString("Dirección:", dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
+                    e.Graphics.DrawString($"{cliente.Direccion}", dGVProducto.Font, Brushes.Black, marginLeft + 100, marginTop);
                     marginTop += 20;
+
                 }
 
                 if (!string.IsNullOrEmpty(cliente.Telefono))
                 {
-                    e.Graphics.DrawString("Teléfono:", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
-                    e.Graphics.DrawString($"{cliente.Telefono}", dGVProducto.Font, Brushes.Black, e.MarginBounds.Left + 100, marginTop);
+                    e.Graphics.DrawString("Teléfono:", dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
+                    e.Graphics.DrawString($"{cliente.Telefono}", dGVProducto.Font, Brushes.Black, marginLeft + 100, marginTop);
                     marginTop += 20;
                 }
 
@@ -480,10 +506,11 @@ namespace Presentacion
                 {
                     DateTime fechaHoy = DateTime.Today;
                     e.Graphics.DrawString("Vigencia desde: " + fechaHoy.ToString("dd/MM/yy"), dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
-                    marginTop += 20;
+
+                    float fechaVigenciaHastaX = e.MarginBounds.Right - e.Graphics.MeasureString("Vigencia hasta: " + fechaHoy.ToString("dd/MM/yy"), dGVProducto.Font).Width;
 
                     DateTime fechaVigenciaHasta = fechaHoy.AddDays(cliente.DiasVigencia.Value);
-                    e.Graphics.DrawString("Vigencia hasta: " + fechaVigenciaHasta.ToString("dd/MM/yy"), dGVProducto.Font, Brushes.Black, e.MarginBounds.Left, marginTop);
+                    e.Graphics.DrawString("Vigencia hasta: " + fechaVigenciaHasta.ToString("dd/MM/yy"), dGVProducto.Font, Brushes.Black, fechaVigenciaHastaX, marginTop);
                     marginTop += 20;
                 }
                 e.Graphics.DrawLine(Pens.Black, e.MarginBounds.Left, marginTop, e.MarginBounds.Right, marginTop);
@@ -513,7 +540,7 @@ namespace Presentacion
             // Draw each row
             foreach (DataGridViewRow row in dGVProducto.Rows)
             {
-                marginLeft = e.MarginBounds.Left; // Reset margin left for each row
+                marginLeft = originalMarginLeft;  // Reset margin left for each row
                 cellHeight = 0; // Reset cell height for each row
 
                 // Draw each desired column
@@ -601,11 +628,22 @@ namespace Presentacion
             Excel.Worksheet worksheet = workbook.Sheets[1];
             Excel.Range range = worksheet.UsedRange;
 
-            int filaInicio = 8;
-            while (worksheet.Cells[filaInicio, 3].Value != null)
+            //int filaInicio = 8;
+            //while (worksheet.Cells[filaInicio, 3].Value != null)
+            //{
+            //    filaInicio++;
+            //}
+
+            int numFilasDataGridView = dataGridView.Rows.Count - 1; // Restar 1 para excluir la fila de nuevo
+
+            int filaInicio = EncontrarFilaVaciaContigua(worksheet, numFilasDataGridView);
+
+            if (filaInicio == -1)
             {
-                filaInicio++;
+                MessageBox.Show("No se encontraron suficientes filas vacías en el documento de Excel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
             worksheet.Cells[filaInicio, 1].Value = DateTime.Today.ToString("dd/MM/yyyy");
 
             int fila = 0;
@@ -618,22 +656,22 @@ namespace Presentacion
                     string cantidad = dataGridViewRow.Cells["ColumnaCantidad"].Value?.ToString();
                     string descripcion = dataGridViewRow.Cells["ColumnaDescripcion"].Value?.ToString();
                     string codigo = dataGridViewRow.Cells["ColumnaCodigo"].Value?.ToString();
-                    string precio = dataGridViewRow.Cells["ColumnaPrecio"].Value?.ToString();
+                    string precioConFormato = dataGridViewRow.Cells["ColumnaPrecio"].Value?.ToString();
 
-                    string codigoString = "'" + codigo;
+    string precioSinFormato = precioConFormato.Replace("$", "").Replace(",", "");
 
-                    worksheet.Cells[fila + filaInicio - 1, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
-                    worksheet.Cells[fila + filaInicio - 1, 3].Value = descripcion;
-                    worksheet.Cells[fila + filaInicio - 1, 4].Value = codigoString;
-                    worksheet.Cells[fila + filaInicio - 1, 5].Value = double.TryParse(precio, out double precioValue) ? precioValue : 0;
+    double precioDouble;
+    if (double.TryParse(precioSinFormato, out precioDouble))
+    {
+      worksheet.Cells[fila + filaInicio - 1, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
+      worksheet.Cells[fila + filaInicio - 1, 3].Value = descripcion;
+      worksheet.Cells[fila + filaInicio - 1, 4].Value = "'" + codigo;
+      worksheet.Cells[fila + filaInicio - 1, 5].Value = precioDouble;
+    }
 
 
                 }
             }
-
-            // Aplicar formato a las celdas según sea necesario
-
-            // Guardar el archivo
             workbook.Save();
 
             ReleaseObject(worksheet);
@@ -641,6 +679,40 @@ namespace Presentacion
 
             MessageBox.Show("Los datos se han exportado correctamente a Excel.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+
+        private int EncontrarFilaVaciaContigua(Excel.Worksheet worksheet, int numFilas)
+        {
+            int filaInicio = 8;
+            int filaActual = 8; 
+            int filasVaciasContiguas = 0;
+
+            while (filaActual <= worksheet.Rows.Count && filasVaciasContiguas < numFilas)
+            {
+                if (worksheet.Cells[filaActual, 3].Value == null)
+                {
+                    filasVaciasContiguas++;
+                }
+                else
+                {
+                    filasVaciasContiguas = 0; 
+                }
+
+                filaActual++;
+            }
+
+            if (filasVaciasContiguas >= numFilas)
+            {
+                filaInicio = filaActual - numFilas;
+            }
+            else
+            {
+                filaInicio = -1; 
+            }
+
+            return filaInicio;
+        }
+
 
         private void ReleaseObject(object obj)
         {
@@ -707,5 +779,41 @@ namespace Presentacion
                 }
             }
         }
+
+
+        private void ResizeDataGridViewColumns()
+        {
+            int anchoTotal = dGVProducto.ClientSize.Width;
+            double margen = 0.1;
+
+            double porcentajeDescripcion = 0.348;
+            double porcentajeCodigo = 0.15;
+            double porcentajeCantidad = 0.07;
+            double porcentajePrecio = 0.1;
+            double porcentajeSubtotal = 0.1;
+            double porcentajeEliminar = 0.1;
+            double porcentajeBoton = 0.05;
+
+            double anchoDisponible = anchoTotal * (1 - margen);
+
+            int anchoDescripcion = (int)(anchoDisponible * porcentajeDescripcion);
+            int anchoCodigo = (int)(anchoDisponible * porcentajeCodigo);
+            int anchoCantidad = (int)(anchoDisponible * porcentajeCantidad);
+            int anchoPrecio = (int)(anchoDisponible * porcentajePrecio);
+            int anchoSubtotal = (int)(anchoDisponible * porcentajeSubtotal);
+            int anchoEliminar = (int)(anchoDisponible * porcentajeEliminar);
+            int anchoBoton = (int)(anchoDisponible * porcentajeBoton);
+
+            ColumnaDescripcion.Width = anchoDescripcion;
+            ColumnaCodigo.Width = anchoCodigo;
+            ColumnaCantidad.Width = anchoCantidad;
+            ColumnaPrecio.Width = anchoPrecio;
+            ColumnaSubtotal.Width = anchoSubtotal;
+            dGVProducto.Columns["ColumnaEliminar"].Width = anchoEliminar;
+            dGVProducto.Columns["ColumnaMas"].Width = anchoBoton;
+            dGVProducto.Columns["ColumnaMenos"].Width = anchoBoton;
+        }
+
+
     }
 }

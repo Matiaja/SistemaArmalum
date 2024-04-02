@@ -25,7 +25,6 @@ namespace Presentacion
 
         private void ConfigurarDataGridView()
         {
-            // Agrega una columna de botón para agregar
             DataGridViewButtonColumn agregarButtonColumn = new DataGridViewButtonColumn();
             agregarButtonColumn.HeaderText = "Agregar";
             agregarButtonColumn.Name = "ColumnaAgregar";
@@ -33,7 +32,6 @@ namespace Presentacion
             agregarButtonColumn.UseColumnTextForButtonValue = true;
             dGVProducto.Columns.Add(agregarButtonColumn);
 
-            // Maneja el evento de clic en el botón de agregar
             dGVProducto.CellContentClick += dGVProducto_CellContentClick;
         }
 
@@ -82,5 +80,48 @@ namespace Presentacion
         {
             return productoSeleccionado;
         }
+
+        private void txtBuscador_TextChanged(object sender, EventArgs e)
+        {
+            string busqueda = txtBuscador.Text.Trim().ToLower();
+
+            if (!string.IsNullOrEmpty(busqueda))
+            {
+                foreach (DataGridViewRow row in dGVProducto.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        bool encontrado = false;
+
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            if (cell.Value != null)
+                            {
+                                string valorCelda = cell.Value.ToString().ToLower();
+                                if ((cell.OwningColumn.Name == "ColumnaCodigo" && valorCelda.Contains(busqueda)) ||
+                                    (cell.OwningColumn.Name == "ColumnaDescripcion" && valorCelda.Contains(busqueda)))
+                                {
+                                    encontrado = true;
+                                    break;
+                                }
+                            }
+                        }
+                        row.Visible = encontrado;
+                    }
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in dGVProducto.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        row.Visible = true;
+                    }
+                }
+            }
+        }
+
+
     }
 }
