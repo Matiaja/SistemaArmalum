@@ -1,3 +1,8 @@
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.exe.config
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.exe.manifest
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.application
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.exe
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.pdb
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\BouncyCastle.Crypto.dll
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Datos.dll
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Entidades.dll
@@ -110,13 +115,8 @@ C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Presen
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Presentacion.Properties.Resources.resources
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Presentacion.csproj.GenerateResource.cache
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Presentacion.csproj.CoreCompileInputs.cache
-C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Presentacion.csproj.CopyComplete
-C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.exe.config
-C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.exe
-C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.pdb
-C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Sistema Armalum.exe
-C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Sistema Armalum.pdb
-C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.exe.manifest
-C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\bin\Release\Sistema Armalum.application
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Sistema Armalum.exe.manifest
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Sistema Armalum.application
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Presentacion.csproj.CopyComplete
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Sistema Armalum.exe
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Presentacion\obj\Release\Sistema Armalum.pdb

@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Sistema Armalum.exe.manifest" size="41171">
+    <dependentAssembly dependencyType="install" codebase="Sistema Armalum.exe.manifest" size="41172">
       <assemblyIdentity name="Sistema Armalum.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>awMHjZIf+RCctEu3MYgE1gPPWxd/aTRxAHTntlur/E8=</dsig:DigestValue>
+        <dsig:DigestValue>Kitf9cWTxOjE9LF+IWiW7yk3NLjScMAj6xSuJVN9/P8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

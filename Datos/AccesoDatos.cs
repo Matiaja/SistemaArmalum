@@ -27,36 +27,52 @@ namespace Datos
 
         }
 
-        private void CrearBaseDeDatosSiNoExiste(MySqlConnection connection)
+        private void CrearBaseDeDatosSiNoExiste()
         {
-            string createDatabaseQuery = $"CREATE DATABASE IF NOT EXISTS {database}";
-            using (MySqlCommand command = new MySqlCommand(createDatabaseQuery, connection))
-            {
-                command.ExecuteNonQuery();
-            }
+            string cadenaConexionSinBaseDatos = $"SERVER={server};PORT=3306;UID={uid};PASSWORD={password};";
 
-            // Cambiar a la base de datos recién creada
-            connection.ChangeDatabase(database);
-
-            // Crear la tabla si no existe
-            string createTableQuery = "CREATE TABLE IF NOT EXISTS producto (" +
-                                      "descripcion VARCHAR(255), " +
-                                      "codigo VARCHAR(70), " +
-                                      "precio DECIMAL(18, 2))";
-            using (MySqlCommand command = new MySqlCommand(createTableQuery, connection))
+            using (MySqlConnection connection = new MySqlConnection(cadenaConexionSinBaseDatos))
             {
-                command.ExecuteNonQuery();
+                connection.Open();
+
+                string consultaExiste = $"SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name = '{database}'";
+
+                using (MySqlCommand command = new MySqlCommand(consultaExiste, connection))
+                {
+                    int? cantidad = command.ExecuteScalar() as int?;
+
+                    if (cantidad == null)
+                    {
+                        string crearBaseDatos = $"CREATE DATABASE IF NOT EXISTS {database}";
+                        command.CommandText = crearBaseDatos;
+                        command.ExecuteNonQuery();
+
+                    }
+
+                    connection.ChangeDatabase(database);
+
+                    string createTableQuery = "CREATE TABLE IF NOT EXISTS producto (" +
+                                                "descripcion VARCHAR(255), " +
+                                                "codigo VARCHAR(70), " +
+                                                "precio DECIMAL(18, 2))";
+
+                    using (MySqlCommand cmd = new MySqlCommand(createTableQuery, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
             }
         }
 
         public void ActualizarBaseDeDatos(List<Producto> productos)
         {
 
+            CrearBaseDeDatosSiNoExiste();
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
+
                 connection.Open();
-                CrearBaseDeDatosSiNoExiste(connection);
                 string query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = @DatabaseName";
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@DatabaseName", database);
