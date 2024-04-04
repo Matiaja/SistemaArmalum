@@ -11,6 +11,7 @@ namespace Entidades
         public string NombreYApellido {  get; set; }
         public string Cuil {  get; set; }
         public string Direccion {  get; set; }
+        public string Localidad { get; set; }
         public string Telefono { get; set; }
         public int? DiasVigencia { get; set; }
 

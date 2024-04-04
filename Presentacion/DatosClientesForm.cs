@@ -30,6 +30,7 @@ namespace Presentacion
                 txtBoxCuil.Text = cliente.Cuil;
                 txtBoxNombreApellido.Text = cliente.NombreYApellido;
                 txtBoxDireccion.Text = cliente.Direccion;
+                txtBoxLocalidad.Text = cliente.Localidad;
                 txtBoxTelefono.Text = cliente.Telefono;
                 txtBoxDiasVigencia.Text = cliente.DiasVigencia.ToString();
             }
@@ -40,6 +41,7 @@ namespace Presentacion
             txtBoxCuil.Clear();
             txtBoxDiasVigencia.Clear();
             txtBoxDireccion.Clear();
+            txtBoxLocalidad.Clear();
             txtBoxNombreApellido.Clear();
             txtBoxTelefono.Clear();
         }
@@ -50,6 +52,7 @@ namespace Presentacion
             cliente.NombreYApellido = txtBoxNombreApellido.Text;
             cliente.Direccion = txtBoxDireccion.Text;
             cliente.Telefono = txtBoxTelefono.Text;
+            cliente.Localidad = txtBoxLocalidad.Text;
             if (string.IsNullOrWhiteSpace(txtBoxDiasVigencia.Text))
             {
                 cliente.DiasVigencia = null;
@@ -68,6 +71,36 @@ namespace Presentacion
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void txtBoxNombreApellido_TextChanged(object sender, EventArgs e)
+        {
+            txtBoxNombreApellido.Text = txtBoxNombreApellido.Text.ToUpper();
+            txtBoxNombreApellido.SelectionStart = txtBoxNombreApellido.Text.Length;
+        }
+
+        private void txtBoxDireccion_TextChanged(object sender, EventArgs e)
+        {
+            txtBoxDireccion.Text = txtBoxDireccion.Text.ToUpper();
+            txtBoxDireccion.SelectionStart = txtBoxDireccion.Text.Length;
+        }
+
+        private void txtBoxLocalidad_TextChanged(object sender, EventArgs e)
+        {
+            txtBoxLocalidad.Text = txtBoxLocalidad.Text.ToUpper();
+            txtBoxLocalidad.SelectionStart = txtBoxLocalidad.Text.Length;
+        }
+
+        private void txtBoxTelefono_TextChanged(object sender, EventArgs e)
+        {
+            txtBoxTelefono.Text = txtBoxTelefono.Text.ToUpper();
+            txtBoxTelefono.SelectionStart = txtBoxTelefono.Text.Length;
+        }
+
+        private void txtBoxCuil_TextChanged(object sender, EventArgs e)
+        {
+            txtBoxCuil.Text = txtBoxCuil.Text.ToUpper();
+            txtBoxCuil.SelectionStart = txtBoxCuil.Text.Length;
         }
     }
 }

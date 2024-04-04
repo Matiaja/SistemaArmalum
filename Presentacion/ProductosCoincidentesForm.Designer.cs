@@ -141,7 +141,7 @@
             this.Controls.Add(this.lblProdCoincidentes);
             this.Name = "ProductosCoincidentesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ProductosCoincidentesForm";
+            this.Text = "Productos coincidentes";
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

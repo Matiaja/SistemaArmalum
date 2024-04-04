@@ -41,7 +41,7 @@
             this.txtBoxDescripcion = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.txtboxCodigo = new System.Windows.Forms.TextBox();
-            this.btnGuardarPDF = new System.Windows.Forms.Button();
+            this.btnImprimirPDF = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.enlazarExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -49,13 +49,13 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.btnDatosCliente = new System.Windows.Forms.Button();
             this.dGVProducto = new System.Windows.Forms.DataGridView();
-            this.btnImprimir = new System.Windows.Forms.Button();
-            this.btnCargaACtaCte = new System.Windows.Forms.Button();
             this.ColumnaCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnCargaACtaCte = new System.Windows.Forms.Button();
+            this.btnGenerarPDF = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
@@ -164,16 +164,16 @@
             this.txtboxCodigo.TabIndex = 23;
             this.txtboxCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtboxCodigo_KeyPress);
             // 
-            // btnGuardarPDF
+            // btnImprimirPDF
             // 
-            this.btnGuardarPDF.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnGuardarPDF.Location = new System.Drawing.Point(1277, 47);
-            this.btnGuardarPDF.Name = "btnGuardarPDF";
-            this.btnGuardarPDF.Size = new System.Drawing.Size(199, 48);
-            this.btnGuardarPDF.TabIndex = 33;
-            this.btnGuardarPDF.Text = "Guardar PDF";
-            this.btnGuardarPDF.UseVisualStyleBackColor = true;
-            this.btnGuardarPDF.Click += new System.EventHandler(this.btnGuardarPDF_Click);
+            this.btnImprimirPDF.Font = new System.Drawing.Font("Arial", 13.8F);
+            this.btnImprimirPDF.Location = new System.Drawing.Point(1277, 47);
+            this.btnImprimirPDF.Name = "btnImprimirPDF";
+            this.btnImprimirPDF.Size = new System.Drawing.Size(199, 48);
+            this.btnImprimirPDF.TabIndex = 33;
+            this.btnImprimirPDF.Text = "Imprimir PDF";
+            this.btnImprimirPDF.UseVisualStyleBackColor = true;
+            this.btnImprimirPDF.Click += new System.EventHandler(this.btnImprimirPDF_Click);
             // 
             // menuStrip1
             // 
@@ -270,28 +270,6 @@
             this.dGVProducto.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVProducto_CellValueChanged_1);
             this.dGVProducto.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dGVProducto_RowsAdded);
             // 
-            // btnImprimir
-            // 
-            this.btnImprimir.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnImprimir.Location = new System.Drawing.Point(1277, 115);
-            this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(199, 48);
-            this.btnImprimir.TabIndex = 37;
-            this.btnImprimir.Text = "Imprimir PDF";
-            this.btnImprimir.UseVisualStyleBackColor = true;
-            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
-            // 
-            // btnCargaACtaCte
-            // 
-            this.btnCargaACtaCte.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCargaACtaCte.Location = new System.Drawing.Point(812, 115);
-            this.btnCargaACtaCte.Name = "btnCargaACtaCte";
-            this.btnCargaACtaCte.Size = new System.Drawing.Size(199, 48);
-            this.btnCargaACtaCte.TabIndex = 38;
-            this.btnCargaACtaCte.Text = "Cargar en Cta Cte";
-            this.btnCargaACtaCte.UseVisualStyleBackColor = true;
-            this.btnCargaACtaCte.Click += new System.EventHandler(this.btnCargaACtaCte_Click);
-            // 
             // ColumnaCantidad
             // 
             this.ColumnaCantidad.HeaderText = "Cantidad";
@@ -327,17 +305,39 @@
             this.ColumnaSubtotal.Name = "ColumnaSubtotal";
             this.ColumnaSubtotal.ReadOnly = true;
             // 
+            // btnCargaACtaCte
+            // 
+            this.btnCargaACtaCte.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCargaACtaCte.Location = new System.Drawing.Point(812, 115);
+            this.btnCargaACtaCte.Name = "btnCargaACtaCte";
+            this.btnCargaACtaCte.Size = new System.Drawing.Size(199, 48);
+            this.btnCargaACtaCte.TabIndex = 38;
+            this.btnCargaACtaCte.Text = "Cargar en Cta Cte";
+            this.btnCargaACtaCte.UseVisualStyleBackColor = true;
+            this.btnCargaACtaCte.Click += new System.EventHandler(this.btnCargaACtaCte_Click);
+            // 
+            // btnGenerarPDF
+            // 
+            this.btnGenerarPDF.Font = new System.Drawing.Font("Arial", 13.8F);
+            this.btnGenerarPDF.Location = new System.Drawing.Point(1278, 114);
+            this.btnGenerarPDF.Name = "btnGenerarPDF";
+            this.btnGenerarPDF.Size = new System.Drawing.Size(199, 48);
+            this.btnGenerarPDF.TabIndex = 39;
+            this.btnGenerarPDF.Text = "Generar PDF";
+            this.btnGenerarPDF.UseVisualStyleBackColor = true;
+            this.btnGenerarPDF.Click += new System.EventHandler(this.btnGenerarPDF_Click);
+            // 
             // PrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
             this.ClientSize = new System.Drawing.Size(1579, 732);
+            this.Controls.Add(this.btnGenerarPDF);
             this.Controls.Add(this.btnCargaACtaCte);
-            this.Controls.Add(this.btnImprimir);
             this.Controls.Add(this.dGVProducto);
             this.Controls.Add(this.btnDatosCliente);
-            this.Controls.Add(this.btnGuardarPDF);
+            this.Controls.Add(this.btnImprimirPDF);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.txtBoxTotal);
@@ -375,7 +375,7 @@
         private System.Windows.Forms.TextBox txtBoxDescripcion;
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.TextBox txtboxCodigo;
-        private System.Windows.Forms.Button btnGuardarPDF;
+        private System.Windows.Forms.Button btnImprimirPDF;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem enlazarExcelToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
@@ -383,13 +383,13 @@
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.Button btnDatosCliente;
         private System.Windows.Forms.DataGridView dGVProducto;
-        private System.Windows.Forms.Button btnImprimir;
         private System.Windows.Forms.Button btnCargaACtaCte;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaSubtotal;
+        private System.Windows.Forms.Button btnGenerarPDF;
     }
 }
 

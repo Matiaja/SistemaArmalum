@@ -63,7 +63,7 @@
             this.Controls.Add(this.btnCerrar);
             this.Name = "AvisoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AvisoForm";
+            this.Text = "Aviso de actualizacion de la base de datos";
             this.Load += new System.EventHandler(this.AvisoForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

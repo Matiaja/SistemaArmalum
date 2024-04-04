@@ -22,6 +22,9 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Excel = Microsoft.Office.Interop.Excel;
 using Org.BouncyCastle.Asn1.X509;
+using System.Globalization;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace Presentacion
 {
@@ -64,7 +67,6 @@ namespace Presentacion
             buttonColumnMenos.Name = "ColumnaMenos";
             buttonColumnMenos.Text = "-";
             buttonColumnMenos.UseColumnTextForButtonValue = true;
-            //buttonColumnMenos.Width = 40;
             dGVProducto.Columns.Insert(0, buttonColumnMenos);
 
             DataGridViewButtonColumn buttonColumnMas = new DataGridViewButtonColumn();
@@ -72,46 +74,12 @@ namespace Presentacion
             buttonColumnMas.Name = "ColumnaMas";
             buttonColumnMas.Text = "+";
             buttonColumnMas.UseColumnTextForButtonValue = true;
-            //buttonColumnMas.Width = 40;
+
             dGVProducto.Columns.Insert(2, buttonColumnMas);
-
-            //ColumnaDescripcion.Width = 400;
-
-            //ColumnaCantidad.Width = 80;
-
-            //ColumnaPrecio.Width = 100;
-            //ColumnaSubtotal.Width = 100;
-
             dGVProducto.CellContentClick += DGVProducto_CellContentClick;
             dGVProducto.CellValueChanged += DGVProducto_CellValueChanged;
 
-            //ResizeDataGridViewColumns();
-
         }
-
-        //private void dGVProducto_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        //{
-        //    FormatearCeldas();
-        //}
-
-        //private void FormatearCeldas()
-        //{
-        //    foreach (DataGridViewRow row in dGVProducto.Rows)
-        //    {
-        //        FormatearCelda(row.Cells["ColumnaPrecio"]);
-        //        FormatearCelda(row.Cells["ColumnaSubtotal"]);
-        //        FormatearCelda(row.Cells["ColumnaTotal"]);
-        //    }
-        //}
-
-        //private void FormatearCelda(DataGridViewCell cell)
-        //{
-        //    if (cell != null && cell.Value != null && double.TryParse(cell.Value.ToString(), out double valor))
-        //    {
-        //        cell.Value = valor.ToString("C");
-        //    }
-        //}
-
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
@@ -178,7 +146,7 @@ namespace Presentacion
                     newRow.CreateCells(dGVProducto);
                     newRow.Cells[dGVProducto.Columns["ColumnaDescripcion"].Index].Value = producto.Descripcion;
                     newRow.Cells[dGVProducto.Columns["ColumnaCodigo"].Index].Value = producto.Codigo;
-                    newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = producto.Precio.ToString("C");
+                    newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = producto.Precio.ToString("C", CultureInfo.CreateSpecificCulture("es-AR"));
                     newRow.Cells[dGVProducto.Columns["ColumnaCantidad"].Index].Value = 1;
                     dGVProducto.Rows.Add(newRow);
 
@@ -229,7 +197,7 @@ namespace Presentacion
                                 newRow.CreateCells(dGVProducto);
                                 newRow.Cells[dGVProducto.Columns["ColumnaDescripcion"].Index].Value = productoSeleccionado.Descripcion;
                                 newRow.Cells[dGVProducto.Columns["ColumnaCodigo"].Index].Value = productoSeleccionado.Codigo;
-                                newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = productoSeleccionado.Precio.ToString("C");
+                                newRow.Cells[dGVProducto.Columns["ColumnaPrecio"].Index].Value = productoSeleccionado.Precio.ToString("C", CultureInfo.CreateSpecificCulture("es-AR"));
                                 newRow.Cells[dGVProducto.Columns["ColumnaCantidad"].Index].Value = 1;
                                 dGVProducto.Rows.Add(newRow);
                                 txtBoxDescripcion.Text = productoSeleccionado.Descripcion;
@@ -259,14 +227,14 @@ namespace Presentacion
                     string descripcion = fila.Cells["ColumnaDescripcion"].Value?.ToString();
                     string codigo = fila.Cells["ColumnaCodigo"].Value?.ToString();
                     string precioConFormato = (string)fila.Cells["ColumnaPrecio"].Value;
-                    string precioSinFormato = precioConFormato.Replace("$", "").Replace(",", "");
 
-                    double precioDouble;
-                    if (double.TryParse(precioSinFormato, out precioDouble))
+                    // Convertir el precio directamente a un valor numérico (decimal)
+                    decimal precioDecimal;
+                    if (decimal.TryParse(precioConFormato, NumberStyles.Currency, CultureInfo.GetCultureInfo("es-AR"), out precioDecimal))
                     {
                         int cantidad = Convert.ToInt32(fila.Cells["ColumnaCantidad"].Value);
 
-                        Producto producto = new Producto(descripcion, codigo, precioDouble);
+                        Producto producto = new Producto(descripcion, codigo, (double)precioDecimal);
                         productosConCantidad.Add(producto, cantidad);
                     }
                     else
@@ -285,7 +253,7 @@ namespace Presentacion
                 {
                     if (!fila.IsNewRow && fila.Cells["ColumnaDescripcion"].Value.ToString() == parProductoSubtotal.Key.Descripcion)
                     {
-                        fila.Cells["ColumnaSubtotal"].Value = parProductoSubtotal.Value.ToString("C");
+                        fila.Cells["ColumnaSubtotal"].Value = parProductoSubtotal.Value.ToString("C", CultureInfo.CreateSpecificCulture("es-AR"));
                         break;
                     }
                 }
@@ -306,12 +274,10 @@ namespace Presentacion
                 {
                     string subtotalConFormato = (string)fila.Cells["ColumnaSubtotal"].Value;
 
-                    string subtotalSinFormato = subtotalConFormato.Replace("$", "").Replace(",", "");
-
-                    double subtotalDouble;
-                    if (double.TryParse(subtotalSinFormato, out subtotalDouble))
+                    decimal subtotalDecimal;
+                    if (decimal.TryParse(subtotalConFormato, NumberStyles.Currency, CultureInfo.GetCultureInfo("es-AR"), out subtotalDecimal))
                     {
-                        subtotales.Add(subtotalDouble);
+                        subtotales.Add((double)subtotalDecimal);
                     }
                     else
                     {
@@ -324,7 +290,7 @@ namespace Presentacion
 
             double Total = gestorProductos.CalcularTotalNegocio(subtotales);
 
-            txtBoxTotal.Text = Total.ToString("C");
+            txtBoxTotal.Text = Total.ToString("C", CultureInfo.CreateSpecificCulture("en-AR"));
         }
 
 
@@ -399,7 +365,7 @@ namespace Presentacion
 
 
         // Método para manejar el evento Click del botón "Imprimir"
-        private void btnGuardarPDF_Click(object sender, EventArgs e)
+        private void btnImprimirPDF_Click(object sender, EventArgs e)
         {
             PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
             printPreviewDialog.Document = printDocument1;
@@ -418,8 +384,8 @@ namespace Presentacion
             btnLimpiar.BackColor = Color.FromArgb(33, 230, 193);
             btnDatosCliente.BackColor = Color.FromArgb(33, 230, 193);
             btnActualizar.BackColor = Color.FromArgb(33, 230, 193);
-            btnGuardarPDF.BackColor = Color.FromArgb(33, 230, 193);
-            btnImprimir.BackColor = Color.FromArgb(33, 230, 193);
+            btnImprimirPDF.BackColor = Color.FromArgb(33, 230, 193);
+           // btnImprimir.BackColor = Color.FromArgb(33, 230, 193);
             btnCargaACtaCte.BackColor = Color.FromArgb(33, 230, 193);
 
             ResizeDataGridViewColumns();
@@ -454,7 +420,7 @@ namespace Presentacion
 
             int[] columnWidths = { 40, 350, 100, 80, 80 };
 
-            System.Drawing.Image encabezadoImage = System.Drawing.Image.FromFile("C:\\Users\\matia\\Desktop\\SistemaParaFerreteria2024\\Logo_Armalum.png");
+            System.Drawing.Image encabezadoImage = Properties.Resources.Logo_Armalum;
 
             int encabezadoWidth = 300;
             int encabezadoHeight = encabezadoImage.Height * encabezadoWidth / encabezadoImage.Width;
@@ -491,6 +457,15 @@ namespace Presentacion
                    
                     e.Graphics.DrawString("Dirección:", dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
                     e.Graphics.DrawString($"{cliente.Direccion}", dGVProducto.Font, Brushes.Black, marginLeft + 100, marginTop);
+                    marginTop += 20;
+
+                }
+
+                if (!string.IsNullOrEmpty(cliente.Localidad))
+                {
+
+                    e.Graphics.DrawString("Localidad:", dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
+                    e.Graphics.DrawString($"{cliente.Localidad}", dGVProducto.Font, Brushes.Black, marginLeft + 100, marginTop);
                     marginTop += 20;
 
                 }
@@ -591,9 +566,8 @@ namespace Presentacion
 
             SizeF totalTextSize = e.Graphics.MeasureString("Total: " + txtBoxTotal.Text, dGVProducto.Font);
 
-            // Define el ancho y la altura adicionales para el rectángulo
-            float extraWidth = 5; // Espacio adicional a la izquierda y a la derecha del texto
-            float extraHeight = 5; // Espacio adicional encima y debajo del texto
+            float extraWidth = 5; 
+            float extraHeight = 5;
 
             // Dibuja el total con un rectángulo que rodea
             RectangleF totalRect = new RectangleF(marginLeft - extraWidth, totalTop, totalTextSize.Width + (2 * extraWidth), totalTextSize.Height + (2 * extraHeight));
@@ -644,7 +618,8 @@ namespace Presentacion
                 return;
             }
 
-            worksheet.Cells[filaInicio, 1].Value = DateTime.Today.ToString("dd/MM/yyyy");
+            worksheet.Cells[filaInicio, 1].NumberFormat = "dd/MM/yyyy";
+            worksheet.Cells[filaInicio, 1].Value = DateTime.Today;
 
             int fila = 0;
             foreach (DataGridViewRow dataGridViewRow in dataGridView.Rows)
@@ -658,16 +633,14 @@ namespace Presentacion
                     string codigo = dataGridViewRow.Cells["ColumnaCodigo"].Value?.ToString();
                     string precioConFormato = dataGridViewRow.Cells["ColumnaPrecio"].Value?.ToString();
 
-    string precioSinFormato = precioConFormato.Replace("$", "").Replace(",", "");
-
-    double precioDouble;
-    if (double.TryParse(precioSinFormato, out precioDouble))
-    {
-      worksheet.Cells[fila + filaInicio - 1, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
-      worksheet.Cells[fila + filaInicio - 1, 3].Value = descripcion;
-      worksheet.Cells[fila + filaInicio - 1, 4].Value = "'" + codigo;
-      worksheet.Cells[fila + filaInicio - 1, 5].Value = precioDouble;
-    }
+                    decimal precioDecimal;
+                    if (decimal.TryParse(precioConFormato, NumberStyles.Currency, CultureInfo.GetCultureInfo("es-AR"), out precioDecimal))
+                    {
+                      worksheet.Cells[fila + filaInicio - 1, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
+                      worksheet.Cells[fila + filaInicio - 1, 3].Value = descripcion;
+                      worksheet.Cells[fila + filaInicio - 1, 4].Value = "'" + codigo;
+                      worksheet.Cells[fila + filaInicio - 1, 5].Value = (double)precioDecimal;
+                    }
 
 
                 }
@@ -732,12 +705,6 @@ namespace Presentacion
             }
         }
 
-        private void btnImprimir_Click(object sender, EventArgs e)
-        {
-            PrintDocument pd = new PrintDocument();
-            pd.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
-            pd.Print();
-        }
 
         private void dGVProducto_CellValueChanged_1(object sender, DataGridViewCellEventArgs e)
         {
@@ -771,7 +738,6 @@ namespace Presentacion
 
                     ExportarDataGridViewAExcel(dGVProducto, rutaArchivoExcel);
 
-                    MessageBox.Show("Los datos se han exportado correctamente a Excel.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -815,5 +781,14 @@ namespace Presentacion
         }
 
 
+        public static void GenerarPDF()
+        {
+
+        }
+
+        private void btnGenerarPDF_Click(object sender, EventArgs e)
+        {
+            GenerarPDF();
+        }
     }
 }

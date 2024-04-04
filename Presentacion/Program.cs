@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,9 @@ namespace Presentacion
         {
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
+                //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("es-AR");
+                //Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("es-AR");
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new PrincipalForm());
