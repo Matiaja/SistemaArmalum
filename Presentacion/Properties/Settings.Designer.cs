@@ -34,5 +34,17 @@ namespace Presentacion.Properties {
                 this["RutaArchivo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RutaExcelVentasMensuales {
+            get {
+                return ((string)(this["RutaExcelVentasMensuales"]));
+            }
+            set {
+                this["RutaExcelVentasMensuales"] = value;
+            }
+        }
     }
 }

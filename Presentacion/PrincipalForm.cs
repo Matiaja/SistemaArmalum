@@ -31,6 +31,7 @@ namespace Presentacion
     public partial class PrincipalForm : Form
     {
         public string rutaArchivo;
+        public string rutaExcelVentasMensuales;
         private DataGridViewCellStyle defaultCellStyle;
         private Cliente cliente = new Cliente();
         public PrincipalForm()
@@ -387,6 +388,7 @@ namespace Presentacion
             btnImprimirPDF.BackColor = Color.FromArgb(33, 230, 193);
            // btnImprimir.BackColor = Color.FromArgb(33, 230, 193);
             btnCargaACtaCte.BackColor = Color.FromArgb(33, 230, 193);
+            btnVentasMensuales.BackColor = Color.FromArgb(33, 230, 193);
 
             ResizeDataGridViewColumns();
         }
@@ -789,6 +791,37 @@ namespace Presentacion
         private void btnGenerarPDF_Click(object sender, EventArgs e)
         {
             GenerarPDF();
+        }
+
+        private void enlazarExcelVentasMensualesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Title = "Seleccionar archivo Excel de ventas Mensuales";
+
+            openFileDialog.Filter = "Archivos Excel|*.xlsm";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFilePath = openFileDialog.FileName;
+
+                rutaExcelVentasMensuales = selectedFilePath;
+
+                Properties.Settings.Default.RutaExcelVentasMensuales = rutaExcelVentasMensuales;
+
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void btnVentasMensuales_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(rutaExcelVentasMensuales))
+            {
+                MessageBox.Show("Primero selecciona un archivo Excel de ventas mensuales.", "Archivo no seleccionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+
         }
     }
 }

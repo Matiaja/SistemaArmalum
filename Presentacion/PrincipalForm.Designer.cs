@@ -56,6 +56,8 @@
             this.ColumnaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCargaACtaCte = new System.Windows.Forms.Button();
             this.btnGenerarPDF = new System.Windows.Forms.Button();
+            this.enlazarExcelVentasMensualesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnVentasMensuales = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +65,7 @@
             // btnActualizar
             // 
             this.btnActualizar.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnActualizar.Location = new System.Drawing.Point(1044, 115);
+            this.btnActualizar.Location = new System.Drawing.Point(997, 114);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(199, 48);
             this.btnActualizar.TabIndex = 32;
@@ -74,7 +76,7 @@
             // btnLimpiar
             // 
             this.btnLimpiar.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(812, 47);
+            this.btnLimpiar.Location = new System.Drawing.Point(765, 46);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(199, 48);
             this.btnLimpiar.TabIndex = 31;
@@ -91,7 +93,7 @@
             this.txtBoxTotal.Location = new System.Drawing.Point(864, 177);
             this.txtBoxTotal.Name = "txtBoxTotal";
             this.txtBoxTotal.ReadOnly = true;
-            this.txtBoxTotal.Size = new System.Drawing.Size(613, 39);
+            this.txtBoxTotal.Size = new System.Drawing.Size(740, 39);
             this.txtBoxTotal.TabIndex = 30;
             // 
             // lblTotal
@@ -167,7 +169,7 @@
             // btnImprimirPDF
             // 
             this.btnImprimirPDF.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnImprimirPDF.Location = new System.Drawing.Point(1277, 47);
+            this.btnImprimirPDF.Location = new System.Drawing.Point(1230, 46);
             this.btnImprimirPDF.Name = "btnImprimirPDF";
             this.btnImprimirPDF.Size = new System.Drawing.Size(199, 48);
             this.btnImprimirPDF.TabIndex = 33;
@@ -180,10 +182,11 @@
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(30)))), ((int)(((byte)(61)))));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enlazarExcelToolStripMenuItem});
+            this.enlazarExcelToolStripMenuItem,
+            this.enlazarExcelVentasMensualesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1579, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1706, 30);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -192,8 +195,8 @@
             this.enlazarExcelToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enlazarExcelToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.enlazarExcelToolStripMenuItem.Name = "enlazarExcelToolStripMenuItem";
-            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(122, 23);
-            this.enlazarExcelToolStripMenuItem.Text = "Enlazar Excel";
+            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.enlazarExcelToolStripMenuItem.Text = "Enlazar Excel Lista de precios";
             this.enlazarExcelToolStripMenuItem.Click += new System.EventHandler(this.enlazarExcelToolStripMenuItem_Click);
             // 
             // openFileDialog1
@@ -218,7 +221,7 @@
             // btnDatosCliente
             // 
             this.btnDatosCliente.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnDatosCliente.Location = new System.Drawing.Point(1044, 47);
+            this.btnDatosCliente.Location = new System.Drawing.Point(997, 46);
             this.btnDatosCliente.Name = "btnDatosCliente";
             this.btnDatosCliente.Size = new System.Drawing.Size(199, 48);
             this.btnDatosCliente.TabIndex = 35;
@@ -265,7 +268,7 @@
             this.dGVProducto.RowHeadersVisible = false;
             this.dGVProducto.RowHeadersWidth = 51;
             this.dGVProducto.RowTemplate.Height = 35;
-            this.dGVProducto.Size = new System.Drawing.Size(1579, 494);
+            this.dGVProducto.Size = new System.Drawing.Size(1706, 494);
             this.dGVProducto.TabIndex = 36;
             this.dGVProducto.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dGVProducto_CellValueChanged_1);
             this.dGVProducto.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dGVProducto_RowsAdded);
@@ -308,7 +311,7 @@
             // btnCargaACtaCte
             // 
             this.btnCargaACtaCte.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCargaACtaCte.Location = new System.Drawing.Point(812, 115);
+            this.btnCargaACtaCte.Location = new System.Drawing.Point(765, 114);
             this.btnCargaACtaCte.Name = "btnCargaACtaCte";
             this.btnCargaACtaCte.Size = new System.Drawing.Size(199, 48);
             this.btnCargaACtaCte.TabIndex = 38;
@@ -319,7 +322,7 @@
             // btnGenerarPDF
             // 
             this.btnGenerarPDF.Font = new System.Drawing.Font("Arial", 13.8F);
-            this.btnGenerarPDF.Location = new System.Drawing.Point(1278, 114);
+            this.btnGenerarPDF.Location = new System.Drawing.Point(1231, 113);
             this.btnGenerarPDF.Name = "btnGenerarPDF";
             this.btnGenerarPDF.Size = new System.Drawing.Size(199, 48);
             this.btnGenerarPDF.TabIndex = 39;
@@ -327,12 +330,33 @@
             this.btnGenerarPDF.UseVisualStyleBackColor = true;
             this.btnGenerarPDF.Click += new System.EventHandler(this.btnGenerarPDF_Click);
             // 
+            // enlazarExcelVentasMensualesToolStripMenuItem
+            // 
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F);
+            this.enlazarExcelVentasMensualesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Name = "enlazarExcelVentasMensualesToolStripMenuItem";
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Text = "Enlazar Excel Ventas Mensuales";
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Click += new System.EventHandler(this.enlazarExcelVentasMensualesToolStripMenuItem_Click);
+            // 
+            // btnVentasMensuales
+            // 
+            this.btnVentasMensuales.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVentasMensuales.Location = new System.Drawing.Point(1460, 46);
+            this.btnVentasMensuales.Name = "btnVentasMensuales";
+            this.btnVentasMensuales.Size = new System.Drawing.Size(199, 48);
+            this.btnVentasMensuales.TabIndex = 40;
+            this.btnVentasMensuales.Text = "Ventas Mensuales";
+            this.btnVentasMensuales.UseVisualStyleBackColor = true;
+            this.btnVentasMensuales.Click += new System.EventHandler(this.btnVentasMensuales_Click);
+            // 
             // PrincipalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(142)))), ((int)(((byte)(165)))));
-            this.ClientSize = new System.Drawing.Size(1579, 732);
+            this.ClientSize = new System.Drawing.Size(1706, 732);
+            this.Controls.Add(this.btnVentasMensuales);
             this.Controls.Add(this.btnGenerarPDF);
             this.Controls.Add(this.btnCargaACtaCte);
             this.Controls.Add(this.dGVProducto);
@@ -390,6 +414,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnaSubtotal;
         private System.Windows.Forms.Button btnGenerarPDF;
+        private System.Windows.Forms.ToolStripMenuItem enlazarExcelVentasMensualesToolStripMenuItem;
+        private System.Windows.Forms.Button btnVentasMensuales;
     }
 }
 

@@ -535,14 +535,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Sistema Armalum.exe" size="262112">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Sistema Armalum.exe" size="263136">
       <assemblyIdentity name="Sistema Armalum" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ki5oe1LFkrd7E1JfnxJo+C7DvBvzkGfDoTy3ivh/aKc=</dsig:DigestValue>
+        <dsig:DigestValue>2xRnFtb3BrbFx8a5R7XxO0QhuL705ovXbpo8W9ygKHg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -711,13 +711,13 @@
       <dsig:DigestValue>tCwBy+hdsLMhHUUpOOoDANXtoRLe1eh1dvsH75crByU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Sistema Armalum.exe.config" size="1990">
+  <file name="Sistema Armalum.exe.config" size="2097">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>wD5CF3uxPYQFMk573L3c7gETLqxmrbjm+X7gLnDb0DI=</dsig:DigestValue>
+      <dsig:DigestValue>R8LbEk/M37SsxJT+zPSzMLFkBbwmUOmJMmv4d2PdNoY=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

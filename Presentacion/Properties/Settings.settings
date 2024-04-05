@@ -5,5 +5,8 @@
     <Setting Name="RutaArchivo" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="RutaExcelVentasMensuales" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
