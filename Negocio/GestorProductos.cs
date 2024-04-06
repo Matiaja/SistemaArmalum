@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using System.Security.AccessControl;
 using ClosedXML.Excel;
 using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Runtime.InteropServices;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Negocio
 {
@@ -101,6 +104,78 @@ namespace Negocio
         public int ActualizarCantidad(int cantidadExistente)
         {
             return cantidadExistente + 1;
+        }
+
+
+        public void ExportarAVentasMensuales(string total, string rutaVentasMensuales)
+        {
+
+            DateTime fechaActual = DateTime.Now;
+            int diaActual = fechaActual.Day;
+            string mesActual = GetMesEspañol(fechaActual.Month);
+
+            Excel.Application excelApp = new Excel.Application();
+            excelApp.Visible = true;
+
+
+            Excel.Workbook workbook = excelApp.Workbooks.Open(rutaVentasMensuales);
+            Excel.Worksheet worksheet = workbook.Sheets[1];
+            Excel.Range range = worksheet.UsedRange;
+
+            int fila = 2;
+
+            Excel.Range columnaDiaActual = range.Columns[diaActual];
+
+            int filaVacia = GetPrimeraFilaVacia(columnaDiaActual, fila);
+
+            if (filaVacia == 2)
+            {
+                columnaDiaActual.Cells[2].Value = $"{diaActual} de {mesActual}";
+                filaVacia += 1;
+            }
+
+            if (filaVacia >= 3)
+            {
+                columnaDiaActual.Cells[filaVacia].Value = total;
+                columnaDiaActual.AutoFit();
+            }
+
+            workbook.Save();
+
+            ReleaseObject(worksheet);
+            ReleaseObject(workbook);
+
+            excelApp.Quit();
+
+        }
+
+        private int GetPrimeraFilaVacia(Excel.Range columna, int filaInicio)
+        {
+            int filaActual = filaInicio;
+            string valorCelda = columna.Cells[filaActual].Text.Trim();
+
+            while (!string.IsNullOrEmpty(valorCelda))
+            {
+                filaActual++;
+                valorCelda = columna.Cells[filaActual].Text.Trim();
+            }
+
+            return filaActual;
+        }
+
+        private string GetMesEspañol(int numeroMes)
+        {
+            string[] meses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+            return meses[numeroMes - 1];
+        }
+
+        private void ReleaseObject(object obj)
+        {
+            if (obj != null)
+            {
+                Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
         }
 
     }

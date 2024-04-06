@@ -38,8 +38,8 @@ namespace Presentacion
         {
             InitializeComponent();
             GestorRuta gestorRuta = new GestorRuta();
-            gestorRuta.ObtenerLaRuta("Lista de precios");
-            rutaArchivo = Properties.Settings.Default.RutaArchivo;
+            rutaArchivo = gestorRuta.ObtenerLaRuta("Lista de precios");
+            rutaExcelVentasMensuales = gestorRuta.ObtenerLaRuta("Ventas Mensuales");
 
             PrintPreviewControl printPreviewControl = new PrintPreviewControl();
             printPreviewControl.Dock = DockStyle.Fill;
@@ -162,7 +162,7 @@ namespace Presentacion
 
                     CalcularTotal();
                 }
-                
+
             }
             else if (productos.Count > 1)
             {
@@ -380,7 +380,7 @@ namespace Presentacion
                 printDocument1.Print();
             }
         }
-        
+
 
         private void PrincipalForm_Load(object sender, EventArgs e)
         {
@@ -388,7 +388,7 @@ namespace Presentacion
             btnDatosCliente.BackColor = Color.FromArgb(33, 230, 193);
             btnActualizar.BackColor = Color.FromArgb(33, 230, 193);
             btnImprimirPDF.BackColor = Color.FromArgb(33, 230, 193);
-           // btnImprimir.BackColor = Color.FromArgb(33, 230, 193);
+            // btnImprimir.BackColor = Color.FromArgb(33, 230, 193);
             btnCargaACtaCte.BackColor = Color.FromArgb(33, 230, 193);
             btnVentasMensuales.BackColor = Color.FromArgb(33, 230, 193);
 
@@ -407,16 +407,13 @@ namespace Presentacion
             {
                 GestorRuta gestorRuta = new GestorRuta();
                 string selectedFilePath = openFileDialog.FileName;
-                
+
                 rutaArchivo = selectedFilePath;
 
                 gestorRuta.CrearBaseParaRutas();
 
                 gestorRuta.ActualizarOModificarLaRuta("Lista de precios", rutaArchivo);
 
-                Properties.Settings.Default.RutaArchivo = rutaArchivo;
-
-                Properties.Settings.Default.Save();
             }
         }
 
@@ -463,7 +460,7 @@ namespace Presentacion
 
                 if (!string.IsNullOrEmpty(cliente.Direccion))
                 {
-                   
+
                     e.Graphics.DrawString("Dirección:", dGVProducto.Font, Brushes.Black, marginLeft, marginTop);
                     e.Graphics.DrawString($"{cliente.Direccion}", dGVProducto.Font, Brushes.Black, marginLeft + 100, marginTop);
                     marginTop += 20;
@@ -499,7 +496,7 @@ namespace Presentacion
                 }
                 e.Graphics.DrawLine(Pens.Black, e.MarginBounds.Left, marginTop, e.MarginBounds.Right, marginTop);
                 marginTop += 40;
-            }            
+            }
 
             // Draw table header
             string[] headers = { "Cant", "Descripción", "Código", "Precio", "Subtotal" };
@@ -575,7 +572,7 @@ namespace Presentacion
 
             SizeF totalTextSize = e.Graphics.MeasureString("Total: " + txtBoxTotal.Text, dGVProducto.Font);
 
-            float extraWidth = 5; 
+            float extraWidth = 5;
             float extraHeight = 5;
 
             // Dibuja el total con un rectángulo que rodea
@@ -645,10 +642,10 @@ namespace Presentacion
                     decimal precioDecimal;
                     if (decimal.TryParse(precioConFormato, NumberStyles.Currency, CultureInfo.GetCultureInfo("es-AR"), out precioDecimal))
                     {
-                      worksheet.Cells[fila + filaInicio - 1, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
-                      worksheet.Cells[fila + filaInicio - 1, 3].Value = descripcion;
-                      worksheet.Cells[fila + filaInicio - 1, 4].Value = "'" + codigo;
-                      worksheet.Cells[fila + filaInicio - 1, 5].Value = (double)precioDecimal;
+                        worksheet.Cells[fila + filaInicio - 1, 2].Value = double.TryParse(cantidad, out double cantidadValue) ? cantidadValue : 0;
+                        worksheet.Cells[fila + filaInicio - 1, 3].Value = descripcion;
+                        worksheet.Cells[fila + filaInicio - 1, 4].Value = "'" + codigo;
+                        worksheet.Cells[fila + filaInicio - 1, 5].Value = (double)precioDecimal;
                     }
 
 
@@ -666,7 +663,7 @@ namespace Presentacion
         private int EncontrarFilaVaciaContigua(Excel.Worksheet worksheet, int numFilas)
         {
             int filaInicio = 8;
-            int filaActual = 8; 
+            int filaActual = 8;
             int filasVaciasContiguas = 0;
 
             while (filaActual <= worksheet.Rows.Count && filasVaciasContiguas < numFilas)
@@ -677,7 +674,7 @@ namespace Presentacion
                 }
                 else
                 {
-                    filasVaciasContiguas = 0; 
+                    filasVaciasContiguas = 0;
                 }
 
                 filaActual++;
@@ -689,7 +686,7 @@ namespace Presentacion
             }
             else
             {
-                filaInicio = -1; 
+                filaInicio = -1;
             }
 
             return filaInicio;
@@ -789,10 +786,116 @@ namespace Presentacion
             dGVProducto.Columns["ColumnaMenos"].Width = anchoBoton;
         }
 
-
-        public static void GenerarPDF()
+        public void GenerarPDF()
         {
+            Document doc = new Document(PageSize.A4);
 
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivo PDF (*.pdf)|*.pdf";
+            saveFileDialog.Title = "Guardar archivo PDF";
+            saveFileDialog.FileName = "output.pdf";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+
+                string filePath = saveFileDialog.FileName;
+
+                try
+                {
+                    PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+                    doc.Open();
+
+                    byte[] imageBytes = ImageToBytes(Properties.Resources.Logo_Armalum);
+
+                    iTextSharp.text.Image encabezadoImage = iTextSharp.text.Image.GetInstance(imageBytes);
+                    int encabezadoWidth = 300;
+                    float encabezadoHeight = encabezadoImage.Height * encabezadoWidth / encabezadoImage.Width;
+                    float startX = (doc.PageSize.Width - encabezadoWidth) / 2 + doc.LeftMargin;
+
+                    doc.Add(new Paragraph(" "));
+                    encabezadoImage.ScaleToFit(encabezadoWidth, encabezadoHeight);
+                    encabezadoImage.SetAbsolutePosition(startX, doc.PageSize.Height - encabezadoHeight - 20);
+                    doc.Add(encabezadoImage);
+                    doc.Add(new Paragraph(" "));
+
+                    // Información del cliente
+                    if (cliente != null && (!string.IsNullOrEmpty(cliente.NombreYApellido) ||
+                        !string.IsNullOrEmpty(cliente.Cuil) ||
+                        !string.IsNullOrEmpty(cliente.Direccion) ||
+                        !string.IsNullOrEmpty(cliente.Telefono) ||
+                        cliente.DiasVigencia != null))
+                    {
+                        Paragraph clienteInfo = new Paragraph();
+                        clienteInfo.Alignment = Element.ALIGN_LEFT;
+                        clienteInfo.Add(new Phrase("Nombre:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                        if (cliente != null && !string.IsNullOrEmpty(cliente.NombreYApellido))
+                        {
+                            clienteInfo.Add(new Phrase(cliente.NombreYApellido, FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                        }
+
+                        if (!string.IsNullOrEmpty(cliente.Cuil))
+                        {
+                            clienteInfo.Add(new Phrase("CUIL:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            clienteInfo.Add(new Phrase(cliente.Cuil ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                        }
+
+                        if (!string.IsNullOrEmpty(cliente.Localidad))
+                        {
+                            clienteInfo.Add(new Phrase("Localidad:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            clienteInfo.Add(new Phrase(cliente.Localidad ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                        }
+
+                        if (!string.IsNullOrEmpty(cliente.Telefono))
+                        {
+                            clienteInfo.Add(new Phrase("Teléfono:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            clienteInfo.Add(new Phrase(cliente.Telefono ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                        }
+
+                        if (!string.IsNullOrEmpty(cliente.Direccion))
+                        {
+                            clienteInfo.Add(new Phrase("Dirección:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            clienteInfo.Add(new Phrase(cliente.Direccion ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                        }
+
+
+                        if (cliente.DiasVigencia != null)
+                        {
+                            DateTime fechaHoy = DateTime.Today;
+                            clienteInfo.Add(new Phrase("Vigencia desde: " + fechaHoy.ToString("dd/MM/yy"), FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            DateTime fechaVigenciaHasta = fechaHoy.AddDays(cliente.DiasVigencia.Value);
+                            clienteInfo.Add(new Phrase("Vigencia hasta: " + fechaVigenciaHasta.ToString("dd/MM/yy"), FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                        }
+
+                        doc.Add(clienteInfo);
+
+                        doc.Add(new Paragraph(" "));
+
+                    }
+
+                    // Total
+                    Paragraph totalParagraph = new Paragraph();
+                    totalParagraph.Add(new Phrase("Total: " + txtBoxTotal.Text, FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                    totalParagraph.Alignment = Element.ALIGN_RIGHT;
+                    doc.Add(totalParagraph);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al generar PDF: " + ex.Message);
+                }
+                finally
+                {
+                    doc.Close();
+                }
+            }
+        }
+        private byte[] ImageToBytes(System.Drawing.Image image)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
         }
 
         private void btnGenerarPDF_Click(object sender, EventArgs e)
@@ -806,17 +909,20 @@ namespace Presentacion
 
             openFileDialog.Title = "Seleccionar archivo Excel de ventas Mensuales";
 
-            openFileDialog.Filter = "Archivos Excel|*.xlsm";
+            openFileDialog.Filter = "Archivos Excel|*.xlsx";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+
+                GestorRuta gestorRuta = new GestorRuta();
                 string selectedFilePath = openFileDialog.FileName;
 
                 rutaExcelVentasMensuales = selectedFilePath;
 
-                Properties.Settings.Default.RutaExcelVentasMensuales = rutaExcelVentasMensuales;
+                gestorRuta.CrearBaseParaRutas();
 
-                Properties.Settings.Default.Save();
+                gestorRuta.ActualizarOModificarLaRuta("Ventas Mensuales", rutaExcelVentasMensuales);
+
             }
         }
 
@@ -828,7 +934,12 @@ namespace Presentacion
                 return;
             }
 
-
+            else
+            {
+                GestorProductos gestorProductos = new GestorProductos();
+                gestorProductos.ExportarAVentasMensuales(txtBoxTotal.Text, rutaExcelVentasMensuales);
+            }
         }
+
     }
 }

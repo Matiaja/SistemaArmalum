@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>s1xH/QWzcjmL3UM4Hb7HEzrBavEgmisG2IS0Dl2HLiQ=</dsig:DigestValue>
+        <dsig:DigestValue>5zDZljOsk6Yq+jNDo//cjyg2o0yDcBiOxD+O3dLqMLU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -487,14 +487,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Negocio.dll" size="7168">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Negocio.dll" size="14336">
       <assemblyIdentity name="Negocio" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>iAl1whO/edccmMwczda+9QCuTowjfF3hw9MwGiZ9nao=</dsig:DigestValue>
+        <dsig:DigestValue>/llEU7cIpWP0x++NK0ZSRNbRSZpe/KUwoaUBbVVhqH4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -535,14 +535,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Sistema Armalum.exe" size="263648">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Sistema Armalum.exe" size="266720">
       <assemblyIdentity name="Sistema Armalum" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GNFUYMXW5weH592RFIgomP6pGIe/5grgIkOPWJl6wZg=</dsig:DigestValue>
+        <dsig:DigestValue>yvfkUZVD1dQih+F0A7jXjEIN1IQd5JbNsUKgUG9uiHI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

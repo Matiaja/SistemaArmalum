@@ -57,23 +57,19 @@ namespace Datos
                 {
                     connection.Open();
 
-                    using (MySqlCommand checkCommand = new MySqlCommand("SHOW TABLES LIKE 'ruta'", connection))
+                    string query = "SELECT ruta FROM ruta WHERE nombre = @nombre";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@nombre", nombre);
+                    object result = command.ExecuteScalar();
+                    if (result != null)
                     {
-                        if (checkCommand.ExecuteNonQuery() > 0)
-                        {
-                            string query = "SELECT ruta FROM ruta WHERE nombre = @nombre";
-                            MySqlCommand command = new MySqlCommand(query, connection);
-                            command.Parameters.AddWithValue("@nombre", nombre);
-                            object result = command.ExecuteScalar();
-                            if (result != null)
-                            {
-                                ruta = result.ToString();
-                            }
-                        }
+                        ruta = result.ToString();
                     }
                 }
-                catch (MySqlException ex) when (ex.Number == 1146)
+                catch (MySqlException ex)
                 {
+                    Console.WriteLine("Error al obtener la ruta: " + ex.Message);
+
                 }
             }
 

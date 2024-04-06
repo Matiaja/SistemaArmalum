@@ -56,3 +56,4 @@ C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Debug\Negocio.cspro
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Debug\Negocio.csproj.CopyComplete
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Debug\Negocio.dll
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Debug\Negocio.pdb
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Debug\Negocio.csproj.ResolveComReference.cache

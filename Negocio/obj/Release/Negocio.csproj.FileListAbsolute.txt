@@ -52,6 +52,7 @@ C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\bin\Release\K4os.Compre
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\bin\Release\System.IO.Pipelines.xml
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\bin\Release\K4os.Hash.xxHash.xml
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Release\Negocio.csproj.AssemblyReference.cache
+C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Release\Negocio.csproj.ResolveComReference.cache
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Release\Negocio.csproj.CoreCompileInputs.cache
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Release\Negocio.csproj.CopyComplete
 C:\Users\matia\Desktop\SistemaParaFerreteria2024\Negocio\obj\Release\Negocio.dll

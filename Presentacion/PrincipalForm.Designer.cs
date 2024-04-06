@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrincipalForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.txtBoxTotal = new System.Windows.Forms.TextBox();
@@ -44,6 +44,7 @@
             this.btnImprimirPDF = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.enlazarExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enlazarExcelVentasMensualesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
@@ -56,7 +57,6 @@
             this.ColumnaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCargaACtaCte = new System.Windows.Forms.Button();
             this.btnGenerarPDF = new System.Windows.Forms.Button();
-            this.enlazarExcelVentasMensualesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnVentasMensuales = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVProducto)).BeginInit();
@@ -186,7 +186,7 @@
             this.enlazarExcelVentasMensualesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1706, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1706, 27);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -195,9 +195,18 @@
             this.enlazarExcelToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enlazarExcelToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.enlazarExcelToolStripMenuItem.Name = "enlazarExcelToolStripMenuItem";
-            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.enlazarExcelToolStripMenuItem.Size = new System.Drawing.Size(243, 23);
             this.enlazarExcelToolStripMenuItem.Text = "Enlazar Excel Lista de precios";
             this.enlazarExcelToolStripMenuItem.Click += new System.EventHandler(this.enlazarExcelToolStripMenuItem_Click);
+            // 
+            // enlazarExcelVentasMensualesToolStripMenuItem
+            // 
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F);
+            this.enlazarExcelVentasMensualesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Name = "enlazarExcelVentasMensualesToolStripMenuItem";
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Size = new System.Drawing.Size(258, 23);
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Text = "Enlazar Excel Ventas Mensuales";
+            this.enlazarExcelVentasMensualesToolStripMenuItem.Click += new System.EventHandler(this.enlazarExcelVentasMensualesToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -238,14 +247,14 @@
             this.dGVProducto.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dGVProducto.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dGVProducto.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dGVProducto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(230)))), ((int)(((byte)(193)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dGVProducto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dGVProducto.ColumnHeadersHeight = 45;
             this.dGVProducto.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnaCantidad,
@@ -253,14 +262,14 @@
             this.ColumnaCodigo,
             this.ColumnaPrecio,
             this.ColumnaSubtotal});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.PaleTurquoise;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dGVProducto.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.PaleTurquoise;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dGVProducto.DefaultCellStyle = dataGridViewCellStyle4;
             this.dGVProducto.EnableHeadersVisualStyles = false;
             this.dGVProducto.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(30)))), ((int)(((byte)(61)))));
             this.dGVProducto.Location = new System.Drawing.Point(0, 239);
@@ -329,15 +338,6 @@
             this.btnGenerarPDF.Text = "Generar PDF";
             this.btnGenerarPDF.UseVisualStyleBackColor = true;
             this.btnGenerarPDF.Click += new System.EventHandler(this.btnGenerarPDF_Click);
-            // 
-            // enlazarExcelVentasMensualesToolStripMenuItem
-            // 
-            this.enlazarExcelVentasMensualesToolStripMenuItem.Font = new System.Drawing.Font("Arial", 10.2F);
-            this.enlazarExcelVentasMensualesToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.enlazarExcelVentasMensualesToolStripMenuItem.Name = "enlazarExcelVentasMensualesToolStripMenuItem";
-            this.enlazarExcelVentasMensualesToolStripMenuItem.Size = new System.Drawing.Size(258, 26);
-            this.enlazarExcelVentasMensualesToolStripMenuItem.Text = "Enlazar Excel Ventas Mensuales";
-            this.enlazarExcelVentasMensualesToolStripMenuItem.Click += new System.EventHandler(this.enlazarExcelVentasMensualesToolStripMenuItem_Click);
             // 
             // btnVentasMensuales
             // 
