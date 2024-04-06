@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Datos.dll" size="10240">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Datos.dll" size="11776">
       <assemblyIdentity name="Datos" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GiOITHPUXzQXIMK+Lp8l59hYUmwAvA3CNPoTfDPkNRo=</dsig:DigestValue>
+        <dsig:DigestValue>s1xH/QWzcjmL3UM4Hb7HEzrBavEgmisG2IS0Dl2HLiQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -103,14 +103,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Entidades.dll" size="5632">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Entidades.dll" size="6144">
       <assemblyIdentity name="Entidades" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4fv40Z4tAl3tIqKV+7EET5o32ZzJDufle/XkDdFOUbA=</dsig:DigestValue>
+        <dsig:DigestValue>3biG7CSvZYWaCclY/Be5B9+IDDKLq2tWNtuNjzFmBpw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -487,14 +487,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Negocio.dll" size="6656">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Negocio.dll" size="7168">
       <assemblyIdentity name="Negocio" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Xi9KCVVGSwPiceISFlR9ntVc4BxcJzQB5edzb7x+wKY=</dsig:DigestValue>
+        <dsig:DigestValue>iAl1whO/edccmMwczda+9QCuTowjfF3hw9MwGiZ9nao=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -535,14 +535,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Sistema Armalum.exe" size="263136">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Sistema Armalum.exe" size="263648">
       <assemblyIdentity name="Sistema Armalum" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2xRnFtb3BrbFx8a5R7XxO0QhuL705ovXbpo8W9ygKHg=</dsig:DigestValue>
+        <dsig:DigestValue>GNFUYMXW5weH592RFIgomP6pGIe/5grgIkOPWJl6wZg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

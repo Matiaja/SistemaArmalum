@@ -37,6 +37,8 @@ namespace Presentacion
         public PrincipalForm()
         {
             InitializeComponent();
+            GestorRuta gestorRuta = new GestorRuta();
+            gestorRuta.ObtenerLaRuta("Lista de precios");
             rutaArchivo = Properties.Settings.Default.RutaArchivo;
 
             PrintPreviewControl printPreviewControl = new PrintPreviewControl();
@@ -403,9 +405,14 @@ namespace Presentacion
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                GestorRuta gestorRuta = new GestorRuta();
                 string selectedFilePath = openFileDialog.FileName;
                 
                 rutaArchivo = selectedFilePath;
+
+                gestorRuta.CrearBaseParaRutas();
+
+                gestorRuta.ActualizarOModificarLaRuta("Lista de precios", rutaArchivo);
 
                 Properties.Settings.Default.RutaArchivo = rutaArchivo;
 

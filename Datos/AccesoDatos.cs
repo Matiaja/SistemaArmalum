@@ -27,6 +27,11 @@ namespace Datos
 
         }
 
+        public string RetornarConnectionString()
+        {
+            return connectionString;
+        }
+
         private void CrearBaseDeDatosSiNoExiste()
         {
             string cadenaConexionSinBaseDatos = $"SERVER={server};PORT=3306;UID={uid};PASSWORD={password};";
@@ -35,31 +40,49 @@ namespace Datos
             {
                 connection.Open();
 
-                string consultaExiste = $"SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name = '{database}'";
-
-                using (MySqlCommand command = new MySqlCommand(consultaExiste, connection))
+                using (MySqlCommand command = new MySqlCommand($"CREATE DATABASE IF NOT EXISTS {database}", connection))
                 {
-                    int? cantidad = command.ExecuteScalar() as int?;
+                    command.ExecuteNonQuery();
+                }
 
-                    if (cantidad == null)
-                    {
-                        string crearBaseDatos = $"CREATE DATABASE IF NOT EXISTS {database}";
-                        command.CommandText = crearBaseDatos;
-                        command.ExecuteNonQuery();
+                connection.ChangeDatabase(database);
 
-                    }
+                using (MySqlCommand cmd = new MySqlCommand("CREATE TABLE IF NOT EXISTS producto (descripcion VARCHAR(255), codigo VARCHAR(70), precio DECIMAL(18, 2))", connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
 
-                    connection.ChangeDatabase(database);
+                using (MySqlCommand cmdRuta = new MySqlCommand("CREATE TABLE IF NOT EXISTS ruta (nombre VARCHAR(255), ruta VARCHAR(255))", connection))
+                {
+                    cmdRuta.ExecuteNonQuery();
+                }
+            }
+        }
 
-                    string createTableQuery = "CREATE TABLE IF NOT EXISTS producto (" +
-                                                "descripcion VARCHAR(255), " +
-                                                "codigo VARCHAR(70), " +
-                                                "precio DECIMAL(18, 2))";
 
-                    using (MySqlCommand cmd = new MySqlCommand(createTableQuery, connection))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
+        public void CrearBaseDeDatosSiNoExistearaRutas()
+        {
+            string cadenaConexionSinBaseDatos = $"SERVER={server};PORT=3306;UID={uid};PASSWORD={password};";
+
+            using (MySqlConnection connection = new MySqlConnection(cadenaConexionSinBaseDatos))
+            {
+                connection.Open();
+
+                using (MySqlCommand command = new MySqlCommand($"CREATE DATABASE IF NOT EXISTS {database}", connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                connection.ChangeDatabase(database);
+
+                using (MySqlCommand cmd = new MySqlCommand("CREATE TABLE IF NOT EXISTS producto (descripcion VARCHAR(255), codigo VARCHAR(70), precio DECIMAL(18, 2))", connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (MySqlCommand cmdRuta = new MySqlCommand("CREATE TABLE IF NOT EXISTS ruta (nombre VARCHAR(255), ruta VARCHAR(255))", connection))
+                {
+                    cmdRuta.ExecuteNonQuery();
                 }
             }
         }
