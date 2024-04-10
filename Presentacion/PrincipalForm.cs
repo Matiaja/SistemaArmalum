@@ -25,6 +25,7 @@ using Org.BouncyCastle.Asn1.X509;
 using System.Globalization;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using iText.Forms.Xfdf;
 
 namespace Presentacion
 {
@@ -131,9 +132,9 @@ namespace Presentacion
                 {
                     if (row.Cells["ColumnaCodigo"].Value != null && row.Cells["ColumnaCodigo"].Value.ToString() == producto.Codigo)
                     {
-                        int cantidadExistente = Convert.ToInt32(row.Cells["ColumnaCantidad"].Value);
+                        float cantidadExistente = (float)Convert.ToDouble(row.Cells["ColumnaCantidad"].Value);
 
-                        int nuevaCantidad = gestorProductos.ActualizarCantidad(cantidadExistente);
+                        float nuevaCantidad = gestorProductos.ActualizarCantidad(cantidadExistente);
 
                         row.Cells["ColumnaCantidad"].Value = nuevaCantidad;
 
@@ -179,9 +180,9 @@ namespace Presentacion
                             {
                                 if (row.Cells["ColumnaCodigo"].Value != null && row.Cells["ColumnaCodigo"].Value.ToString() == productoSeleccionado.Codigo)
                                 {
-                                    int cantidadExistente = Convert.ToInt32(row.Cells["ColumnaCantidad"].Value);
+                                    float cantidadExistente = (float)Convert.ToDouble(row.Cells["ColumnaCantidad"].Value);
 
-                                    int nuevaCantidad = gestorProductos.ActualizarCantidad(cantidadExistente);
+                                    float nuevaCantidad = gestorProductos.ActualizarCantidad(cantidadExistente);
 
                                     row.Cells["ColumnaCantidad"].Value = nuevaCantidad;
 
@@ -221,7 +222,7 @@ namespace Presentacion
 
         private void CalcularSubtotal()
         {
-            Dictionary<Producto, int> productosConCantidad = new Dictionary<Producto, int>();
+            Dictionary<Producto, float> productosConCantidad = new Dictionary<Producto, float>();
 
             foreach (DataGridViewRow fila in dGVProducto.Rows)
             {
@@ -235,7 +236,7 @@ namespace Presentacion
                     decimal precioDecimal;
                     if (decimal.TryParse(precioConFormato, NumberStyles.Currency, CultureInfo.GetCultureInfo("es-AR"), out precioDecimal))
                     {
-                        int cantidad = Convert.ToInt32(fila.Cells["ColumnaCantidad"].Value);
+                        float cantidad = (float)Convert.ToDouble(fila.Cells["ColumnaCantidad"].Value);
 
                         Producto producto = new Producto(descripcion, codigo, (double)precioDecimal);
                         productosConCantidad.Add(producto, cantidad);
@@ -332,10 +333,10 @@ namespace Presentacion
                 // Verifica si la celda de la cantidad no es nula
                 if (fila.Cells["ColumnaCantidad"].Value != null)
                 {
-                    int cantidad = Convert.ToInt32(fila.Cells["ColumnaCantidad"].Value);
+                    float cantidad = (float)Convert.ToDouble(fila.Cells["ColumnaCantidad"].Value);
 
                     // Verifica si se hizo clic en el botón "-" y la cantidad es mayor que 1
-                    if (e.ColumnIndex == dGVProducto.Columns["ColumnaMenos"].Index && cantidad > 1)
+                    if (e.ColumnIndex == dGVProducto.Columns["ColumnaMenos"].Index && cantidad -1 > 0)
                     {
                         cantidad--;
                     }
@@ -805,75 +806,166 @@ namespace Presentacion
                 {
                     PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
                     doc.Open();
-
+                    Paragraph imageParagraph = new Paragraph();
+                    imageParagraph.Alignment = Element.ALIGN_CENTER;
                     byte[] imageBytes = ImageToBytes(Properties.Resources.Logo_Armalum);
 
                     iTextSharp.text.Image encabezadoImage = iTextSharp.text.Image.GetInstance(imageBytes);
                     int encabezadoWidth = 300;
                     float encabezadoHeight = encabezadoImage.Height * encabezadoWidth / encabezadoImage.Width;
-                    float startX = (doc.PageSize.Width - encabezadoWidth) / 2 + doc.LeftMargin;
+                    float startX = (doc.PageSize.Width - encabezadoWidth) / 2;
 
-                    doc.Add(new Paragraph(" "));
+                    //doc.Add(new Paragraph(" "));
                     encabezadoImage.ScaleToFit(encabezadoWidth, encabezadoHeight);
                     encabezadoImage.SetAbsolutePosition(startX, doc.PageSize.Height - encabezadoHeight - 20);
                     doc.Add(encabezadoImage);
-                    doc.Add(new Paragraph(" "));
+                    imageParagraph.SpacingBefore = encabezadoHeight;
 
-                    // Información del cliente
+                    doc.Add(imageParagraph);
+                    // doc.Add(new Paragraph(" "));
+
                     if (cliente != null && (!string.IsNullOrEmpty(cliente.NombreYApellido) ||
                         !string.IsNullOrEmpty(cliente.Cuil) ||
                         !string.IsNullOrEmpty(cliente.Direccion) ||
                         !string.IsNullOrEmpty(cliente.Telefono) ||
                         cliente.DiasVigencia != null))
                     {
-                        Paragraph clienteInfo = new Paragraph();
-                        clienteInfo.Alignment = Element.ALIGN_LEFT;
-                        clienteInfo.Add(new Phrase("Nombre:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+
                         if (cliente != null && !string.IsNullOrEmpty(cliente.NombreYApellido))
                         {
-                            clienteInfo.Add(new Phrase(cliente.NombreYApellido, FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                            Paragraph NombreYApellido = new Paragraph();
+                            NombreYApellido.Alignment = Element.ALIGN_LEFT;
+                            NombreYApellido.Add(new Phrase("Nombre y apellido: ", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            NombreYApellido.Add(new Phrase(cliente.NombreYApellido, FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                            doc.Add(NombreYApellido);
                         }
 
                         if (!string.IsNullOrEmpty(cliente.Cuil))
                         {
-                            clienteInfo.Add(new Phrase("CUIL:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
-                            clienteInfo.Add(new Phrase(cliente.Cuil ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
-                        }
-
-                        if (!string.IsNullOrEmpty(cliente.Localidad))
-                        {
-                            clienteInfo.Add(new Phrase("Localidad:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
-                            clienteInfo.Add(new Phrase(cliente.Localidad ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
-                        }
-
-                        if (!string.IsNullOrEmpty(cliente.Telefono))
-                        {
-                            clienteInfo.Add(new Phrase("Teléfono:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
-                            clienteInfo.Add(new Phrase(cliente.Telefono ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                            Paragraph cuilParrafo = new Paragraph();
+                            cuilParrafo.Alignment = Element.ALIGN_LEFT;
+                            cuilParrafo.Add(new Phrase("CUIL: ", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            cuilParrafo.Add(new Phrase(cliente.Cuil ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                            doc.Add(cuilParrafo);
                         }
 
                         if (!string.IsNullOrEmpty(cliente.Direccion))
                         {
-                            clienteInfo.Add(new Phrase("Dirección:", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
-                            clienteInfo.Add(new Phrase(cliente.Direccion ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                            Paragraph direccionParrafo = new Paragraph();
+                            direccionParrafo.Alignment = Element.ALIGN_LEFT;
+                            direccionParrafo.Add(new Phrase("Dirección: ", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            direccionParrafo.Add(new Phrase(cliente.Direccion ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                            doc.Add(direccionParrafo);
+                        }
+
+                        if (!string.IsNullOrEmpty(cliente.Localidad))
+                        {
+                            Paragraph localidadParrafo = new Paragraph();
+                            localidadParrafo.Alignment = Element.ALIGN_LEFT;
+                            localidadParrafo.Add(new Phrase("Localidad: ", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            localidadParrafo.Add(new Phrase(cliente.Localidad ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                            doc.Add(localidadParrafo);
+                        }
+
+                        if (!string.IsNullOrEmpty(cliente.Telefono))
+                        {
+                            Paragraph telefonoParrafo = new Paragraph();
+                            telefonoParrafo.Alignment = Element.ALIGN_LEFT;
+                            telefonoParrafo.Add(new Phrase("Teléfono: ", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            telefonoParrafo.Add(new Phrase(cliente.Telefono ?? "", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+                            doc.Add(telefonoParrafo);
                         }
 
 
                         if (cliente.DiasVigencia != null)
                         {
-                            DateTime fechaHoy = DateTime.Today;
-                            clienteInfo.Add(new Phrase("Vigencia desde: " + fechaHoy.ToString("dd/MM/yy"), FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
-                            DateTime fechaVigenciaHasta = fechaHoy.AddDays(cliente.DiasVigencia.Value);
-                            clienteInfo.Add(new Phrase("Vigencia hasta: " + fechaVigenciaHasta.ToString("dd/MM/yy"), FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
-                        }
+                            Paragraph fechasParrafo = new Paragraph();
+                            fechasParrafo.Alignment = Element.ALIGN_LEFT;
 
-                        doc.Add(clienteInfo);
+                            DateTime fechaHoy = DateTime.Today;
+                            DateTime fechaVigenciaHasta = fechaHoy.AddDays(cliente.DiasVigencia.Value);
+
+                            fechasParrafo.Add(new Phrase("Vigencia desde: ", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            fechasParrafo.Add(new Phrase(fechaHoy.ToString("dd/MM/yy"), FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+
+                            fechasParrafo.Add(new Chunk("    ", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+
+                            fechasParrafo.Add(new Phrase("Vigencia hasta: ", FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+                            fechasParrafo.Add(new Phrase(fechaVigenciaHasta.ToString("dd/MM/yy"), FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+
+                            doc.Add(fechasParrafo);
+                        
+                    }
 
                         doc.Add(new Paragraph(" "));
 
                     }
 
-                    // Total
+                    PdfPTable table = new PdfPTable(5);
+
+                    //float[] widths = new float[] { 40f, 350f, 100f, 80f, 80f };
+
+                    //table.SetWidths(widths);
+
+                    table.TotalWidth = doc.PageSize.Width;
+
+                    table.AddCell(new PdfPCell(new Phrase("Cantidad")));
+                    table.AddCell(new PdfPCell(new Phrase("Descripción")));
+                    table.AddCell(new PdfPCell(new Phrase("Código")));
+                    table.AddCell(new PdfPCell(new Phrase("Precio")));
+                    table.AddCell(new PdfPCell(new Phrase("Subtotal")));
+
+                    foreach (DataGridViewRow row in dGVProducto.Rows)
+                    {
+                        if (row.Cells["ColumnaCantidad"].Value != null)
+                        {
+                            table.AddCell(new PdfPCell(new Phrase(row.Cells["ColumnaCantidad"].Value.ToString())));
+                        }
+                        else
+                        {
+                            table.AddCell(new PdfPCell(new Phrase(""))); 
+                        }
+
+                        if (row.Cells["ColumnaDescripcion"].Value != null)
+                        {
+                            table.AddCell(new PdfPCell(new Phrase(row.Cells["ColumnaDescripcion"].Value.ToString())));
+                        }
+                        else
+                        {
+                            table.AddCell(new PdfPCell(new Phrase("")));
+                        }
+
+                        if (row.Cells["ColumnaCodigo"].Value != null)
+                        {
+                            table.AddCell(new PdfPCell(new Phrase(row.Cells["ColumnaCodigo"].Value.ToString())));
+                        }
+                        else
+                        {
+                            table.AddCell(new PdfPCell(new Phrase("")));
+                        }
+
+                        if (row.Cells["ColumnaPrecio"].Value != null)
+                        {
+                            table.AddCell(new PdfPCell(new Phrase(row.Cells["ColumnaPrecio"].Value.ToString())));
+                        }
+                        else
+                        {
+                            table.AddCell(new PdfPCell(new Phrase("")));
+                        }
+
+                        if (row.Cells["ColumnaSubtotal"].Value != null)
+                        {
+                            table.AddCell(new PdfPCell(new Phrase(row.Cells["ColumnaSubtotal"].Value.ToString())));
+                        }
+                        else
+                        {
+                            table.AddCell(new PdfPCell(new Phrase("")));
+                        }
+
+                    }
+
+                    doc.Add(table);
+
                     Paragraph totalParagraph = new Paragraph();
                     totalParagraph.Add(new Phrase("Total: " + txtBoxTotal.Text, FontFactory.GetFont(FontFactory.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
                     totalParagraph.Alignment = Element.ALIGN_RIGHT;

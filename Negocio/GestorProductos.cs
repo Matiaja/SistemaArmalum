@@ -88,11 +88,11 @@ namespace Negocio
             return total;
         }
 
-        public Dictionary<Producto, double> CalcularSubtotales(Dictionary<Producto, int> productosConCantidad)
+        public Dictionary<Producto, double> CalcularSubtotales(Dictionary<Producto, float> productosConCantidad)
         {
             Dictionary<Producto, double> subtotales = new Dictionary<Producto, double>();
 
-            foreach (KeyValuePair<Producto, int> parProductoCantidad in productosConCantidad)
+            foreach (KeyValuePair<Producto, float> parProductoCantidad in productosConCantidad)
             {
                 double subtotal = parProductoCantidad.Key.Precio * parProductoCantidad.Value;
                 subtotales.Add(parProductoCantidad.Key, subtotal);
@@ -101,7 +101,7 @@ namespace Negocio
             return subtotales;
         }
 
-        public int ActualizarCantidad(int cantidadExistente)
+        public float ActualizarCantidad(float cantidadExistente)
         {
             return cantidadExistente + 1;
         }
