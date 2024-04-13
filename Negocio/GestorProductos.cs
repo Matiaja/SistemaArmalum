@@ -112,6 +112,7 @@ namespace Negocio
 
             DateTime fechaActual = DateTime.Now;
             int diaActual = fechaActual.Day;
+            int numeroMes = fechaActual.Month;
             string mesActual = GetMesEspañol(fechaActual.Month);
 
             Excel.Application excelApp = new Excel.Application();
@@ -119,7 +120,7 @@ namespace Negocio
 
 
             Excel.Workbook workbook = excelApp.Workbooks.Open(rutaVentasMensuales);
-            Excel.Worksheet worksheet = workbook.Sheets[1];
+            Excel.Worksheet worksheet = workbook.Sheets[numeroMes];
             Excel.Range range = worksheet.UsedRange;
 
             int fila = 2;

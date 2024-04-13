@@ -26,6 +26,7 @@ using System.Globalization;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iText.Forms.Xfdf;
+using System.Runtime.InteropServices;
 
 namespace Presentacion
 {
@@ -389,7 +390,7 @@ namespace Presentacion
             btnDatosCliente.BackColor = Color.FromArgb(33, 230, 193);
             btnActualizar.BackColor = Color.FromArgb(33, 230, 193);
             btnImprimirPDF.BackColor = Color.FromArgb(33, 230, 193);
-            // btnImprimir.BackColor = Color.FromArgb(33, 230, 193);
+            btnGenerarPDF.BackColor = Color.FromArgb(33, 230, 193);
             btnCargaACtaCte.BackColor = Color.FromArgb(33, 230, 193);
             btnVentasMensuales.BackColor = Color.FromArgb(33, 230, 193);
 
@@ -602,18 +603,43 @@ namespace Presentacion
                 return;
             }
 
-            Excel.Application excelApp = new Excel.Application();
-            excelApp.Visible = true;
+            Excel.Application excelApp = null;
+            Excel.Workbook workbook = null;
+            try
+            {
+                excelApp = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
+                foreach (Excel.Workbook wb in excelApp.Workbooks)
+                {
+                    if (wb.FullName == rutaArchivoExcel)
+                    {
+                        workbook = wb;
+                        break;
+                    }
+                }
+            }
+            catch { }
 
-            Excel.Workbook workbook = excelApp.Workbooks.Open(rutaArchivoExcel);
+            // Si el archivo de Excel no está abierto, abrirlo
+            if (workbook == null)
+            {
+                excelApp = new Excel.Application();
+                excelApp.Visible = true;
+                workbook = excelApp.Workbooks.Open(rutaArchivoExcel);
+            }
+            else
+            {
+                // Si el archivo de Excel está abierto, guardar y cerrar antes de modificarlo
+                workbook.Save();
+                workbook.Close();
+                Marshal.ReleaseComObject(workbook);
+                Marshal.ReleaseComObject(excelApp);
+                excelApp = new Excel.Application();
+                excelApp.Visible = true;
+                workbook = excelApp.Workbooks.Open(rutaArchivoExcel);
+            }
+
             Excel.Worksheet worksheet = workbook.Sheets[1];
             Excel.Range range = worksheet.UsedRange;
-
-            //int filaInicio = 8;
-            //while (worksheet.Cells[filaInicio, 3].Value != null)
-            //{
-            //    filaInicio++;
-            //}
 
             int numFilasDataGridView = dataGridView.Rows.Count - 1; // Restar 1 para excluir la fila de nuevo
 
